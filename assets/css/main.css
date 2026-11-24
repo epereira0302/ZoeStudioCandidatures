@@ -1,0 +1,1455 @@
+/* ==========================================================================
+   Studio Zoé — design system
+   1. Polices   2. Variables   3. Base   4. Typographie   5. Composants
+   6. En-tête et menu   7. Accueil   8. Pied de page   9. Mouvement réduit
+   ========================================================================== */
+
+/* 1. Polices (auto-hébergées, licence web) ------------------------------ */
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("../fonts/neue-montreal-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("../fonts/neue-montreal-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("../fonts/neue-montreal-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("../fonts/neue-montreal-extrabold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("../fonts/neue-montreal-extrabold-italic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Right Didone";
+  src: url("../fonts/right-didone-light-italic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* 2. Variables ------------------------------------------------------------ */
+:root {
+  /* Neutres : la majorité du site */
+  --ink: #120e0f;
+  --ink-soft: #2a2425;
+  --paper: #f5f0ea;
+  --paper-2: #ebe4dc;
+  --muted-on-paper: #5e5556;   /* 6.5:1 sur --paper */
+  --muted-on-ink: #a89fa0;     /* 7.4:1 sur --ink */
+
+  /* Accents : avec parcimonie */
+  --rose: #f2b0dc;
+  --fuchsia: #e83fa6;          /* sur fonds sombres uniquement pour du texte */
+  --fuchsia-ink: #b3126f;      /* variante lisible (AA) sur fonds clairs */
+  --fuchsia-fluo: #ff00aa;     /* survol du sommaire, sur fond aubergine profond */
+  --aubergine: #37121e;        /* l’aubergine de la charte Studio Zoé */
+  --aubergine-deep: #1e0807;
+
+  /* Typographie */
+  --f-sans: "PP Neue Montreal", "Helvetica Neue", Arial, sans-serif;
+  --f-serif: "Right Didone", "Didot", "Bodoni 72", Georgia, serif;
+
+  --t-micro: 0.75rem;                                  /* 12 px, petites capitales */
+  --t-small: 0.875rem;
+  --t-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);   /* 16 → 18 px */
+  --t-lead: clamp(1.25rem, 1.05rem + 0.9vw, 1.875rem);
+  --t-h3: clamp(1.5rem, 1.1rem + 1.8vw, 2.75rem);
+  --t-h2: clamp(2.5rem, 1.4rem + 5vw, 6.5rem);
+  --t-h1: clamp(3.5rem, 1rem + 12vw, 15rem);
+
+  /* Espacements et grille */
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --gutter: clamp(1rem, 0.6rem + 2.4vw, 3rem);
+  /* Marge du contenu : référence de tout le site (limites données par Enzo).
+     Sur grand écran, 19 % de chaque côté : le contenu tient dans les 62 % centraux */
+  --marge: var(--gutter);
+  --pad-l: calc(var(--marge) + var(--safe-l));
+  --pad-r: calc(var(--marge) + var(--safe-r));
+  /* En-tête et menu restent calés sur les bords de l’écran */
+  --bord-l: calc(var(--gutter) + var(--safe-l));
+  --bord-r: calc(var(--gutter) + var(--safe-r));
+  /* Gros caractères : une seule taille pour tous les titres en capitales, celle du sommaire.
+     « Direction artistique » + vignette ≈ 12,7 em tient dans la colonne centrale */
+  --t-grand: clamp(1.75rem, 10.4vw - 0.3rem, 2.375rem);
+  --section: clamp(3.5rem, 2rem + 6vw, 7.5rem); /* resserré le 2026-10-25 à la demande d’Enzo */
+  /* Photos et médias : coins carrés sur tout le site (demande d’Enzo) */
+  --radius: 0px;
+  --header-h: 4.5rem;
+
+  /* Mouvement */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --d-fast: 250ms;
+  --d: 450ms;
+  --d-slow: 700ms;
+}
+@media (min-width: 768px) {
+  /* La marge grandit avec l’écran et atteint 19 % vers 1440 px :
+     en dessous, le texte courant et les coordonnées gardent une largeur lisible */
+  :root { --marge: clamp(var(--gutter), 35vw - 14.5rem, 19vw); --t-grand: min(4.8vw, 10svh); }
+}
+
+/* 3. Base ----------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem); /* le focus clavier ne passe pas sous l’en-tête */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent; /* retour tactile assuré par les états :active */
+}
+/* Défilement amorti (Lenis) : il remplace le défilement doux natif */
+html.defilement-doux { scroll-behavior: auto; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-stopped { overflow: clip; }
+/* Pas d’effet élastique de la page à la souris ; le tactile garde le sien */
+@media (pointer: fine) { html { overscroll-behavior: none; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img, video, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+::selection { background: var(--rose); color: var(--ink); }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--fuchsia);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+[data-theme="paper"] :focus-visible { outline-color: var(--fuchsia-ink); }
+[data-theme="rose"] :focus-visible { outline-color: var(--aubergine); }
+
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: fixed; top: 0.75rem; left: 0.75rem; z-index: 1000;
+  padding: 0.75rem 1.25rem; border-radius: 999px;
+  background: var(--rose); color: var(--ink); font-weight: 800;
+  transform: translateY(-200%); transition: transform var(--d-fast) var(--ease);
+}
+.skip-link:focus-visible { transform: none; }
+
+.wrap { padding-left: var(--pad-l); padding-right: var(--pad-r); }
+
+/* Thèmes de section : le site alterne encre / papier / rose / aubergine */
+[data-theme="ink"] { background: var(--ink); color: var(--paper); }
+[data-theme="paper"] { background: var(--paper); color: var(--ink); }
+[data-theme="rose"] { background: var(--rose); color: var(--ink); }
+[data-theme="aubergine"] { background: var(--aubergine); color: var(--rose); }
+[data-theme="nuit"] { background: var(--aubergine-deep); color: var(--rose); }
+
+/* 4. Typographie ---------------------------------------------------------- */
+/* Titres : PP Neue Montreal Extrabold en capitales, interlignage serré */
+.display {
+  font-family: var(--f-sans);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+p { text-wrap: pretty; }
+.h2 { font-size: var(--t-h2); }
+.h3 { font-size: var(--t-h3); line-height: 0.92; }
+
+/* Right Didone Italic Light : rythme, apartés, légendes. Jamais de texte long. */
+.serif {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+.display .serif { letter-spacing: -0.02em; line-height: 0.9; }
+
+/* Micro-textes en petites capitales */
+.micro {
+  font-family: var(--f-sans);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.3;
+  font-weight: 400;
+  max-width: 34ch;
+}
+.prose { max-width: 66ch; }
+.accent { color: var(--fuchsia); }
+[data-theme="paper"] .accent { color: var(--fuchsia-ink); }
+
+/* 5. Composants ----------------------------------------------------------- */
+
+/* Petits libellés de section */
+.paren { white-space: nowrap; }
+
+/* Image dans des parenthèses (cadre de vignette) */
+.paren-img {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 0.06em;
+  line-height: 1;
+}
+.paren-img::before, .paren-img::after {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1.15em;
+  line-height: 0.8;
+  transform: translateY(-0.04em);
+}
+.paren-img::before { content: "("; }
+.paren-img::after { content: ")"; }
+.paren-img__frame {
+  display: inline-block;
+  width: 1.55em;
+  height: 0.78em;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.paren-img__frame img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Lien à soulignement animé */
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px; /* zone tactile */
+  padding-block: 0.35em;
+  transition: color var(--d-fast) var(--ease);
+}
+.link::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0.15em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--d) var(--ease);
+}
+.link:hover::after, .link:focus-visible::after, .link[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.link:hover { color: var(--fuchsia); }
+[data-theme="paper"] .link:hover { color: var(--fuchsia-ink); }
+
+/* Flèche qui glisse */
+.arrow {
+  display: inline-block;
+  width: 1em; height: 1em;
+  overflow: hidden;
+  position: relative;
+  flex: none;
+}
+.arrow svg {
+  width: 1em; height: 1em;
+  transition: transform var(--d) var(--ease);
+}
+.arrow svg + svg { position: absolute; inset: 0; transform: translateX(-110%); }
+a:hover .arrow svg:first-child, a:focus-visible .arrow svg:first-child,
+button:hover .arrow svg:first-child, button:focus-visible .arrow svg:first-child { transform: translateX(110%); }
+a:hover .arrow svg + svg, a:focus-visible .arrow svg + svg,
+button:hover .arrow svg + svg, button:focus-visible .arrow svg + svg { transform: none; }
+
+/* Bouton pilule (magnétique sur desktop) */
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 2.5rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 800;
+  font-size: var(--t-micro);
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color var(--d) var(--ease);
+  will-change: transform;
+}
+.btn::before {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: -1;
+  background: var(--fuchsia);
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform var(--d) var(--ease);
+}
+.btn:hover::before, .btn:focus-visible::before { transform: none; }
+.btn:hover, .btn:focus-visible { color: var(--ink); }
+.btn--light { --btn-bg: var(--paper); --btn-fg: var(--ink); }
+.btn--rose { --btn-bg: var(--rose); --btn-fg: var(--ink); }
+.btn--ghost { --btn-bg: transparent; --btn-fg: currentColor; box-shadow: inset 0 0 0 1px currentColor; }
+
+/* Pastille de disponibilité */
+.dispo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.dispo__dot {
+  position: relative;
+  width: 0.55rem; height: 0.55rem;
+  border-radius: 50%;
+  background: var(--fuchsia);
+  flex: none;
+}
+.dispo__dot::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: pulse 2.2s var(--ease) infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  80%, 100% { transform: scale(3); opacity: 0; }
+}
+
+/* Carte projet (réutilisée : accueil, liste mobile, projets suivants) */
+.card { display: block; position: relative; }
+.card__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper-2);
+}
+[data-theme="ink"] .card__media { background: var(--ink-soft); }
+.card__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform var(--d-slow) var(--ease);
+}
+.card:hover .card__media img, .card:focus-visible .card__media img { transform: scale(1.045); }
+.card__meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.9rem;
+  align-items: baseline;
+  margin-top: 1.1rem;
+}
+.card__num { grid-row: span 2; opacity: 0.7; }
+.card__title {
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem);
+  line-height: 0.9;
+  transition: color var(--d-fast) var(--ease);
+}
+.card:hover .card__title, .card:focus-visible .card__title { color: var(--fuchsia); }
+.card__cat { font-size: var(--t-lead); line-height: 1.2; margin-top: 0.3rem; }
+
+/* Curseur personnalisé (ordinateur avec souris uniquement) :
+   un halo fuchsia dégradé qui passe le texte dessous en sombre, sans jamais de vert.
+   Deux calques fixes : un négatif (blanc légèrement jaune, pour que le fuchsia vif vire au noir et non au bleu) (fonds sombres seulement), puis un fuchsia
+   en « produit » qui retire tout le vert. Sur fond sombre, le fond devient rose et
+   le texte clair devient sombre ; sur papier, le fond devient rose et le texte reste sombre. */
+.cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .has-cursor, .has-cursor a, .has-cursor button, .has-cursor [data-cursor] { cursor: none; }
+  .cursor { display: contents; }
+  .cursor__calque {
+    position: fixed; left: 0; top: 0;
+    z-index: 900;
+    width: 0; height: 0;
+    pointer-events: none;
+    transition: opacity var(--d-fast) linear;
+  }
+  .cursor__calque--negatif { mix-blend-mode: difference; }
+  .cursor__calque--rose { mix-blend-mode: multiply; }
+  .cursor.is-hidden .cursor__calque,
+  .cursor[data-fond="paper"] .cursor__calque--negatif,
+  .cursor[data-fond="rose"] .cursor__calque--negatif { opacity: 0; }
+  .cursor__calque > span {
+    position: absolute;
+    left: 0; top: 0;
+    border-radius: 50%;
+    transition: transform var(--d) var(--ease);
+  }
+  .cursor__halo { width: 180px; height: 180px; margin: -90px 0 0 -90px; }
+  /* Le fuchsia couvre toujours plus large que le négatif : le bord reste rose, jamais vert */
+  .cursor__calque--negatif .cursor__halo {
+    background: radial-gradient(circle closest-side,
+      #ffffc8 0%, #ffffc8 22%, rgb(255 255 200 / 0.55) 50%, rgb(255 255 200 / 0.15) 72%, rgb(255 255 200 / 0) 88%);
+  }
+  .cursor__calque--rose .cursor__halo {
+    background: radial-gradient(circle closest-side,
+      #ff00aa 0%, #ff00aa 55%, rgb(255 0 170 / 0.7) 75%, rgb(255 0 170 / 0.25) 90%, rgb(255 0 170 / 0) 100%);
+  }
+  /* Point central : repère précis à la place du curseur système */
+  .cursor__point { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--aubergine-deep); }
+  /* Lien survolé : le halo grandit légèrement */
+  .cursor.is-link .cursor__halo { transform: scale(1.18); }
+}
+
+/* Révélations au scroll (activées par JS uniquement) */
+.wm {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.14em 0.06em 0.1em;
+  margin: -0.14em -0.06em -0.1em;
+}
+.wi { display: inline-block; }
+.js [data-reveal="fade"] { opacity: 0; }
+.js [data-reveal="mask"] { clip-path: inset(100% 0 0 0 round var(--radius)); }
+
+/* Loader d’entrée */
+.loader {
+  position: fixed; inset: 0;
+  z-index: 1000;
+  display: none;
+  place-items: center;
+  background: var(--aubergine-deep);
+  color: var(--rose);
+}
+.js .loader.is-on { display: grid; }
+.loader__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: clamp(5rem, 14vw, 11rem);
+  line-height: 1;
+}
+.loader__mono { width: 0.9em; overflow: visible; }
+
+/* Rideau de transition de page */
+.curtain {
+  position: fixed; inset: 0;
+  z-index: 950;
+  pointer-events: none;
+  background: var(--aubergine);
+  transform: translateY(100%);
+  visibility: hidden;
+}
+/* Arrivée par le rideau : il couvre la page dès la première image, avant que
+   les scripts ne prennent le relais (évite l’éclair de la page nue) */
+.arrivee .curtain { transform: none; visibility: visible; }
+
+/* 6. En-tête et menu ------------------------------------------------------ */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 800;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: env(safe-area-inset-top, 0px) var(--bord-r) 0 var(--bord-l);
+  color: var(--header-fg, var(--paper));
+  transition: color var(--d) var(--ease), transform var(--d) var(--ease), background-color var(--d) var(--ease);
+}
+.header[data-on="paper"], .header[data-on="rose"] { --header-fg: var(--ink); }
+.header[data-on="aubergine"], .header[data-on="nuit"] { --header-fg: var(--rose); }
+/* En-tête fixé avec un fond, pris sur la section qu’il recouvre */
+.header { --header-bg: var(--ink); }
+.header[data-on="paper"] { --header-bg: var(--paper); }
+.header[data-on="rose"] { --header-bg: var(--rose); }
+.header[data-on="aubergine"] { --header-bg: var(--aubergine); }
+.header[data-on="nuit"] { --header-bg: var(--aubergine-deep); }
+.header.is-fond { background: var(--header-bg); }
+.header.is-hidden { transform: translateY(-110%); }
+.header.is-hidden:focus-within { transform: none; }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+}
+/* Logo sans encart : rose sur fond sombre, aubergine sur fond clair */
+.brand { color: var(--brand-fg, inherit); transition: color var(--d) var(--ease); }
+.header[data-on="paper"], .header[data-on="rose"] { --brand-fg: var(--aubergine); }
+.header[data-on="aubergine"], .header[data-on="nuit"] { --brand-fg: var(--rose); }
+.brand__mono { width: 2.1rem; height: 1.6rem; flex: none; overflow: visible; transition: transform var(--d) var(--ease); }
+.brand:hover .brand__mono { transform: scale(1.08); }
+.brand__name { white-space: nowrap; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.95rem; }
+
+.nav { display: none; }
+.nav ul { display: flex; gap: clamp(1.25rem, 2.5vw, 2.75rem); list-style: none; margin: 0; padding: 0; }
+.nav a { font-weight: 800; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; min-height: 44px; }
+
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 0.25rem;
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.menu-btn__icon { position: relative; width: 1.6rem; height: 0.6rem; }
+.menu-btn__icon::before, .menu-btn__icon::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor;
+  transition: transform var(--d) var(--ease);
+}
+.menu-btn__icon::before { top: 0; }
+.menu-btn__icon::after { bottom: 0; }
+.menu-open .menu-btn__icon::before { transform: translateY(0.24rem) rotate(20deg); }
+.menu-open .menu-btn__icon::after { transform: translateY(-0.24rem) rotate(-20deg); }
+
+@media (min-width: 900px) {
+  .nav { display: block; }
+  .menu-btn { display: none; }
+}
+
+.menu {
+  position: fixed; inset: 0;
+  z-index: 790;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 2rem) var(--bord-r) calc(2rem + env(safe-area-inset-bottom, 0px)) var(--bord-l);
+  background: var(--aubergine-deep);
+  color: var(--rose);
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  /* Fermeture plus rapide que l’ouverture (320 ms contre 520 ms) */
+  transition: clip-path 320ms var(--ease-in-out), visibility 0s linear 320ms;
+}
+.menu-open .menu { clip-path: inset(0); visibility: visible; transition: clip-path 520ms var(--ease); }
+.menu-open .header { --header-fg: var(--rose); --brand-fg: var(--rose); } /* logo lisible sur le menu sombre */
+.menu ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+.menu__link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  font-size: min(12.5vw, 7rem);
+  min-height: 44px;
+  transition: color var(--d-fast) var(--ease);
+}
+.menu__link:hover, .menu__link:focus-visible { color: var(--fuchsia); }
+.menu__foot { display: grid; gap: 0.75rem; color: var(--paper); }
+.menu__foot a { font-family: var(--f-serif); font-style: italic; font-size: 1.35rem; color: var(--rose); }
+
+/* 7. Accueil --------------------------------------------------------------- */
+/* Cinq temps, fonds alternés aubergine / papier : chaque changement de fond
+   se lit comme un changement de page pendant le scroll. */
+.nowrap { white-space: nowrap; }
+:root {
+  --ease-som: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --d-som: 350ms;
+  --skew: -11deg; /* angle de l’italique PP Neue Montreal */
+}
+
+/* 1. Ouverture */
+.ouverture {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.ouverture__inner {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+}
+.ouverture__titre {
+  align-self: center;
+  text-align: center;
+  /* « Je suis Zoé Vinardell » mesure environ 10,6 em : il tient dans la colonne */
+  font-size: var(--t-grand);
+  line-height: 0.9;
+}
+.ouverture__ligne { display: block; }
+/* La fenêtre : le monogramme dans un ovale, sur le même fond que la section */
+.fenetre {
+  position: relative;
+  display: inline-block;
+  width: 1.3em;
+  height: 0.74em;
+  margin-inline: 0.02em;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--aubergine);
+  color: var(--rose);
+  vertical-align: baseline;
+}
+/* Le logo est centré en absolu : jamais calé en haut de l’ovale, quel que soit le navigateur */
+.fenetre > svg, .fenetre > img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+}
+.fenetre > svg { width: 78%; }
+.fenetre > img { width: 200%; height: auto; }
+/* Apparition : l’ovale arrive flou puis devient net, après l’entrée des mots */
+.wm--libre { overflow: visible; }
+.fenetre.is-floue { filter: blur(24px); opacity: 0; }
+.fenetre.is-nette {
+  transition: filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ouverture.is-zoom .fenetre > * { visibility: hidden; }
+/* Calque plein cadre, découpé en ovale à la place de la fenêtre puis agrandi au scroll */
+.ouverture__media {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  overflow: hidden;
+  background: var(--aubergine-deep);
+  pointer-events: none;
+  will-change: clip-path;
+}
+.ouverture.is-zoom .ouverture__media { display: block; }
+.ouverture__photo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1000px;
+  max-width: none;
+  height: 562.5px;
+  object-fit: cover;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.ouverture__mono {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 131px;
+  height: 100px;
+  color: var(--rose);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.ouverture__legende {
+  position: absolute;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  transform: translateX(-50%);
+  color: var(--paper);
+  white-space: nowrap;
+  opacity: 0;
+}
+/* Sur la photo du logo, la légende se pose dans le halo rose */
+.ouverture__media.has-photo .ouverture__legende { bottom: 13%; color: var(--aubergine-deep); }
+.ouverture__bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  color: var(--paper);
+}
+.ouverture__scroll {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(242 176 220 / 0.6);
+  border-radius: 50%;
+  color: var(--rose);
+  transition: background-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease);
+}
+.ouverture__scroll svg { width: 1rem; height: 1rem; transform: rotate(90deg); }
+.ouverture__scroll:hover, .ouverture__scroll:focus-visible { background: var(--rose); color: var(--ink); }
+
+/* 2. Sommaire */
+.sommaire {
+  --som-size: var(--t-grand);
+  --ecart: calc(var(--som-size) * 0.16);
+  padding-block: var(--section);
+  text-align: center;
+  overflow-x: clip;
+}
+.sommaire__label { margin: 0 0 clamp(2rem, 4vw, 3.5rem); }
+.sommaire__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  /* Interligne au repos (Enzo, 2026-10-24) : les lignes respirent sans survol */
+  row-gap: calc(var(--som-size) * 0.24);
+}
+.sommaire__list li { max-width: 100%; transition: transform var(--d-som) var(--ease-som); }
+/* La ligne survolée s’écarte de ses voisines */
+.sommaire__list li.is-avant { transform: translateY(calc(var(--ecart) * -1)); }
+.sommaire__list li.is-apres { transform: translateY(var(--ecart)); }
+.sommaire__row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  max-width: 100%;
+  min-height: 44px;
+  font-size: var(--som-size);
+}
+.sommaire__mot {
+  display: inline-block;
+  min-width: 0;
+  transition: color var(--d-som) var(--ease-som);
+}
+/* Survol, focus clavier ou ligne au centre de l’écran (mobile) :
+   vraie italique PP Neue Montreal Extrabold Italic, en fuchsia fluo */
+.sommaire__row.is-active .sommaire__mot { font-style: italic; color: var(--fuchsia-fluo); }
+.sommaire__row:focus-visible { outline-offset: 0.1em; }
+.sommaire__pied {
+  display: grid;
+  justify-items: center;
+  gap: 1.75rem;
+  max-width: 36ch;
+  margin: clamp(3rem, 6vw, 5rem) auto 0;
+}
+.sommaire .btn { --btn-bg: var(--rose); --btn-fg: var(--ink); }
+
+/* 3. À propos : maquette d’Enzo (2026-10-15), en pleine largeur (exception à la marge commune).
+   Ordinateur : la section reprend les proportions 16:9 de la maquette, tout est en vw.
+   Mobile : texte, puis portrait sur la fourrure, puis bas de page. Texte en aubergine. */
+.apropos {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: clamp(2rem, 6vw, 3rem) var(--bord-r) clamp(2rem, 6vw, 3rem) var(--bord-l);
+  color: var(--aubergine);
+  overflow: clip;
+}
+.apropos__texte { display: grid; align-content: start; }
+.apropos__nom {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(1.125rem, 1.5vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.apropos__metier {
+  margin: 0.15em 0 0;
+  white-space: pre-line;
+  font-size: clamp(1.125rem, 1.6vw, 2.125rem);
+  line-height: 1.1;
+}
+.apropos__corps { margin-top: clamp(2rem, 6vw, 7rem); }
+.apropos__corps p {
+  margin: 0;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: max(1rem, 1.4vw);
+  line-height: 1.48;
+  letter-spacing: 0.005em;
+  text-wrap: wrap;
+}
+.apropos__corps p + p { margin-top: 1.48em; }
+.apropos__portrait, .apropos__fourrure { margin: 0; overflow: hidden; }
+.apropos__portrait { position: relative; z-index: 1; background: var(--paper-2); aspect-ratio: 556 / 630; }
+.apropos__portrait img, .apropos__fourrure img { width: 100%; height: 100%; object-fit: cover; }
+.apropos__portrait img { object-position: 50% 30%; transform: scale(1.12); transform-origin: 55% 100%; }
+.apropos__fourrure { background: var(--aubergine-deep); }
+.apropos__pied, .apropos__etiquette {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(1rem, 1.4vw, 1.875rem);
+  line-height: 1;
+}
+.apropos__pied { display: flex; justify-content: flex-end; }
+/* Mobile et tablette : le portrait chevauche une bande de fourrure */
+@media (max-width: 1023.98px) {
+  .apropos { row-gap: clamp(2.5rem, 8vw, 4rem); padding-top: calc(var(--header-h) + 1rem); }
+  /* Colonne explicite : sinon le portrait et la fourrure, sur la même ligne, ouvriraient une 2e colonne */
+  .apropos > * { grid-column: 1; }
+  .apropos__texte { grid-row: 1; }
+  .apropos__corps { margin-top: clamp(2rem, 6vw, 3rem); max-width: 40rem; }
+  .apropos__portrait { grid-row: 2; width: min(72%, 26rem); margin-block: 2.5rem; }
+  .apropos__fourrure {
+    grid-row: 2;
+    justify-self: end;
+    width: 46%;
+    height: 100%;
+    margin-right: calc(var(--bord-r) * -1);
+  }
+  .apropos__pied { grid-row: 3; }
+  .apropos__etiquette { grid-row: 3; align-self: end; }
+}
+/* Ordinateur : reproduction de la maquette (2000 × 1125) en proportions */
+@media (min-width: 1024px) {
+  .apropos {
+    display: block;
+    min-height: 56.25vw;
+    /* Haut de maquette à 3,9vw, sans passer sous l’en-tête fixe */
+    padding: max(3.9vw, calc(var(--header-h) + 1rem)) 0 9vw 4vw;
+  }
+  .apropos__texte { position: relative; z-index: 1; width: 40vw; }
+  .apropos__corps { margin-top: 6.2vw; }
+  .apropos__corps p { text-align: justify; hyphens: none; }
+  .apropos__fourrure { position: absolute; top: 0; right: 0; bottom: 0; width: 35.15vw; }
+  .apropos__portrait { position: absolute; left: 51.1vw; top: 12.4vw; width: 27.8vw; }
+  .apropos__pied { position: absolute; left: 51.1vw; bottom: 3.85vw; } /* Paris sous le portrait, À propos au-dessus */
+  /* « À propos » au-dessus du portrait, aligné sur son bord gauche et sur le nom (Enzo, 2026-10-25) */
+  .apropos__etiquette { position: absolute; left: 51.1vw; top: max(3.9vw, calc(var(--header-h) + 1rem)); }
+}
+
+/* 4. Projets phares (maquette 2026-10-25) : bande de trois projets sous le
+   sommaire, calée sur les bords de l’en-tête pour bien voir les photos */
+.bande {
+  padding: 0 var(--bord-r) clamp(4rem, 8vw, 7rem) var(--bord-l);
+  color: var(--rose);
+}
+.bande__tete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+.bande__tete h2 { margin: 0; }
+.bande__tete .link { min-height: 44px; display: inline-flex; align-items: center; }
+.bande__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.2vw, 1.25rem);
+}
+/* Quatre projets : sur une ligne en grand écran, deux par deux en dessous */
+.bande__liste[data-n="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1099px) { .bande__liste[data-n="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(1.5rem, 3vw, 2.5rem); } }
+.bande__lien { display: block; }
+.bande__media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--aubergine); }
+.bande__media img, .bande__media video { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-som); }
+.bande__nom {
+  margin: 0.85rem 0 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  transition: color var(--d-som) var(--ease-som);
+}
+.bande__cat { margin: 0.3rem 0 0; font-size: clamp(1rem, 1.2vw, 1.25rem); line-height: 1.2; color: var(--paper); opacity: 0.8; }
+/* Même survol que le sommaire : italique fuchsia fluo, la photo s’approche */
+.bande__lien:focus-visible .bande__nom { font-style: italic; color: var(--fuchsia-fluo); }
+.bande__lien:focus-visible :is(img, video) { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .bande__lien:hover .bande__nom { font-style: italic; color: var(--fuchsia-fluo); }
+  .bande__lien:hover :is(img, video) { transform: scale(1.04); }
+}
+/* Mobile : la bande défile à l’horizontale, une carte et un bout de la suivante */
+@media (max-width: 767px) {
+  .bande { padding-inline: 0; }
+  .bande__tete { padding-inline: var(--gutter); }
+  .bande__liste, .bande__liste[data-n] {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    padding: 8px var(--gutter);
+    margin-block: -8px; /* place pour l’anneau de focus, que le défilement horizontal rognerait */
+    scrollbar-width: none;
+  }
+  .bande__liste::-webkit-scrollbar { display: none; }
+  .bande__liste li { scroll-snap-align: start; }
+}
+
+/* Onglet « Parlons de votre projet » : pilule rose au bout du menu */
+.nav .nav__cta { min-height: 2rem; padding: 0.3rem 1rem; font-size: var(--t-micro); letter-spacing: 0.1em; } /* plus fin (Enzo, 2026-10-25) */
+.nav ul { align-items: center; }
+.menu__foot .menu__cta { justify-self: start; min-height: 2.75rem; margin-bottom: 1.25rem; font-family: var(--f-sans); font-style: normal; font-size: var(--t-micro); color: var(--ink); }
+/* Site des candidatures : la bande des projets phares suit directement l’ouverture */
+.bande { padding-top: clamp(4rem, 8vw, 7rem); }
+@media (max-width: 767px) { .bande { padding-top: clamp(3rem, 12vw, 4rem); } }
+
+/* 5. Ils m’ont fait confiance : logos ramenés à une même présence visuelle
+   (hauteur divisée par la racine du rapport largeur / hauteur), en aubergine,
+   en couleurs d’origine au survol */
+.confiance { padding-block: clamp(3rem, 5vw, 5rem) clamp(3.5rem, 7vw, 6rem); color: var(--aubergine); text-align: center; }
+.confiance__titre { margin: 0 0 clamp(2.5rem, 5vw, 4.5rem); font-size: var(--t-grand); }
+.confiance__liste {
+  --logo-h: clamp(2.5rem, 3.6vw, 3.75rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.confiance__logo { position: relative; height: calc(var(--logo-h) / sqrt(var(--r))); aspect-ratio: var(--r); max-width: 100%; }
+/* Grand écran : les sept marques sur une seule ligne */
+@media (min-width: 1024px) {
+  .confiance__liste { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); justify-items: center; gap: clamp(1.5rem, 2.5vw, 2.5rem); }
+}
+.confiance__masque {
+  position: absolute; inset: 0;
+  background: var(--aubergine);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  transition: opacity var(--d) var(--ease);
+}
+.confiance__logo img { width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity var(--d) var(--ease); }
+@media (hover: hover) {
+  .confiance__logo:hover img { opacity: 1; }
+  .confiance__logo:hover .confiance__masque { opacity: 0; }
+}
+/* Bandeau qui défile : deux fois la liste à la suite, la piste recule de la
+   moitié de sa largeur puis recommence ; bords fondus dans le papier.
+   Arrêt au survol, pour voir un logo en couleurs. */
+.confiance__bandeau.is-defile {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.is-defile .confiance__piste { display: flex; width: max-content; animation: defile var(--duree, 40s) linear infinite; }
+.is-defile .confiance__liste {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  padding-right: clamp(3rem, 6vw, 5.5rem);
+  padding-block: 0.5rem;
+}
+.is-defile .confiance__logo { flex: none; max-width: none; }
+@media (hover: hover) {
+  .confiance__bandeau.is-defile:hover .confiance__piste { animation-play-state: paused; }
+}
+@keyframes defile { to { transform: translateX(-50%); } }
+
+/* 9. Page projet ----------------------------------------------------------- */
+/* Ouverture : l’image en plein écran, le titre posé en bas à gauche */
+.projet-hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 28rem;
+  overflow: clip;
+  background: var(--aubergine-deep);
+  color: var(--aubergine-deep);
+}
+.projet-hero__media { position: absolute; inset: 0; }
+.projet-hero__media { background: var(--hero-fond, transparent); }
+.projet-hero__media img { width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 0; }
+/* Visuel à fond uni (un logo) : en portrait il reste entier, posé sur sa couleur */
+@media (max-aspect-ratio: 1/1) {
+  .projet-hero--fond .projet-hero__media img { width: 240%; max-width: none; margin-left: -70%; object-fit: contain; object-position: 50% 38%; }
+}
+.projet-hero__texte {
+  position: absolute;
+  left: var(--bord-l);
+  right: var(--bord-r);
+  bottom: calc(clamp(1.5rem, 4vw, 3.5rem) + env(safe-area-inset-bottom, 0px));
+}
+.projet-hero__client { margin: 0 0 0.6rem; font-weight: 800; letter-spacing: 0.12em; }
+.projet-hero__titre { margin: 0; font-size: clamp(3.25rem, 10vw, 11.5rem); line-height: 0.92; letter-spacing: -0.01em; }
+/* Image sombre : titre clair sur un voile en bas */
+.projet-hero--clair { color: var(--paper); }
+.projet-hero--clair .projet-hero__media::after {
+  content: "";
+  position: absolute; inset: 40% 0 0;
+  background: linear-gradient(to top, rgb(30 8 7 / 0.7), rgb(30 8 7 / 0));
+}
+.projet-hero.is-vide { height: 70svh; }
+
+/* Présentation : chapô à gauche, fiche à droite */
+.projet-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.5rem, 5vw, 4rem);
+  padding-block: var(--section);
+  color: var(--aubergine);
+}
+.projet-intro__type { margin: 0 0 1.25rem; opacity: 0.75; }
+.projet-intro__corps p { margin: 0; max-width: 40rem; font-size: var(--t-body); line-height: 1.6; text-wrap: pretty; }
+.projet-intro__corps p + p { margin-top: 1.25em; }
+.projet-intro__corps .projet-intro__chapo { max-width: none; font-size: clamp(1.375rem, 2.3vw, 2.25rem); line-height: 1.22; letter-spacing: -0.01em; }
+.projet-intro__corps .projet-intro__chapo + p { margin-top: 1.75rem; }
+.projet-fiche { margin: 0; align-self: start; }
+.projet-fiche__ligne { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 1rem; padding-block: 0.85rem; border-top: 1px solid rgb(55 18 30 / 0.25); }
+.projet-fiche__ligne:last-child { border-bottom: 1px solid rgb(55 18 30 / 0.25); }
+.projet-fiche dt { padding-top: 0.2em; opacity: 0.75; }
+.projet-fiche dd { margin: 0; font-size: 1rem; line-height: 1.4; }
+.projet-fiche ul { list-style: none; margin: 0; padding: 0; }
+@media (min-width: 1024px) {
+  .projet-intro { grid-template-columns: minmax(0, 1.75fr) minmax(16rem, 1fr); column-gap: clamp(3rem, 6vw, 6rem); }
+}
+
+/* Galerie : une section par sujet, visuels sur la colonne ou par deux */
+.projet-galerie { padding-bottom: var(--section); color: var(--aubergine); }
+.bloc + .bloc { margin-top: clamp(4.5rem, 9vw, 8rem); }
+.bloc__tete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+  padding-top: 1rem;
+  border-top: 1px solid rgb(55 18 30 / 0.25);
+}
+.bloc__titre { margin: 0; font-weight: 800; text-transform: uppercase; font-size: clamp(1.25rem, 1.9vw, 2rem); line-height: 1; letter-spacing: -0.01em; }
+.bloc__note { margin: 0; font-size: clamp(1.0625rem, 1.3vw, 1.375rem); line-height: 1.25; }
+.bloc__grille { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(0.75rem, 1.5vw, 1.25rem); }
+.visuel { margin: 0; overflow: hidden; background: var(--paper-2); }
+.visuel img { display: block; width: 100%; height: 100%; }
+/* Visuels détourés : posés dans un panneau de proportions fixes */
+.visuel--panneau { aspect-ratio: 16 / 9; }
+.visuel--panneau img { object-fit: contain; padding: clamp(1rem, 6%, 4rem); }
+.visuel--panneau.visuel--bande { aspect-ratio: 2 / 1; }
+.visuel--panneau.visuel--demi, .visuel--panneau.visuel--seul { aspect-ratio: 4 / 5; }
+.visuel--photo { aspect-ratio: var(--ratio, 16 / 9); }
+.visuel--photo img { object-fit: cover; }
+@media (min-width: 768px) {
+  .bloc__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .visuel--plein, .visuel--bande { grid-column: 1 / -1; }
+  .visuel--seul { grid-column: 1 / -1; justify-self: center; width: calc(50% - clamp(0.375rem, 0.75vw, 0.625rem)); }
+  .visuel--panneau.visuel--bande { aspect-ratio: 3 / 1; }
+}
+
+/* Projets suivants : le titre change à gauche pendant que la pile de cartes
+   défile à droite (la carte du dessus part à gauche, repasse derrière) */
+.projet-suivant { padding-block: var(--section); background: var(--aubergine); overflow: clip; }
+.suivant { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem 0; }
+.suivant__label { margin: 0; color: var(--paper); }
+.suivant__textes { display: grid; margin: 0; padding: 0; list-style: none; container-type: inline-size; }
+/* Les trois titres occupent la même case : seul l’actif se voit */
+.suivant__item { grid-area: 1 / 1; opacity: 0; transform: translateY(0.6em); visibility: hidden; transition: opacity 420ms var(--ease), transform 520ms var(--ease-som), visibility 0s 520ms; }
+.suivant__item.is-actif { opacity: 1; transform: none; visibility: visible; transition: opacity 420ms var(--ease) 120ms, transform 520ms var(--ease-som) 120ms, visibility 0s; }
+.suivant__item:focus-within { opacity: 1; transform: none; visibility: visible; }
+.suivant__lien { display: grid; gap: 0.75rem; color: var(--rose); }
+/* Le mot le plus long tient dans sa colonne, sans passer sous la pile */
+.suivant__titre { font-size: min(var(--t-grand), 15.5cqi); overflow-wrap: break-word; line-height: 0.95; transition: color var(--d-som) var(--ease-som); }
+.suivant__cat { color: var(--paper); font-size: clamp(1.125rem, 1.6vw, 1.75rem); }
+.suivant__lien:hover .suivant__titre, .suivant__lien:focus-visible .suivant__titre { color: var(--fuchsia); font-style: italic; }
+.suivant__pile { position: relative; display: block; width: min(88%, 26rem); aspect-ratio: 16 / 9; margin-top: 2rem; }
+.suivant__carte {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--aubergine-deep);
+  box-shadow: 0 0.6rem 1.6rem rgb(0 0 0 / 0.28);
+  transition: transform 520ms var(--ease-som), opacity 520ms var(--ease);
+}
+.suivant__carte img { width: 100%; height: 100%; object-fit: cover; }
+.suivant__carte[data-pos="0"] { z-index: 3; transform: none; }
+.suivant__carte[data-pos="1"] { z-index: 2; transform: translate(5%, -4%) rotate(2.5deg) scale(0.95); }
+.suivant__carte[data-pos="2"] { z-index: 1; transform: translate(10%, -8%) rotate(5deg) scale(0.9); }
+.suivant__carte[data-pos="sort"] { z-index: 4; transform: translate(-115%, 4%) rotate(-10deg); opacity: 0; }
+.suivant__carte.is-sans-transition { transition: none; }
+/* Flèches fines sous la pile : choisir soi-même le projet */
+.suivant__fleches { display: flex; gap: 1.25rem; margin-top: 1.5rem; }
+.suivant__fleche { display: grid; place-items: center; width: 3.5rem; height: 44px; padding: 0; color: var(--rose); opacity: 0.75; touch-action: manipulation; transition: opacity var(--d-fast) var(--ease), transform var(--d-fast) var(--ease); }
+.suivant__fleche svg { width: 100%; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) {
+  .suivant__fleche:hover { opacity: 1; }
+  .suivant__fleche--suiv:hover { transform: translateX(4px); }
+}
+.suivant__fleche:focus-visible { opacity: 1; outline: 2px solid currentColor; outline-offset: 2px; }
+@media (min-width: 768px) {
+  /* Texte | pile | flèche */
+  .suivant { grid-template-columns: minmax(0, 1fr) auto auto; column-gap: clamp(1rem, 2vw, 2rem); align-items: end; }
+  .suivant__label, .suivant__textes { grid-column: 1; margin-right: clamp(1rem, 3vw, 3rem); }
+  .suivant__pile { grid-column: 2; grid-row: 1 / span 2; width: clamp(14rem, 28vw, 26rem); margin: 0; }
+  .suivant__fleches { grid-column: 3; grid-row: 1 / span 2; align-self: center; margin: 0 0 0 clamp(1rem, 2.5vw, 2.5rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .suivant__item, .suivant__item.is-actif, .suivant__carte, .suivant__fleche { transition: none; }
+}
+
+/* Effet d’ouverture d’un projet depuis l’accueil : l’image grandit jusqu’au plein écran */
+.ouverture-projet { position: fixed; z-index: 960; overflow: hidden; pointer-events: none; }
+.ouverture-projet img, .ouverture-projet video { position: absolute; max-width: none; object-fit: cover; }
+/* Sur la page projet : la même image reste à l’écran pendant que la page se
+   construit, puis s’efface. Posée dès l’en-tête (classe « ouverture »). */
+html.ouverture::before {
+  content: ''; position: fixed; z-index: 960; pointer-events: none;
+  top: var(--ov0-t, 0px); left: var(--ov0-l, 0px); width: var(--ov0-w, 100%); height: var(--ov0-h, 100%);
+  /* Autour de l’image, le fond de la page quittée, jusqu’à ce que celle-ci soit prête */
+  box-shadow: 0 0 0 100vmax var(--ouverture-fond, transparent);
+  background:
+    var(--ouverture-img, none) var(--ouverture-pos, center) / cover no-repeat,
+    var(--ouverture-mini, none) var(--ouverture-pos, center) / cover no-repeat,
+    var(--aubergine-deep);
+  transition: opacity 0.45s ease;
+}
+/* Une fois la page prête, l’image rejoint la place du premier visuel du projet
+   (mesurée par reveler(), dans commun.js) et s’y fond en fin de course */
+html.ouverture.ouverture-vers::before {
+  top: var(--ov-t); left: var(--ov-l); width: var(--ov-w); height: var(--ov-h);
+  transition:
+    top 0.7s cubic-bezier(0.7, 0, 0.2, 1), left 0.7s cubic-bezier(0.7, 0, 0.2, 1),
+    width 0.7s cubic-bezier(0.7, 0, 0.2, 1), height 0.7s cubic-bezier(0.7, 0, 0.2, 1),
+    opacity 0.35s ease 0.5s, box-shadow 0.35s ease;
+  box-shadow: 0 0 0 100vmax transparent;
+}
+html.ouverture.ouverture-fin::before { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  html.ouverture::before, html.ouverture.ouverture-vers::before { transition: opacity 0.2s ease; }
+}
+
+/* Page Projets : grille de photos -------------------------------------------
+   D’après la référence d’Enzo (2026-10-25) : grand titre, phrase courte, onglets
+   des catégories en texte, puis une grille serrée de photos carrées.
+   Survol : la photo s’approche à peine, le nom du projet monte, les autres
+   s’effacent un peu. Au clic, la photo grandit jusqu’à la page projet. */
+body[data-page="projets"] { background: var(--paper); }
+.grille-page {
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 7vw, 6rem));
+  padding-bottom: var(--section);
+}
+.grille-tete {
+  display: grid;
+  gap: 1.25rem 2rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 4.5vw, 4rem);
+}
+.grille-titre { font-size: var(--t-grand); line-height: 0.9; letter-spacing: -0.02em; }
+.grille-intro { max-width: 30ch; font-size: max(0.875rem, 0.95vw); line-height: 1.45; color: var(--muted-on-paper); text-wrap: pretty; }
+@media (min-width: 768px) {
+  .grille-tete { grid-template-columns: minmax(0, 1fr) auto; }
+  .grille-intro { justify-self: end; }
+}
+
+.grille-barre {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: clamp(1rem, 1.6vw, 1.5rem);
+}
+.grille-barre__titre { font-size: clamp(1rem, 1.2vw, 1.25rem); font-weight: 400; letter-spacing: -0.01em; white-space: nowrap; }
+/* Onglets des catégories, en texte : la catégorie choisie en encre, les autres en gris */
+.onglets { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 clamp(0.9rem, 1.7vw, 2rem); margin: 0; }
+.onglet {
+  min-height: 44px;
+  padding: 0;
+  color: color-mix(in srgb, var(--aubergine) 65%, var(--paper)); /* contraste 5:1 (38 % donnait 2,3:1) */
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  letter-spacing: -0.01em;
+  transition: color var(--d-fast) var(--ease);
+}
+.onglet[aria-pressed="true"] { color: var(--aubergine); }
+@media (hover: hover) { .onglet:hover { color: var(--aubergine); } }
+@media (max-width: 899px) {
+  .grille-barre { flex-direction: column; align-items: stretch; }
+  .onglets {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    margin-inline: calc(var(--pad-l) * -1) calc(var(--pad-r) * -1);
+    padding-inline: var(--pad-l) var(--pad-r);
+  }
+  .onglets::-webkit-scrollbar { display: none; }
+  .onglet { flex: none; white-space: nowrap; }
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 900px) { .grille { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.grille__item[hidden] { display: none; }
+.grille__lien { position: relative; display: block; overflow: hidden; aspect-ratio: 1; background: var(--paper-2); color: var(--paper); }
+.grille__img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease), opacity 400ms var(--ease); }
+/* Nom du projet : en bas de la photo, sur un léger voile pour rester lisible */
+.grille__legende {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 2.5rem 0.9rem 0.85rem;
+  background: linear-gradient(to top, rgb(30 8 7 / 0.62), rgb(30 8 7 / 0));
+  pointer-events: none;
+}
+.grille__nom { font-weight: 800; font-size: max(0.8125rem, 0.95vw); line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; }
+.grille__cat { font-family: var(--f-serif); font-style: italic; font-weight: 300; font-size: max(0.875rem, 0.95vw); line-height: 1.1; }
+/* Souris : la légende n’apparaît qu’au survol ou au focus */
+@media (hover: hover) and (pointer: fine) {
+  .grille__legende { opacity: 0; transform: translateY(0.6rem); transition: opacity 350ms var(--ease), transform 500ms var(--ease); }
+  .grille__lien:hover .grille__legende, .grille__lien:focus-visible .grille__legende { opacity: 1; transform: none; }
+  .grille__lien:hover .grille__img, .grille__lien:focus-visible .grille__img { transform: scale(1.035); }
+  /* Les autres photos s’effacent un peu : l’œil reste sur celle qu’on regarde */
+  .grille:has(.grille__lien:hover) .grille__lien:not(:hover) .grille__img { opacity: 0.7; }
+}
+/* Retour immédiat à l’appui */
+.grille__lien:active .grille__img { transform: scale(0.985); transition-duration: 120ms; }
+.grille__lien:focus-visible { outline-offset: -3px; }
+
+/* Sections qui reculent quand la suivante les recouvre */
+[data-recul] { overflow: clip; }
+
+@media (max-width: 419px) { .brand__name { display: none; } }
+/* Requêtes en em : elles suivent aussi l’agrandissement du texte */
+@media (max-width: 23em) {
+  .menu-btn__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+.header__right { display: flex; align-items: center; gap: clamp(0.75rem, 2.5vw, 2.5rem); }
+
+/* 8. Pied de page : bandeau rose pleine largeur, écriture aubergine (Enzo, 2026-10-24) */
+.footer {
+  container-type: inline-size;
+  padding-block: clamp(3.5rem, 7vw, 6rem) calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  background: var(--rose);
+  color: var(--aubergine);
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+}
+.footer__col { min-width: 0; }
+.footer__tete { margin: 0 0 0.6rem; font-weight: 800; letter-spacing: 0.1em; }
+.footer ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.footer a { overflow-wrap: anywhere; }
+.footer a[href^="mailto:"] { overflow-wrap: normal; }
+.footer__col .link, .footer__val { font-size: 0.9375rem; line-height: 1.3; }
+.footer__col .link { min-height: 2.25rem; padding-block: 0.25em; }
+.footer__val { display: flex; align-items: center; min-height: 2.25rem; margin: 0; }
+.footer__reseaux { display: flex; gap: 0.5rem; margin: -0.25rem 0 0; }
+.footer__social {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -11px;
+  color: var(--aubergine);
+  transition: color var(--d-fast) var(--ease);
+}
+.footer__social svg { width: 1.375rem; height: 1.375rem; }
+a.footer__social:hover, a.footer__social:focus-visible { color: var(--fuchsia-ink); }
+.footer__social.is-attente { opacity: 0.55; }
+
+/* Mot géant : occupe toute la largeur de la colonne, chaque lettre
+   s’écrase vers le bas au survol puis revient doucement */
+.footer__geant {
+  display: block;
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--aubergine);
+  line-height: 0;
+}
+.geant {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: calc(100cqi / 4.82);
+  line-height: 0.78;
+  letter-spacing: -0.02em;
+}
+.geant__l {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  transition: transform 0.9s var(--ease), color 0.9s var(--ease);
+}
+@media (hover: hover) {
+  .geant__l:hover {
+    transform: scaleY(0.42);
+    color: var(--fuchsia-ink);
+    transition-duration: 0.35s;
+  }
+}
+.footer__geant:focus-visible { outline-offset: 0.5rem; }
+.footer__geant:focus-visible .geant__l { color: var(--fuchsia-ink); }
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  padding-top: 0.75rem;
+  border-top: 1px solid rgb(55 18 30 / 0.25);
+}
+.to-top { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; }
+.footer__legal { display: inline-flex; align-items: center; min-height: 44px; }
+/* Écran large : copyright à gauche, mentions légales au centre, haut de page à droite */
+@media (min-width: 768px) {
+  .footer__bottom { display: grid; grid-template-columns: 1fr auto 1fr; }
+  .footer__bottom .to-top { justify-self: end; }
+}
+
+/* 10. Mentions légales : tout centré sur la page (demande d’Enzo) ------------
+   Passe « apple-design » (2026-10-24) : hiérarchie par graisse + taille + interlignage,
+   approche propre à chaque taille, libellé collé à sa valeur, retour immédiat au toucher. */
+.legal { padding-top: calc(var(--header-h) + clamp(3rem, 8vw, 7rem)); padding-bottom: clamp(4rem, 8vw, 7rem); color: var(--aubergine); text-align: center; }
+.legal__titre { margin: 0; font-size: var(--t-grand); }
+.legal__maj { margin: 1rem 0 0; font-size: clamp(1.125rem, 1.6vw, 1.75rem); line-height: 1.2; }
+.legal__corps { display: grid; gap: clamp(3.5rem, 7vw, 5.5rem); max-width: 40rem; margin: clamp(3.5rem, 8vw, 6.5rem) auto 0; }
+/* Dès la tablette : rubriques deux par deux (Éditrice | Hébergement, Propriété | Données),
+   la dernière seule au centre ; la grille reste centrée sur l’axe du titre */
+@media (min-width: 768px) {
+  .legal__corps { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 62rem; column-gap: clamp(2.5rem, 5vw, 5rem); row-gap: clamp(3.5rem, 6vw, 5rem); }
+  .legal__bloc:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* Capitales moyennes : approche neutre, interlignage serré, lignes équilibrées */
+.legal__bloc h2 { margin: 0 0 1.5rem; font-weight: 800; text-transform: uppercase; font-size: clamp(1.25rem, 1.9vw, 2rem); line-height: 1.05; letter-spacing: 0; text-wrap: balance; }
+/* Texte courant centré : mesure courte et lignes équilibrées pour une forme régulière */
+.legal__bloc p { max-width: 52ch; margin: 0 auto; line-height: 1.6; text-wrap: balance; hyphens: manual; }
+.legal__bloc p + p { margin-top: 1.1em; }
+/* Libellé à 0,3 rem de sa valeur, 1,5 rem entre deux paires : la proximité dit ce qui va ensemble */
+.legal__bloc dl { display: grid; gap: 1.5rem; margin: 0; }
+.legal__bloc dt { margin: 0 0 0.3rem; opacity: 0.72; }
+.legal__bloc dd { margin: 0; line-height: 1.35; text-wrap: balance; }
+.legal__bloc .nombre { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.legal__bloc p a[href^="mailto:"] { white-space: nowrap; }
+.legal__bloc a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: rgb(55 18 30 / 0.4);
+  transition: text-decoration-color 150ms ease, opacity 100ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  .legal__bloc a:hover { text-decoration-color: var(--fuchsia-ink); }
+}
+.legal__bloc a:active { opacity: 0.6; transition-duration: 0ms; }
+.a-completer:empty::before { content: "À compléter"; font-family: var(--f-serif); font-style: italic; color: var(--fuchsia-ink); }
+.to-top .arrow { transform: rotate(-90deg); }
+@media (min-width: 768px) {
+  .footer__grid { grid-template-columns: repeat(4, minmax(0, auto)); justify-content: space-between; column-gap: clamp(2rem, 5vw, 5rem); }
+}
+
+/* Placeholder visuel quand un média manque */
+.placeholder {
+  display: grid; place-items: center;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(-45deg, var(--paper-2) 0 12px, var(--paper) 12px 24px);
+  color: var(--muted-on-paper);
+}
+
+/* Page 404 */
+.erreur {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  padding-block: calc(1rem + env(safe-area-inset-top, 0px)) calc(2rem + env(safe-area-inset-bottom, 0px));
+}
+.erreur__titre {
+  display: flex;
+  align-items: center;
+  font-size: clamp(8rem, 38vw, 30rem);
+  line-height: 0.8;
+  margin: 0.1em 0 0.15em;
+}
+.erreur__mono .paren-img { font-size: 0.55em; gap: 0.08em; }
+.erreur__mono svg { width: 0.9em; color: var(--fuchsia); }
+.erreur__mono .paren-img::before, .erreur__mono .paren-img::after { font-size: 1.4em; color: var(--paper); }
+
+/* Retour visuel immédiat au toucher */
+/* Cible tactile de 44 px gardée au doigt */
+@media (pointer: coarse) { .btn { min-height: 2.75rem; } }
+.erreur .brand { --brand-fg: var(--rose); }
+
+@media (hover: none) {
+  .btn:active, .card:active, .bande__lien:active, .sommaire__row:active, .onglet:active, .link:active { opacity: 0.7; transition-duration: 80ms; }
+}
+
+/* Finitions (audit du 2026-11-16) ------------------------------------------
+   Retour à l’appui sur tous les écrans, pas seulement au toucher : la réponse
+   arrive dès la pression (100 ms), avant le relâchement */
+@media (hover: hover) {
+  .btn:active { transform: scale(0.97); transition: transform 100ms var(--ease); }
+  .onglet:active, .link:active { opacity: 0.7; transition-duration: 80ms; }
+}
+/* Cibles d’au moins 44 px sans rien déplacer : une zone invisible prolonge
+   les petits liens (logo sur mobile, liens de l’en-tête, onglet « Tout ») */
+.brand, .onglet, .nav .link { position: relative; }
+.brand::before, .onglet::before { content: ''; position: absolute; inset: 0 -6px; }
+.cl-repere__lien { position: relative; }
+.cl-repere__lien::before { content: ''; position: absolute; inset: 0 -8px; }
+.nav .link::before { content: ''; position: absolute; inset: -4px -6px; }
+/* Bouton de la maquette « transparence réduite » : fonds pleins */
+@media (prefers-reduced-transparency: reduce) {
+  .us-son { background: rgb(32 6 3); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* 9. Mouvement réduit ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+  .dispo__dot::after { display: none; }
+  .grille__img, .grille__legende { transition: opacity 200ms ease !important; transform: none !important; }
+}
+
+/* Pages construites par script (Projets, page projet) : le pied de page et le
+   projet suivant attendent la fin du rendu pour ne pas sauter à l’écran */
+html.js body:is([data-page="projet"], [data-page="projets"]):not(.est-pret) :is(.projet-suivant, .footer) { display: none; }

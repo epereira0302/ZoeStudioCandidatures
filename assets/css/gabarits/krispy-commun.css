@@ -1,0 +1,84 @@
+/* Co-brandings Krispy Kreme (Buttermelt Glaze, Kiss café) ------------------
+   Base commune aux deux pages, d’après les maquettes d’Enzo (2026-11-18) :
+   encart aubergine de columbus.css, visuels bord à bord sans gouttière,
+   coins carrés. */
+
+.kk figure { margin: 0; }
+.kk-visuels img, .kk img { display: block; width: 100%; height: auto; }
+
+/* Encart : le titre passe à la ligne s’il le faut, paragraphes détachés */
+.page-kk .cl-encart__titre { white-space: normal; }
+.kk-encart__texte { text-align: left; }
+.kk-encart__texte p { margin: 0; }
+.kk-encart__texte p + p { margin-top: 1.5em; }
+.kk-credits li + li { margin-top: 0.1em; }
+
+/* Bande de titre pleine largeur */
+.kk-bande { overflow: clip; }
+
+/* « Glaze » glisse de droite à gauche pendant qu’il traverse l’écran
+   (krispy-commun.js, glisse) ; agrandie pour ne jamais montrer de bord */
+.kk-glisse img { transform: translate3d(var(--kk-x, 0%), 0, 0) scale(1.08); will-change: transform; }
+
+/* Logos chromés : un reflet clair les traverse à l’arrivée, puis au survol */
+.kk-brille { position: relative; isolation: isolate; }
+.kk-brille::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.55) 50%, transparent 62%) no-repeat;
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+.kk-brille.is-vu::after { animation: kk-reflet 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.2s both; }
+.kk-brille:hover::after { animation: kk-reflet-survol 1.2s cubic-bezier(0.45, 0, 0.2, 1) both; }
+@keyframes kk-reflet { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+@keyframes kk-reflet-survol { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+
+/* Vidéos des réseaux : bouton du son en bas à droite, 44 px de cible minimum */
+.kk-video { position: relative; }
+.kk-video video { display: block; width: 100%; height: auto; }
+.kk-son {
+  position: absolute;
+  right: clamp(0.5rem, 1.2vw, 1rem);
+  bottom: clamp(0.5rem, 1.2vw, 1rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding: 0 1em 0 0.85em;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(32 6 3 / 0.72);
+  color: #fff;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  transition: transform 0.12s ease-out, background-color 0.2s ease;
+}
+.kk-son:hover { background: rgb(32 6 3 / 0.86); }
+.kk-son:active { transform: scale(0.96); }
+.kk-son:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.kk-son__icone { display: inline-flex; }
+.kk-son[aria-pressed="false"] .kk-son__ondes { opacity: 0; }
+.kk-son[aria-pressed="true"] .kk-son__barre { opacity: 0; }
+/* Petits écrans : une icône ronde de 44 px, le texte reste lu par les lecteurs d’écran */
+@media (max-width: 699px) {
+  .kk-son { width: 44px; padding: 0; justify-content: center; }
+  .kk-son__texte { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+/* Avec « réduire les animations », le lecteur a ses propres commandes */
+@media (prefers-reduced-motion: reduce) { .kk-son { display: none; } }
+@media (prefers-reduced-transparency: reduce) { .kk-son { background: #200603; backdrop-filter: none; -webkit-backdrop-filter: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .kk-glisse img { transform: none; will-change: auto; }
+  .kk-brille::after { display: none; }
+}

@@ -1,0 +1,229 @@
+/* Gabarit « Non… et pourtant si. » (Heinz × Krispy Kreme, 1er avril 2026) ---
+   Même mise en page que Columbus, Studio Zoé et Glowy Winter (columbus.css :
+   encart aubergine à gauche, visuels à droite), d’après les 13 planches
+   d’Enzo (2026-11-05). Couleurs relevées sur ses planches. Aucun filet. */
+
+@font-face {
+  font-family: "Heinz Label";
+  src: url("../../fonts/heinz-label-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.page-hk {
+  --hk-creme: #fef1dd;
+  --hk-rouge: #d6001b;
+  --hk-prune: #540927;
+}
+.page-hk ::selection { background: var(--hk-rouge); color: var(--hk-creme); }
+
+.hk-visuels { background: var(--hk-creme); }
+.hk figure { margin: 0; }
+.hk-bande img { display: block; width: 100%; height: auto; }
+
+/* Encart : le titre tient sur deux lignes, comme sur la maquette */
+.hk-titre { white-space: normal; max-width: 9em; }
+.hk-encart__texte { text-align: left; }
+.hk-encart__texte p { margin: 0; }
+.hk-encart__texte p + p { margin-top: 1.5em; }
+.hk-credits li { font-weight: 800; }
+
+/* Les trois bouteilles : posées sur la crème, elles se soulèvent au survol ---- */
+.hk-bouteilles {
+  position: relative;
+  aspect-ratio: 6000 / 3874;   /* bande de la planche 7 + la place de la sauce au sol */
+  background: var(--hk-creme);
+}
+.hk-bouteille {
+  position: absolute;
+  top: 7.6%;
+  left: var(--x);
+  width: var(--w);
+}
+.hk-bouteille__img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: translate 480ms var(--ease), rotate 480ms var(--ease);
+}
+.hk-bouteille__ombre {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: -1.5%;
+  height: 5%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(84 9 39 / 0.42), rgb(84 9 39 / 0));
+  opacity: 0;
+  scale: 1.1 1;
+  transition: opacity 650ms var(--ease), scale 650ms var(--ease);
+}
+.hk-bouteille:nth-child(1) { --rot: -3deg; --fx: 55.9%; }
+.hk-bouteille:nth-child(2) { --rot: 2deg; --fx: 46.3%; }
+.hk-bouteille:nth-child(3) { --rot: 3.5deg; --fx: 45.3%; }
+.hk-bouteille__img { z-index: 2; }
+
+/* Sauce qui sort du bouchon : le trait se dessine depuis le bec quand la
+   bouteille est en l’air, puis s’efface dès qu’elle se repose */
+.hk-sauce {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 100 / 236;
+  overflow: visible;
+  pointer-events: none;
+}
+.hk-sauce path { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+/* Un boudin en volume : bord plus sombre, cœur texturé (PSD d’Enzo), lumière
+   diffuse sur le dessus, reflet net, ombre portée au sol */
+.hk-bouteille:nth-child(1) .hk-sauce { --bord: #6e050c; }
+.hk-bouteille:nth-child(2) .hk-sauce { --bord: #551a26; }
+.hk-bouteille:nth-child(3) .hk-sauce { --bord: #220703; }
+.hk-sauce__ombre { stroke: rgb(60 10 10 / 0.28); stroke-width: 8.4; translate: 1px 2.4px; filter: blur(1.8px); }
+.hk-sauce__bord { stroke: var(--bord); stroke-width: 7.6; }
+.hk-sauce__trait { stroke-width: 6.4; translate: -0.25px -0.35px; }
+.hk-sauce__volume { stroke: rgb(255 236 228 / 0.2); stroke-width: 3.2; translate: -0.7px -0.9px; filter: blur(0.7px); }
+.hk-sauce__reflet { stroke: rgb(255 250 246 / 0.8); stroke-width: 1.1; translate: -1.3px -1.75px; filter: blur(0.3px); }
+/* Petite goutte au bec et flaque qui s’étale là où le filet touche le sol */
+.hk-sauce__goutte { fill: var(--bord); transform-box: fill-box; transform-origin: 50% 0; scale: 0; }
+.hk-sauce__flaque { fill: var(--bord); opacity: 0.85; transform-box: fill-box; transform-origin: 50% 50%; scale: 0 0; }
+
+/* Ça sort tout de suite : le filet tombe vite (gravité), puis la sauce
+   ralentit en s’étalant au sol */
+.hk-sauce { opacity: 0; transition: opacity 220ms var(--ease); }
+.hk-sauce path { transition: stroke-dashoffset 0s linear 230ms; }
+.hk-sauce__goutte, .hk-sauce__flaque { transition: scale 0s linear 230ms; }
+.hk-bouteille.is-leve .hk-sauce { opacity: 1; transition: opacity 60ms linear 90ms; }
+.hk-bouteille.is-leve .hk-sauce path { stroke-dashoffset: 0; transition: stroke-dashoffset 950ms cubic-bezier(0.55, 0, 0.3, 1) 90ms; }
+.hk-bouteille.is-leve .hk-sauce__goutte { scale: 1; transition: scale 240ms var(--ease) 60ms; }
+.hk-bouteille.is-leve .hk-sauce__flaque { scale: 1 1; transition: scale 900ms var(--ease) 330ms; }
+@media (hover: hover) {
+  .hk-bouteille:hover .hk-sauce { opacity: 1; transition: opacity 60ms linear 90ms; }
+  .hk-bouteille:hover .hk-sauce path { stroke-dashoffset: 0; transition: stroke-dashoffset 950ms cubic-bezier(0.55, 0, 0.3, 1) 90ms; }
+  .hk-bouteille:hover .hk-sauce__goutte { scale: 1; transition: scale 240ms var(--ease) 60ms; }
+  .hk-bouteille:hover .hk-sauce__flaque { scale: 1 1; transition: scale 900ms var(--ease) 330ms; }
+}
+.hk-bouteille.is-leve .hk-bouteille__img { translate: 0 -9%; rotate: var(--rot); }
+.hk-bouteille.is-leve .hk-bouteille__ombre { opacity: 1; scale: 0.72 1; }
+@media (hover: hover) {
+  .hk-bouteille:hover .hk-bouteille__img { translate: 0 -9%; rotate: var(--rot); }
+  .hk-bouteille:hover .hk-bouteille__ombre { opacity: 1; scale: 0.72 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Une fois en l’air, la bouteille flotte doucement */
+  .hk-bouteille.is-leve .hk-bouteille__img { animation: hk-flotte 2.6s ease-in-out 650ms infinite; }
+  .hk-bouteille.is-leve .hk-bouteille__ombre { animation: hk-ombre 2.6s ease-in-out 650ms infinite; }
+  @media (hover: hover) {
+    .hk-bouteille:hover .hk-bouteille__img { animation: hk-flotte 2.6s ease-in-out 650ms infinite; }
+    .hk-bouteille:hover .hk-bouteille__ombre { animation: hk-ombre 2.6s ease-in-out 650ms infinite; }
+  }
+}
+@keyframes hk-flotte { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.2%); } }
+@keyframes hk-ombre { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.88); } }
+
+/* Slides du 1er avril : sur la crème, libellés au-dessus, même espace entre les photos */
+.hk-slides { background: var(--hk-creme); padding-bottom: 3.2%; }
+.hk-slides__liste {
+  display: flex;
+  gap: 1.1%;
+  margin: 0;
+  padding: 0 1.1%;
+  list-style: none;
+}
+.hk-slides__liste li { flex: var(--fr) 1 0; min-width: 0; display: flex; flex-direction: column; }
+.hk-slides__liste img { display: block; width: 100%; height: auto; margin-top: auto; }
+.hk-slides__nom {
+  margin: 0 0 0.9em;
+  color: var(--cl-encart);
+  font-size: max(0.6875rem, 0.92vw);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Vidéo « T’étais pas censé voir ça », bord à bord */
+.hk-cense video { display: block; width: 100%; height: auto; }
+
+/* Dossiers des sauces : trois onglets, le dossier s’ouvre dessous ------------ */
+.hk-dossiers { background: var(--hk-creme); }
+.hk-onglets { display: grid; grid-template-columns: repeat(3, 1fr); }
+.hk-onglet {
+  --fond: var(--hk-creme);
+  --encre: var(--hk-rouge);
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2000 / 725;
+  min-height: 3rem;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: "Heinz Label", "PP Neue Montreal", sans-serif;
+  font-size: max(1.05rem, 2.9vw);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 300ms var(--ease);
+}
+.hk-onglet--ketchup { --fond: var(--hk-rouge); --encre: var(--hk-prune); }
+.hk-onglet--firecracker { --fond: var(--hk-prune); --encre: var(--hk-creme); }
+.hk-onglet > * { pointer-events: none; }
+.hk-onglet:focus-visible { outline: 3px solid var(--encre); outline-offset: -8px; }
+/* Le texte se soulève comme l’onglet d’un dossier qu’on attrape */
+.hk-onglet { transition: color 300ms var(--ease), letter-spacing 400ms var(--ease); }
+@media (hover: hover) {
+  .hk-onglet:hover { letter-spacing: 0.04em; }
+}
+/* Dossier ouvert : les autres onglets passent au second plan */
+.hk-dossiers:not([data-ouvert=""]) .hk-onglet[aria-pressed="false"] { color: color-mix(in srgb, var(--encre) 60%, var(--fond)); } /* Firecracker inactif : 3,5:1 → 5,4:1 */
+
+.hk-dossier {
+  display: grid;
+  grid-template-rows: 0fr;
+  background: var(--hk-creme);
+  transition: grid-template-rows 750ms var(--ease), background-color 600ms var(--ease);
+}
+.hk-dossier__interieur { min-height: 0; overflow: clip; }
+.hk-dossiers:not([data-ouvert=""]) .hk-dossier { grid-template-rows: 1fr; }
+.hk-dossiers[data-ouvert="ketchup"] .hk-dossier { background: var(--hk-rouge); }
+.hk-dossiers[data-ouvert="firecracker"] .hk-dossier { background: var(--hk-prune); }
+
+/* Scène du donut, mêmes proportions que les planches 10 à 12 */
+.hk-dossier__scene { position: relative; aspect-ratio: 16 / 9; max-height: calc(100svh - 14rem); width: 100%; }
+.hk-donut {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: 78%;
+  margin: 0;
+  translate: -50% -50%;
+  will-change: transform, filter, opacity;
+}
+.hk-donut[data-donut="firecracker"] { height: 74%; }
+.hk-donut[hidden] { display: none; }
+.hk-donut.is-sortant { z-index: 0; }
+
+@media (max-width: 899px) {
+  .hk-onglet { font-size: clamp(0.95rem, 4.6vw, 1.6rem); aspect-ratio: auto; min-height: 3.75rem; }
+  .hk-slides__nom { font-size: 0.6875rem; letter-spacing: 0.04em; white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hk-bouteille__img, .hk-bouteille__ombre, .hk-onglet, .hk-sauce, .hk-sauce path, .hk-sauce__goutte, .hk-sauce__flaque { transition: none !important; }
+  .hk-dossier { transition: none; }
+}
+
+/* Making-of : la vidéo sur son fond aubergine, en dernier */
+.hk-making-of { background: #4b0e27; }

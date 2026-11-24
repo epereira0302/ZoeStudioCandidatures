@@ -1,0 +1,798 @@
+{
+  "_aide": "Pour ajouter un projet : ajoutez une entrée dans « projets » et déposez ses planches dans contenu/images/planches/ sous la forme <prefixe-de-categorie>-NN.webp (1366 px) et <prefixe>-NN-s.webp (720 px). « planches » indique la première et la dernière planche du projet, « couverture » la planche utilisée comme vignette (ou « couv » : une image du dossier, avec « cadrage » facultatif, qui remplace la vignette sur l’accueil et dans la grille), « categories » (facultatif) range le projet dans plusieurs catégories, « categorie » restant celle de ses planches, « phare » l’affiche dans la sélection de l’accueil, « accueil » (1, 2, 3…) la place dans la bande de l’accueil ; « couv.video » rend la couverture animée. « legende » : une ligne affichée sous les projets phares de l’accueil. Un projet peut avoir une page détaillée : « nom », « type », « contribution », « agence », « texte », « dossier » (images en <nom>.webp et <nom>-s.webp), « hero » et « galerie » (sections avec « titre », « note » facultative et « images » : format plein, demi, bande ou seul ; type panneau pour les visuels détourés, photo pour les photos).",
+  "categories": [
+    {
+      "id": "brand-identity",
+      "nom": "Identité visuelle",
+      "prefixe": "brand-identity"
+    },
+    {
+      "id": "packaging",
+      "nom": "Packaging",
+      "prefixe": "packaging"
+    },
+    {
+      "id": "direction-artistique",
+      "nom": "Direction artistique",
+      "prefixe": "direction-artistique"
+    },
+    {
+      "id": "images",
+      "nom": "Images",
+      "prefixe": "image"
+    },
+    {
+      "id": "publicite",
+      "nom": "Publicité",
+      "prefixe": "publicite"
+    },
+    {
+      "id": "photographie",
+      "nom": "Photographie",
+      "prefixe": "photographie"
+    }
+  ],
+  "projets": [
+    {
+      "slug": "studio-zoe",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 1185,
+        "alt": "Le logo Studio Zoé, création graphique, sur fond rose"
+      },
+      "titre": "Studio Zoé",
+      "categorie": "brand-identity",
+      "planches": {
+        "de": 1,
+        "a": 3
+      },
+      "couverture": 3,
+      "phare": false,
+      "annee": "2024",
+      "client": "Studio Zoé",
+      "role": "Fondatrice, directrice artistique",
+      "description": "Concevoir l’identité visuelle complète du studio, ainsi que son logo. « Zoé » signifie « la vie » en grec. C’est le point de départ de toute la création. En mêlant mythologies, histoire et formes organiques, l’identité en a découlé naturellement.",
+      "legende": "",
+      "gabarit": "studio-zoe",
+      "nom": "Studio Zoé",
+      "type": "Identité visuelle et création de logo",
+      "nomProjet": "Ζωή",
+      "brief": "Concevoir l’identité visuelle complète du studio, ainsi que son logo.",
+      "demarche": "« Zoé » signifie « la vie » en grec. C’est le point de départ de toute la création. En mêlant mythologies, histoire et formes organiques, l’identité en a découlé naturellement.",
+      "credits": {
+        "equipe": [
+          "Zoé Vinardell"
+        ],
+        "services": [
+          "Identité visuelle",
+          "Logo",
+          "Typographie",
+          "Couleurs",
+          "Motif",
+          "Papeterie"
+        ]
+      },
+      "dossier": "contenu/images/projets/studio-zoe"
+    },
+    {
+      "slug": "le-central-technique",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 1600,
+        "alt": "Le logo Le Central Technique, le symbole au-dessus du nom, en bleu clair sur fond bleu Technique"
+      },
+      "titre": "Le Central Technique",
+      "categorie": "brand-identity",
+      "planches": {
+        "de": 4,
+        "a": 6
+      },
+      "couverture": 5,
+      "phare": false,
+      "annee": "2026",
+      "client": "Le Central Technique",
+      "role": "Direction artistique, graphisme, création de contenu",
+      "description": "Le Central Technique (LCT) est une entreprise d’intégration audiovisuelle fondée en 2013 par Pierre Pereira, qui l’a portée seul pendant plusieurs années avant qu’une équipe ne se constitue progressivement autour de lui. Elle est aujourd’hui dirigée par Mickael et Enzo. Ce passage d’une personne seule à un vrai collectif appelait une refonte complète de l’identité visuelle de la marque. Entre nouveau symbole, bleu redéfini et typographie retravaillée, chaque élément a été repensé pour refléter la volonté d’évolution et de modernisation de LCT.",
+      "gabarit": "le-central-technique",
+      "nom": "Le Central Technique",
+      "type": "Création de logo et identité visuelle",
+      "dossier": "contenu/images/projets/le-central-technique",
+      "roles": [
+        "Direction artistique",
+        "Graphisme",
+        "Création de contenu"
+      ],
+      "collaboration": "Collaboration long terme"
+    },
+    {
+      "slug": "columbus-cafe-brand-identity",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 1157,
+        "alt": "« C’est le moment », en lettres blanches sur fond jaune"
+      },
+      "gabarit": "columbus",
+      "titre": "Columbus Café",
+      "categorie": "brand-identity",
+      "planches": {
+        "de": 7,
+        "a": 11
+      },
+      "couverture": 8,
+      "phare": true,
+      "annee": "2026",
+      "client": "Columbus Café",
+      "role": "Responsable artistique",
+      "description": "En tant que Responsable Artistique, j’ai piloté en collaboration avec l’agence SYD, la refonte complète de l’identité de Columbus Café. L’objectif était d’affirmer la marque comme le leader de sa catégorie tout en la recentrant sur ce qui compte vraiment : le moment.",
+      "legende": "",
+      "nom": "C’est le moment",
+      "type": "Refonte de charte graphique",
+      "contribution": [
+        "Branding",
+        "Wording",
+        "Shooting photo",
+        "Packaging"
+      ],
+      "agence": "SYD",
+      "credits": {
+        "equipe": [
+          "Émilie Genty",
+          "Ludivine Xavier",
+          "Zoé Vinardell"
+        ],
+        "services": [
+          "Identité visuelle",
+          "Packaging",
+          "Production image",
+          "Motion design",
+          "Couleurs"
+        ],
+        "collaboration": {
+          "nom": "Agence SYD",
+          "roles": [
+            "Stratégie",
+            "Logo",
+            "Typographie",
+            "Wording"
+          ]
+        }
+      },
+      "texte": [
+        "Car le coffee shop n’est pas qu’un lieu, c’est un moment. Le moment pour soi, ou à partager. Le moment de se poser 5 min, pendant 2 h. Le moment qui devient le cœur du discours de marque."
+      ],
+      "dossier": "contenu/images/projets/columbus-cest-le-moment",
+      "hero": {
+        "img": "logo-jaune",
+        "alt": "Le logo Columbus Café, une tête d’ours brun sur fond jaune",
+        "w": 2000,
+        "h": 1125,
+        "encre": "sombre",
+        "fond": "#fab900"
+      },
+      "galerie": [
+        {
+          "titre": "Logo",
+          "images": [
+            {
+              "img": "magasin",
+              "alt": "Le nouveau logo Columbus Café au-dessus d’une boutique, avec le slogan « C’est le moment » en grand",
+              "format": "plein",
+              "type": "photo",
+              "w": 2000,
+              "h": 1855
+            },
+            {
+              "img": "cocarde",
+              "alt": "Un muffin et la cocarde ronde « Columbus Café, une entreprise française »",
+              "format": "bande",
+              "type": "panneau",
+              "w": 1209,
+              "h": 627
+            }
+          ]
+        },
+        {
+          "titre": "« C’est le moment »",
+          "note": "Le moment devient le cœur du discours de marque",
+          "images": [
+            {
+              "img": "texte-cest-le-moment",
+              "alt": "Accroche « C’est le moment d’aimer le lundi matin » composée en Ofelia Display",
+              "format": "plein",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1628
+            },
+            {
+              "img": "mise-en-page-texte",
+              "alt": "Affiche rayée « C’est le moment » signée de l’ours Columbus",
+              "format": "demi",
+              "type": "panneau",
+              "w": 1998,
+              "h": 2827
+            },
+            {
+              "img": "carte-fidelite",
+              "alt": "Carte de fidélité « C’est le moment de craquer pour la bonne cause »",
+              "format": "demi",
+              "type": "panneau",
+              "w": 1933,
+              "h": 2211
+            }
+          ]
+        },
+        {
+          "titre": "Typographies",
+          "note": "Ofelia Display et Liebling",
+          "images": [
+            {
+              "img": "typo-ofelia",
+              "alt": "Spécimen de la typographie Ofelia Display Ultrabold",
+              "format": "plein",
+              "type": "panneau",
+              "w": 2000,
+              "h": 799
+            },
+            {
+              "img": "typo-liebling",
+              "alt": "Spécimen de la typographie Liebling, de Regular à Black",
+              "format": "plein",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1186
+            }
+          ]
+        },
+        {
+          "titre": "Couleurs et iconographie",
+          "images": [
+            {
+              "img": "couleurs",
+              "alt": "Palette de couleurs : jaune muffin, blanc, brun café et teintes des boissons",
+              "format": "demi",
+              "type": "panneau",
+              "w": 1611,
+              "h": 2480
+            },
+            {
+              "img": "pastilles",
+              "alt": "Pastilles promotionnelles « 3+1 muffins offerts » et « Nouveau cœur coulant »",
+              "format": "demi",
+              "type": "panneau",
+              "w": 1362,
+              "h": 1155
+            },
+            {
+              "img": "iconographie",
+              "alt": "Pictogrammes jaunes : gobelet, muffin, verre et sandwich",
+              "format": "bande",
+              "type": "panneau",
+              "w": 1515,
+              "h": 457
+            },
+            {
+              "img": "photo-texture",
+              "alt": "Gros plans de textures gourmandes : chocolat, marbré, crème",
+              "format": "bande",
+              "type": "panneau",
+              "w": 2000,
+              "h": 610
+            },
+            {
+              "img": "moodboard",
+              "alt": "Planche d’ambiance : photos de produits, matières et couleurs annotées",
+              "format": "plein",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1191
+            }
+          ]
+        },
+        {
+          "titre": "Packaging",
+          "images": [
+            {
+              "img": "boite-muffins",
+              "alt": "Patron de la boîte « Notre boîte de 4 muffins »",
+              "format": "plein",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1163
+            },
+            {
+              "img": "porte-gobelet",
+              "alt": "Porte-gobelets kraft « C’est le moment » à l’ours",
+              "format": "demi",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1000
+            },
+            {
+              "img": "porte-gobelet-2",
+              "alt": "Porte-gobelet deux places avec l’ours Columbus",
+              "format": "demi",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1146
+            },
+            {
+              "img": "sac-emporter",
+              "alt": "Sacs à emporter kraft, logo Columbus et liste « C’est le moment »",
+              "format": "demi",
+              "type": "panneau",
+              "w": 2000,
+              "h": 1243
+            },
+            {
+              "img": "sachets",
+              "alt": "Sachets à viennoiserie « C’est le moment de craquer pour la bonne cause »",
+              "format": "demi",
+              "type": "panneau",
+              "w": 1366,
+              "h": 1078
+            }
+          ]
+        },
+        {
+          "titre": "Supports et tenues",
+          "images": [
+            {
+              "img": "menu",
+              "alt": "Quatre menus aux couleurs de la nouvelle charte",
+              "format": "bande",
+              "type": "panneau",
+              "w": 2000,
+              "h": 644
+            },
+            {
+              "img": "tablier",
+              "alt": "Tablier noir brodé du logo Columbus Café",
+              "format": "demi",
+              "type": "panneau",
+              "w": 1531,
+              "h": 2131
+            },
+            {
+              "img": "tshirt",
+              "alt": "Deux équipiers de dos en t-shirts jaune et noir « C’est le moment »",
+              "format": "demi",
+              "type": "photo",
+              "w": 736,
+              "h": 920
+            }
+          ]
+        },
+        {
+          "titre": "Shooting photo",
+          "images": [
+            {
+              "img": "photo-boite",
+              "alt": "Boîte à muffins, gobelets dans leur porte-gobelet et sandwich sur une table",
+              "format": "plein",
+              "type": "photo",
+              "w": 1285,
+              "h": 832
+            },
+            {
+              "img": "photo-sachet",
+              "alt": "Muffin dans son sachet kraft « C’est le moment », tenu à la main",
+              "format": "seul",
+              "type": "photo",
+              "w": 1023,
+              "h": 1537
+            }
+          ]
+        }
+      ],
+      "accueil": 1
+    },
+    {
+      "slug": "glowy-winter",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 2125,
+        "alt": "L’affiche A5 Glowy Winter : le Glowy Choco Praliné à la chantilly dorée, le Cinnamon Roll Chaï Latte, le Glowy Prali Muffin et le donut doré au sapin en chocolat, sur une spirale rose"
+      },
+      "titre": "Glowy Winter",
+      "categorie": "direction-artistique",
+      "planches": {
+        "de": 1,
+        "a": 3
+      },
+      "couverture": 1,
+      "phare": false,
+      "annee": "2025",
+      "client": "Columbus Café",
+      "role": "Direction artistique, graphisme et illustration",
+      "description": "Glowy Winter est l’animation la plus stratégique de l’année en termes de chiffre d’affaires pour Columbus Café car elle se situe pendant les fêtes de Noël.",
+      "texte": [
+        "Pour cette édition, le parti était de rompre totalement avec les codes du Noël traditionnel en développant un univers pop, saturé et anti-conventionnel. Une direction artistique pensée pour créer la surprise en point de vente et provoquer un vrai décalage."
+      ],
+      "gabarit": "glowy-winter",
+      "nom": "Glowy Winter",
+      "type": "Direction artistique",
+      "credits": [
+        [
+          "Émilie Genty",
+          "Directrice marketing"
+        ],
+        [
+          "Hortense Simonin",
+          "Produit"
+        ],
+        [
+          "Zoé Vinardell",
+          "Direction artistique, graphisme et illustration"
+        ],
+        [
+          "Chanel Graine",
+          "Assistante graphisme"
+        ],
+        [
+          "Flavie Tréhin",
+          "Social media"
+        ],
+        [
+          "Sébastien Dray",
+          "Photographie"
+        ],
+        [
+          "Les Bons Faiseurs",
+          "Print et motion design"
+        ]
+      ],
+      "dossier": "contenu/images/projets/glowy-winter"
+    },
+    {
+      "slug": "too-faced-kiss-cafe",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 1600,
+        "alt": "Le logo Too Faced en lettres roses gonflées, sur un dégradé blanc et rose"
+      },
+      "titre": "Kiss café",
+      "categorie": "direction-artistique",
+      "planches": {
+        "de": 5,
+        "a": 5
+      },
+      "couverture": 5,
+      "phare": false,
+      "annee": "2025",
+      "client": "Too Faced × Krispy Kreme",
+      "role": "Graphisme",
+      "description": "Pour le Kiss café, l’événement monté par Krispy Kreme et Too Faced au cœur du Marais, j’ai assuré la direction artistique de la contribution Krispy Kreme. Ce co-branding visait une forte visibilité et devait susciter de l’engagement spontané sur les réseaux sociaux.",
+      "categories": [
+        "brand-identity",
+        "packaging"
+      ],
+      "texte": [
+        "J’ai conçu et supervisé tous les visuels portés par Krispy Kreme, du packaging des donuts servis sur place aux supports d’activation. Il fallait marier l’univers Krispy Kreme avec l’identité très colorée et girly de Too Faced, pour que la marque compte dans l’expérience comme un acteur créatif, au même titre que son partenaire."
+      ],
+      "gabarit": "kiss-cafe",
+      "nom": "Kiss café",
+      "type": "Lancement de produit",
+      "credits": [
+        {
+          "equipe": "Équipe Krispy Kreme",
+          "membres": [
+            [
+              "Célia Refalo",
+              "Directrice marketing"
+            ],
+            [
+              "Mathilde Digiovanni",
+              "Responsable communication"
+            ],
+            [
+              "Zoé Vinardell",
+              "Responsable artistique"
+            ],
+            [
+              "Flavie Tréhin",
+              "Chargée de communication"
+            ]
+          ]
+        }
+      ],
+      "dossier": "contenu/images/projets/kiss-cafe"
+    },
+    {
+      "slug": "nyx-krispy-kreme",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 1600,
+        "alt": "« buttermelt Glaze » en lettres jaunes sur les vagues orangées du tube"
+      },
+      "titre": "Buttermelt Glaze",
+      "categorie": "direction-artistique",
+      "planches": {
+        "de": 6,
+        "a": 6
+      },
+      "couverture": 6,
+      "phare": false,
+      "annee": "2025",
+      "client": "NYX × Krispy Kreme",
+      "role": "Graphisme",
+      "description": "Pour le lancement du Buttermelt Glaze de NYX Professional Makeup, Krispy Kreme a associé le fond de teint à son Original Glazed : les deux produits partagent le même univers, brillant et frais.",
+      "categories": [
+        "brand-identity",
+        "packaging"
+      ],
+      "texte": [
+        "Du 8 au 28 avril 2025, la campagne a joué sur plusieurs leviers : une animation au flagship le 26 avril avec une maquilleuse de 15 h à 18 h, un jeu concours Instagram qui a apporté plus de 300 abonnés, un envoi à 120 influenceurs et une activation TikTok à 252 400 vues pour 100 € investis.",
+        "Objectif : faire grandir la notoriété de la marque grâce à un co-branding cohérent et à des activations sur tous les canaux."
+      ],
+      "gabarit": "buttermelt-glaze",
+      "nom": "Buttermelt Glaze",
+      "type": "Lancement de produit",
+      "credits": [
+        {
+          "equipe": "Équipe Krispy Kreme",
+          "membres": [
+            [
+              "Célia Refalo",
+              "Directrice marketing"
+            ],
+            [
+              "Mathilde Digiovanni",
+              "Responsable communication"
+            ],
+            [
+              "Zoé Vinardell",
+              "Responsable artistique"
+            ],
+            [
+              "Flavie Tréhin",
+              "Chargée de communication"
+            ]
+          ]
+        }
+      ],
+      "dossier": "contenu/images/projets/buttermelt-glaze"
+    },
+    {
+      "slug": "heinz-krispy-kreme",
+      "couv": {
+        "img": "couverture",
+        "w": 1600,
+        "h": 1200,
+        "alt": "Les logos Heinz et Krispy Kreme l’un sous l’autre, sur fond aubergine"
+      },
+      "titre": "Heinz & Krispy Kreme",
+      "categorie": "direction-artistique",
+      "planches": {
+        "de": 7,
+        "a": 8
+      },
+      "couverture": 7,
+      "phare": true,
+      "annee": "2026",
+      "client": "Krispy Kreme x Heinz",
+      "role": "Direction artistique",
+      "description": "1er avril. Trois doughnuts fourrés aux sauces Heinz® : ketchup, firecracker et barbecue. On dirait une blague, sauf que non. Une campagne Heinz® x Krispy Kreme qui joue sur l’ambiguïté du poisson d’avril, d’un faux produit sur internet à un vrai plaisir en magasin.",
+      "legende": "",
+      "gabarit": "heinz-krispy-kreme",
+      "nom": "Non… et pourtant si.",
+      "type": "Co-branding",
+      "credits": [
+        {
+          "equipe": "Équipe Krispy Kreme",
+          "membres": [
+            [
+              "Émilie Genty",
+              "Directrice marketing"
+            ],
+            [
+              "Hortense Simonin",
+              "Produit"
+            ],
+            [
+              "Marielle Bosteau",
+              "Produit"
+            ],
+            [
+              "Zoé Vinardell",
+              "Direction artistique"
+            ],
+            [
+              "Flavie Tréhin",
+              "Social media"
+            ]
+          ]
+        },
+        {
+          "equipe": "Équipe Heinz",
+          "membres": [
+            [
+              "Théo Bellamy",
+              "Brand manager"
+            ],
+            [
+              "Amélie Verdier",
+              "Brand manager"
+            ],
+            [
+              "Isabelle Allard",
+              "Responsable marketing"
+            ]
+          ]
+        }
+      ],
+      "dossier": "contenu/images/projets/heinz-krispy-kreme",
+      "accueil": 2
+    },
+    {
+      "slug": "columbus-cafe-images",
+      "titre": "Production Images : Éditions Limitées",
+      "categorie": "images",
+      "planches": {
+        "de": 1,
+        "a": 5
+      },
+      "couverture": 1,
+      "couv": {
+        "img": "bleu-donut-cartes",
+        "w": 1400,
+        "h": 2100,
+        "alt": "Donut au glaçage bleu et fleurs de bleuet, entre un muffin, des dés et des cartes à jouer",
+        "cadrage": "50% 45%"
+      },
+      "phare": false,
+      "annee": "2025",
+      "client": "Columbus Café",
+      "role": "Direction artistique",
+      "description": "Imaginer et orchestrer la production image des éditions limitées de Columbus Café, en donnant à chaque lancement un territoire visuel qui lui est propre. L’ambition : traduire l’univers des recettes en images attractives et gourmandes, capables de capter l’attention et de susciter l’envie.",
+      "texte": [
+        "La couleur devient le fil rouge de l’année. Chaque édition s’articule autour d’une palette dédiée, déclinée dans les décors, les accessoires et la mise en scène des produits. Une direction artistique pensée comme un ensemble cohérent, au service de l’identité de la marque et de son expression sur les réseaux sociaux."
+      ],
+      "gabarit": "columbus-images",
+      "nom": "Production Images : Éditions Limitées",
+      "type": "Direction artistique de shootings photo",
+      "credits": [
+        {
+          "equipe": "",
+          "membres": [
+            [
+              "Zoé Vinardell",
+              "Direction artistique"
+            ],
+            [
+              "Sébastien Dray",
+              "Photographe"
+            ]
+          ]
+        }
+      ],
+      "dossier": "contenu/images/projets/columbus-images"
+    },
+    {
+      "slug": "ne-gardez-que-le-meilleur-des-us",
+      "couv": {
+        "img": "couverture",
+        "video": "couverture.mp4",
+        "w": 1920,
+        "h": 1080,
+        "alt": ""
+      },
+      "titre": "Ne gardez que le meilleur des US",
+      "categorie": "publicite",
+      "planches": {
+        "de": 1,
+        "a": 5
+      },
+      "couverture": 2,
+      "phare": true,
+      "annee": "2025",
+      "client": "Columbus Café",
+      "role": "Graphisme et direction artistique",
+      "description": "Pour les 30 ans de la marque, Columbus Café a fait appel à l’agence Buzzman pour imaginer une campagne « Ne gardez que le meilleur des U.S. ».",
+      "legende": "",
+      "gabarit": "meilleur-des-us",
+      "nom": "Ne gardez que le meilleur des US",
+      "type": "Campagne publicitaire",
+      "chapitres": [
+        {
+          "type": "Spot publicitaire",
+          "texte": [
+            "Pour les 30 ans de la marque, Columbus Café a fait appel à l’agence Buzzman pour imaginer une campagne « Ne gardez que le meilleur des U.S. ».",
+            "Le spot publicitaire, composé de 2 films déclinés en 30”, 20” et 15”, est visible en ligne ainsi qu’au cinéma et est déployé partout en France.",
+            "Le travail créatif du tournage mêle direction artistique, wording et casting en veillant au respect de l’image de marque. Au travers de courts-métrages parodiques, Columbus Café questionne avec humour l’enthousiasme des Français pour les recettes américaines en prouvant que chez eux, l’apparence est la même, mais la saveur en plus."
+          ]
+        },
+        {
+          "type": "Campagne d’affichage",
+          "texte": [
+            "La campagne d’affichage met en avant le savoir-faire et l’authenticité française de la marque. Elle est établie dans la continuité du spot publicitaire « Ne gardez que le meilleur des U.S. ».",
+            "Les affiches sont déployées partout en France avec 10 affiches différentes en national et en local. Le ton ? De l’humour, des jeux de mots et des punchlines qui montrent qu’en France aussi, on sait être gourmand. Une identité globale basée sur des fonds de couleur, une typographie grasse et des recettes alléchantes."
+          ]
+        },
+        {
+          "type": "Publicité web et magazine",
+          "texte": [
+            "Avec l’agence Buzzman, une campagne de visibilité (« Le muffin parfait est chez Columbus ») a renforcé le positionnement du muffin iconique fait sur place, via la presse people, TikTok et Instagram, avec une offre attractive à l’appui."
+          ]
+        }
+      ],
+      "credits": [
+        {
+          "titre": "Équipe",
+          "membres": [
+            [
+              "Célia Refalo",
+              "Directrice marketing"
+            ],
+            [
+              "Zoé Vinardell",
+              "Graphisme & direction artistique"
+            ],
+            [
+              "Mathilde Di Giovanni",
+              "Responsable communication"
+            ]
+          ]
+        },
+        {
+          "titre": "Collaboration",
+          "nom": "Agence Buzzman",
+          "roles": [
+            "Production",
+            "Déploiement",
+            "Wording",
+            "Shooting"
+          ]
+        }
+      ],
+      "dossier": "contenu/images/projets/meilleur-des-us",
+      "accueil": 3
+    },
+    {
+      "slug": "coupe-du-monde-2026",
+      "titre": "Coupe du monde 2026",
+      "categorie": "photographie",
+      "planches": {
+        "de": 1,
+        "a": 2
+      },
+      "couverture": 2,
+      "couv": {
+        "img": "frappe",
+        "w": 2400,
+        "h": 1600,
+        "alt": "Frappe d’un joueur français, jambe tendue, ballon au sol",
+        "cadrage": "50% 50%"
+      },
+      "phare": false,
+      "annee": "2026",
+      "client": "Projet personnel",
+      "role": "Photographie",
+      "description": "Une série prise au Sony RX100 VII pendant le match France – Espagne de la Coupe du monde 2026. Le regard reste spontané, dans la lignée de Florence Pernet : l’énergie d’un instant compte plus que sa netteté.",
+      "texte": [
+        "Le grain, le flou de mouvement et les textures vintage portent la série. L’émotion et le geste passent avant la précision : un tacle saisi dans l’élan, une accolade, un regard."
+      ],
+      "legende": "",
+      "gabarit": "coupe-du-monde",
+      "nom": "Coupe du monde 2026",
+      "type": "Série photographique · France – Espagne",
+      "credits": [
+        {
+          "equipe": "",
+          "membres": [
+            [
+              "Zoé Vinardell",
+              "Photographe"
+            ]
+          ]
+        }
+      ],
+      "dossier": "contenu/images/projets/coupe-du-monde"
+    }
+  ]
+}

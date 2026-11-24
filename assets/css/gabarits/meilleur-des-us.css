@@ -1,0 +1,181 @@
+/* Gabarit « Ne gardez que le meilleur des US » (Columbus Café) ---------------
+   D’après la maquette d’Enzo (2026-11-16) : chaque chapitre est une rangée,
+   sa fiche aubergine à gauche (le quart de la largeur, comme les autres pages
+   Columbus) qui défile avec ses visuels, à droite, bord à bord. Couleurs
+   relevées sur la maquette. Les tailles des visuels sont en cqw : pourcentage
+   de la largeur de la colonne, comme sur la maquette. */
+
+@font-face {
+  font-family: 'Acumin Extra Condensed';
+  src: url('../../fonts/acumin-extra-condensed-800.woff2') format('woff2');
+  font-weight: 800;
+  font-display: block; /* 4 Ko : le bandeau attend la police plutôt que de changer d’allure */
+}
+
+.page-us {
+  --us-jaune: #ffac04;
+  --us-blanc: #ffffff;
+  --us-creme: #f1f1c2;
+}
+
+.us { padding-top: var(--header-h); background: var(--cl-encart); }
+.us figure { margin: 0; }
+.us img, .us video { display: block; width: 100%; height: auto; }
+
+.us-chap {
+  display: grid;
+  grid-template-columns: var(--cl-l) minmax(0, 1fr);
+  scroll-margin-top: var(--header-h);
+}
+.us-visuels { container-type: inline-size; min-width: 0; background: var(--us-creme); }
+
+/* Fiche de chapitre ---------------------------------------------------------- */
+.us-fiche {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: calc(var(--cl-p) * 0.4) var(--cl-p) var(--cl-p);
+  color: var(--cl-rose-texte);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.us-fiche :focus-visible { outline-color: var(--cl-rose-texte); }
+/* Le texte descend avec la page jusqu’à la fin de son chapitre (colle(), dans
+   le script, ajuste --us-colle quand la fiche est plus haute que l’écran) */
+.us-fiche__colle {
+  position: sticky;
+  top: var(--us-colle, calc(var(--header-h) + var(--cl-p) * 0.4));
+}
+.us-fiche .cl-encart__haut { margin: 0; }
+/* Le titre tient sur deux lignes : « Ne gardez que le / meilleur des US » */
+.us-fiche__titre { margin-top: clamp(1.5rem, 6vh, 4rem); white-space: normal; font-size: clamp(1.25rem, 1.9vw, 2.4rem); line-height: 1.08; }
+.us-fiche__texte { text-align: left; }
+.us-fiche__texte p { margin: 0; }
+.us-fiche__texte p + p { margin-top: 1.5em; }
+
+/* Flèche du retour en haut : en bas de la longue fiche « affichage », elle reste
+   visible pendant tout le chapitre */
+.us-fleche {
+  position: sticky;
+  right: auto;
+  bottom: calc(var(--cl-p) - 0.75rem);
+  align-self: flex-end;
+  margin: 0 -0.75rem -0.75rem 0;
+}
+
+/* Crédits : noms en gras, rôles en italique */
+.us-fiche__colle .us-credits { margin-top: clamp(2rem, 7vh, 4rem); }
+.us-credits h2 { font-size: clamp(1.4rem, 2vw, 2.6rem); }
+.us-credits h3 { margin-top: max(1.25rem, 1.9vw); font-size: max(0.85rem, 1.15vw); }
+.us-credits li { font-size: max(0.75rem, 0.95vw); font-weight: 800; }
+.us-credits i { font-weight: 400; font-style: italic; }
+
+/* Chapitre 1 : le spot ------------------------------------------------------- */
+/* Bandeau jaune : le slogan défile sans fin (deux moitiés identiques) */
+.us-bandeau {
+  display: flex;
+  align-items: center;
+  height: 18.75cqw;
+  margin: 0;
+  overflow: hidden;
+  background: var(--us-jaune);
+  color: var(--us-blanc);
+  font: 800 15.6cqw/1 'Acumin Extra Condensed', 'Arial Narrow', sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.us-bandeau__piste {
+  display: flex;
+  flex: none;
+  padding-top: 0.12em; /* capitales calées comme sur la maquette */
+  animation: us-defile 42s linear infinite;
+  will-change: transform;
+}
+.us-bandeau__piste span { padding-left: 0.32em; }
+.us-bandeau.est-arrete .us-bandeau__piste { animation-play-state: paused; }
+@keyframes us-defile { to { transform: translate3d(-50%, 0, 0); } }
+
+.us-spot, .us-carre { position: relative; background: #000; }
+.us-duo { display: grid; grid-template-columns: 1fr 1fr; }
+.us-coffee {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 3cqw 0 0 3.75cqw;
+  background: var(--us-jaune);
+  color: var(--us-blanc);
+  font: 800 14.8cqw/0.82 'Acumin Extra Condensed', 'Arial Narrow', sans-serif;
+  text-transform: uppercase;
+}
+
+/* Bouton du son, en bas à droite de chaque vidéo */
+.us-son {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0 0.95rem 0 0.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(32 6 3 / 0.72);
+  color: var(--cl-rose-texte);
+  font-family: inherit;
+  font-size: var(--t-micro, 0.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background var(--d-fast, 0.2s) ease;
+}
+.us-son svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.us-son svg path:first-child { fill: currentColor; }
+.us-son[aria-pressed="false"] .us-son__onde, .us-son[aria-pressed="true"] .us-son__barre { display: none; }
+.us-son:focus-visible { outline: 2px solid var(--cl-rose-texte); outline-offset: 2px; }
+@media (hover: hover) { .us-son:hover { background: rgb(32 6 3 / 0.9); } }
+
+/* Chapitre 2 : l’affiche bleue reste en place, les posts défilent à côté ------- */
+.us-defile { display: grid; grid-template-columns: 62.03% 37.97%; align-items: start; background: #b7dde5; }
+.us-defile__fixe { position: sticky; top: var(--header-h); }
+.us-defile__posts { margin: 0; padding: 0; list-style: none; }
+
+/* Chapitre 3 : Closer et Marmiton s’enchaînent dans la même vue (boucle de
+   columbus.css), sur le vert de la planche Closer */
+/* La fiche (texte et crédits) peut être plus haute que la boucle : le fond de la
+   colonne prend la couleur de l’image affichée (vert Closer, bleu canard
+   Marmiton) et la suit au même rythme, sans bande d’une autre couleur dessous */
+#us-web .us-visuels, .us-boucle { background: #a9d0b3; transition: background-color 700ms var(--ease, ease); }
+#us-web .us-visuels:has(.cl-boucle__img:nth-child(2).is-actif),
+.us-boucle:has(.cl-boucle__img:nth-child(2).is-actif) { background: #025556; }
+
+/* Mobile et tablette étroite : la fiche passe au-dessus de ses visuels -------- */
+@media (max-width: 899px) {
+  .us-chap { grid-template-columns: minmax(0, 1fr); }
+  .us-fiche { gap: 2.5rem; padding: 1.75rem var(--bord-r) 2rem var(--bord-l); }
+  .us-chap:first-child .us-fiche { padding-top: 1.25rem; }
+  .us-fiche__titre { margin-top: 1.75rem; font-size: clamp(1.4rem, 6.5vw, 2.2rem); }
+  .us-fiche .cl-encart__sous { margin-top: 0.5rem; font-size: 0.875rem; }
+  .us-fiche .cl-encart__texte { margin-top: 1.25rem; font-size: 0.8125rem; }
+  .us-fleche { display: none; }
+  .us-fiche__colle { position: static; }
+  .us-credits h2 { font-size: 1.75rem; }
+  .us-defile__fixe { top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
+  .us-son { right: 0.5rem; bottom: 0.5rem; padding: 0 0.75rem 0 0.6rem; }
+}
+
+/* « Réduire les animations » : le slogan ne bouge pas */
+@media (prefers-reduced-motion: reduce) {
+  .us-bandeau__piste { animation: none; will-change: auto; }
+  /* La boucle ne tourne pas : les deux visuels l’un sous l’autre */
+  .us-boucle { aspect-ratio: auto !important; }
+  .us-boucle .cl-boucle__img { position: static; opacity: 1; }
+  /* Marmiton en dernier : le fond sous les visuels est son bleu canard */
+  #us-web .us-visuels { background: #025556; transition: none; }
+}

@@ -1,0 +1,522 @@
+/* Gabarit « Studio Zoé » -----------------------------------------------------
+   Même mise en page que Columbus (columbus.css : encart aubergine à gauche,
+   visuels bord à bord) avec les six couleurs de la charte du studio, nommées
+   d’après les Moires. Typographie d’après la vidéo de référence d’Enzo
+   (2026-10-27), livre qui se feuillette. Aucun filet, coins carrés. */
+
+.page-sz {
+  --sz-clotho: #37121e;
+  --sz-atropos: #705622;
+  --sz-fil: #ff1fa3;
+  --sz-lachesis: #ffede3;
+  --sz-destin: #d3e9f4;
+  --sz-deesse: #f2b0dc;
+  --sz-blanc: #ffffff;
+  --sz-voile: #f4efe9;       /* survol discret sur fond blanc */
+}
+.page-sz ::selection { background: var(--sz-deesse); color: var(--sz-clotho); }
+
+[data-theme="sz-clotho"] { background: var(--sz-clotho); color: var(--sz-deesse); }
+[data-theme="sz-atropos"] { background: var(--sz-atropos); color: var(--sz-lachesis); }
+[data-theme="sz-lachesis"] { background: var(--sz-lachesis); color: var(--sz-clotho); }
+[data-theme="sz-destin"] { background: var(--sz-destin); color: var(--sz-clotho); }
+[data-theme="sz-deesse"] { background: var(--sz-deesse); color: var(--sz-clotho); }
+[data-theme="sz-blanc"] { background: var(--sz-blanc); color: var(--sz-clotho); }
+
+.sz-visuels { background: var(--sz-clotho); }
+.sz figure { margin: 0; }
+
+/* Visuels au format 4:5 (posts de la charte) */
+.sz-portrait { aspect-ratio: 4 / 5; }
+.sz-portrait > img { height: 100%; object-fit: cover; }
+
+/* Encart : une phrase ou deux par paragraphe, bien détachées */
+.sz-encart__texte p { margin: 0; }
+/* Brief puis démarche créative, chacun sous son petit titre */
+.sz-encart__rub { margin: 0 0 0.5em; font-size: inherit; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.sz-encart__texte p + .sz-encart__rub { margin-top: 1.6em; }
+.sz-encart__nom { text-transform: none; letter-spacing: 0.02em; }
+
+/* Ouverture (planches d’en-tête d’Enzo refaites en page) ------------------------- */
+.sz-ouverture__bande { position: relative; aspect-ratio: 8000 / 1424; background: var(--sz-atropos); color: var(--sz-destin); }
+.sz-ouverture__bande .sz-masque { width: 38.5%; max-height: none; }
+.sz-ouverture__corps { padding: 3.6vw 6.84% 4.4vw; }
+.sz-ouverture__texte {
+  width: min(100%, 27.6em);
+  margin: 0;
+  font-size: max(0.9375rem, 1.32vw);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+  position: absolute;
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* Les photos arrivent au fil du scroll */
+@media (prefers-reduced-motion: no-preference) {
+}
+
+/* Construction du logo et taille minimale ------------------------------------- */
+.sz-construction { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr); }
+.sz-construction figure { display: flex; flex-direction: column; padding: 2.4vw 2.6vw 3vw; }
+.sz-construction__schema .sz-typo__ent { padding-bottom: 1vw; }
+.sz-schema { display: block; width: 100%; max-width: 62rem; height: auto; margin: auto; overflow: visible; }
+.sz-schema__guide { stroke: #e4874f; stroke-width: 1; }
+.sz-schema__cadre { stroke: var(--sz-clotho); stroke-width: 1.5; }
+.sz-schema__bleu { fill: #c0d3df; }
+.sz-schema__rose { fill: #e5c5d3; }
+.sz-schema text { fill: var(--sz-clotho); font-family: "Right Didone", serif; font-style: italic; font-weight: 300; font-size: 23px; text-anchor: middle; dominant-baseline: central; }
+.sz-construction__mini { align-items: center; justify-content: center; gap: 2.2vw; }
+.sz-construction__titre { margin: 0; font-size: max(0.9375rem, 1.3vw); font-weight: 400; line-height: 1.3; letter-spacing: 0.06em; text-align: center; text-transform: uppercase; }
+.sz-construction__titre span { display: block; text-transform: none; }
+/* Le logo à 2, 4 puis 6 cm, entre deux pointillés roses ; la scène garde la place du plus grand */
+.sz-construction__scene { display: grid; place-items: center; width: calc(6cm + 0.7rem); height: calc(6cm * 562 / 1200 + 1.8rem); }
+.sz-construction__titre span { font-variant-numeric: tabular-nums; }
+.sz-construction__logo {
+  position: relative;
+  width: var(--taille, 2cm);
+  transition: width 700ms var(--ease-som);
+  aspect-ratio: 1200 / 562;
+  box-sizing: content-box;
+  padding: 0.9rem 0.35rem;
+  background:
+    linear-gradient(var(--sz-fil) 50%, transparent 0) left top / 1px 4px repeat-y,
+    linear-gradient(var(--sz-fil) 50%, transparent 0) right top / 1px 4px repeat-y;
+}
+.sz-construction__logo .sz-masque { width: 100%; max-height: none; }
+
+/* Motif : un long bandeau, deux calques teints ; brun et bleu au survol */
+.sz-motif {
+  --fil: var(--sz-clotho);
+  --trame: var(--sz-deesse);
+  position: relative;
+  display: block;
+  width: 100%;
+  height: clamp(8.5rem, 15vw, 16rem);
+  padding: 0;
+  border: 0;
+  overflow: clip;
+  background: var(--sz-blanc);
+  touch-action: manipulation;
+}
+.sz-motif__calque {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-size: auto 100%; -webkit-mask-repeat: repeat-x; -webkit-mask-position: 0 0;
+  mask-size: auto 100%; mask-repeat: repeat-x; mask-position: 0 0;
+  transition: background-color 700ms var(--ease);
+}
+.sz-motif__calque--fil { background-color: var(--fil); }
+.sz-motif__calque--trame { background-color: var(--trame); }
+.sz-motif[aria-pressed="true"] { --fil: var(--sz-atropos); --trame: var(--sz-destin); }
+@media (hover: hover) {
+  .sz-motif:hover { --fil: var(--sz-atropos); --trame: var(--sz-destin); }
+  .sz-motif[aria-pressed="true"]:hover { --fil: var(--sz-clotho); --trame: var(--sz-deesse); }
+}
+.sz-motif:focus-visible { outline: 3px solid var(--sz-fil); outline-offset: -3px; }
+
+/* Slides texte (charte) : symbole + titre en capitales, texte, visuel à côté */
+.sz-slide { display: grid; grid-template-columns: 1fr 1fr; }
+.sz-slide--livre { grid-template-columns: 11fr 9fr; }
+.sz-slide__texte {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35em;
+  padding: 4.6vw 5vw 4vw 5.6vw;
+  font-size: max(0.9375rem, 1.24vw);
+  line-height: 1.36;
+  text-wrap: pretty;
+}
+.sz-slide--livre .sz-slide__texte { padding-right: 7vw; }
+.sz-slide__texte p { margin: 0; }
+.sz-slide__texte strong { font-weight: 600; }
+.sz-slide__titre {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin: 0 0 -0.2em;
+  font-size: 1.1em;
+  font-weight: 600;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.sz-slide__titre .sz-masque { position: relative; top: auto; left: auto; flex: none; width: 1.9em; aspect-ratio: 1200 / 914; max-height: none; transform: none; }
+.sz-slide__visuel { height: 100%; }
+.sz-slide__visuel > img { height: 100%; object-fit: cover; }
+[data-theme="sz-fil"] { background: var(--sz-fil); color: var(--sz-clotho); }
+/* Le carnet occupe tout le côté droit, commandes posées en bas */
+.sz-slide--livre .sz-livre { position: relative; display: block; padding: 0; background: var(--sz-clotho); }
+.sz-slide--livre .sz-livre__objet { width: 100%; box-shadow: none; }
+/* Deux flèches fines sur le rose : remonter ou avancer d’une page */
+.sz-slide--livre .sz-slide__texte { position: relative; }
+.sz-fleche {
+  position: absolute;
+  right: 1.6vw;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: clamp(4.5rem, 6vw, 6rem);
+  padding: 0;
+  color: var(--sz-clotho);
+  opacity: 0.7;
+  touch-action: manipulation;
+  transition: opacity var(--d-fast) var(--ease), transform var(--d-fast) var(--ease);
+}
+.sz-fleche--haut { top: 18%; }
+.sz-fleche--bas { top: 55%; }
+.sz-fleche svg { width: 1.25rem; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) {
+  .sz-fleche--haut:hover { opacity: 1; transform: translateY(-4px); }
+  .sz-fleche--bas:hover { opacity: 1; transform: translateY(4px); }
+}
+.sz-fleche:active { opacity: 1; }
+.sz-fleche:focus-visible { opacity: 1; outline: 2px solid var(--sz-clotho); outline-offset: 2px; }
+
+/* Le récit des Moires : fuchsia « fil de vie » sur aubergine, comme la charte */
+.sz-recit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.1em;
+  align-items: center;
+  gap: 1.5em;
+  aspect-ratio: 16 / 9;
+  padding: 3vw 6vw;
+  color: var(--sz-fil);
+  font-size: max(0.9375rem, 1.72vw);
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: pretty;
+}
+.sz-recit p { max-width: 38em; margin: 0; }
+.sz-recit strong { font-weight: 600; }
+.sz-recit__ent, .sz-typo__ent {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 auto !important;
+  padding-bottom: 2vw;
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+}
+.sz-g3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+
+/* Case de couleur : le visuel détouré au centre, entier */
+.sz-case { position: relative; display: block; aspect-ratio: 1; overflow: clip; contain: size; }
+.sz-case > img { position: absolute; inset: 12%; width: 76%; height: 76%; object-fit: contain; }
+.sz-case--large { aspect-ratio: 16 / 9; }
+.sz-case--large > img { inset: 7% 10%; width: 80%; height: 86%; }
+/* Logo teint par masque : l’encre suit la couleur de la case */
+.sz-masque {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  max-height: 70%;
+  background: currentColor;
+  -webkit-mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
+  mask-position: center; mask-size: contain; mask-repeat: no-repeat;
+  transform: translate(-50%, -50%);
+}
+
+/* Logo : six déclinaisons en cases */
+.sz-logos { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; padding: 0; list-style: none; }
+.sz-logos .sz-masque { width: 64%; max-height: 46%; }
+.sz-logos__nom {
+  position: absolute;
+  left: clamp(0.75rem, 1.4vw, 1.5rem);
+  bottom: clamp(0.75rem, 1.4vw, 1.5rem);
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Couleurs : les bandes de Columbus, avec le code de chaque couleur */
+.sz-bandes { height: min(36vw, 70vh); }
+.sz-bandes li { display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; padding: 1.2vw 1vw; color: var(--sz-clotho); text-align: left; }
+.sz-bandes .is-sombre { color: var(--sz-lachesis); }
+.sz-bandes span { writing-mode: horizontal-tb; font-size: max(0.75rem, 0.95vw); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.sz-bandes .sz-bandes__hex { font-weight: 400; }
+@media (hover: hover) { .sz-bandes li:hover { flex-grow: 2.4; } }
+
+/* Typographies ---------------------------------------------------------------- */
+.sz-typo { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-rows: auto 1fr; }
+/* Libellés sur toute la largeur : le second finit à la même marge que le premier */
+.sz-typo > .sz-typo__ent { grid-column: 1 / -1; padding: 2.4vw 2.6vw 0; }
+.sz-typo__panneau { display: flex; flex-direction: column; justify-content: flex-end; min-height: min(33vw, 72svh); padding: 1vw 2.6vw 3vw; }
+.sz-typo__panneau--rond { align-items: center; justify-content: center; }
+.sz-typo__texte {
+  max-width: 52ch;
+  margin: 2.4vw 0 0;
+  font-weight: 800;
+  font-size: max(0.75rem, 0.82vw);
+  line-height: 1.55;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.sz-typo--abril .sz-typo__texte { font-weight: 400; letter-spacing: 0.04em; }
+
+/* Lettres tracées : la hauteur de capitale vaut 1em */
+.sz-g { height: 1.35em; width: auto; overflow: visible; fill: currentColor; }
+.sz-a { height: 1.6em; width: auto; overflow: visible; fill: currentColor; }
+.sz-mot { display: inline-flex; white-space: nowrap; }
+
+/* Pangramme : chaque lettre survolée passe dans le grand rond */
+.sz-pangramme { display: flex; flex-direction: column; gap: 0.2em; margin: 2vw 0 0; font-size: clamp(1.75rem, 4.1vw, 5rem); line-height: 1; }
+.sz-pangramme__ligne { display: flex; flex-wrap: wrap; column-gap: 0.32em; }
+.sz-pangramme .sz-g { margin-right: 0.05em; transition: color var(--d-fast) var(--ease); }
+@media (hover: hover) { .sz-pangramme .sz-g:hover { color: var(--sz-fil); } }
+
+/* Le grand rond (vidéo de référence) */
+.sz-rond {
+  position: relative;
+  flex: none;
+  width: min(100%, 26vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--sz-atropos);
+  color: var(--sz-lachesis);
+}
+.sz-rond__g, .sz-rond__a { position: absolute; top: 50%; left: 50%; width: auto; max-width: none; overflow: visible; fill: currentColor; transform: translate(-50%, -50%); animation: sz-pose 350ms var(--ease); }
+.sz-rond__g { height: 58%; }
+.sz-rond__a { height: 74%; }
+/* Abril, sans rond : le titre serré monte en haut à gauche, le texte descend en bas à droite */
+.sz-typo--abril .sz-typo__panneau { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2vw 4vw; min-height: min(32vw, 68svh); padding-top: 0.5vw; padding-bottom: 2.4vw; }
+.sz-typo--abril .sz-signature { align-self: start; font-size: clamp(2.25rem, 5.6vw, 7rem); }
+.sz-typo--abril .sz-signature .sz-mot { margin-bottom: -0.42em; }
+.sz-typo--abril .sz-typo__texte { align-self: end; justify-self: end; margin: 0; }
+/* Grille des capitales centrée en hauteur sur le grand rond */
+.sz-typo__panneau:has(.sz-glyphes) { justify-content: center; }
+@keyframes sz-pose { from { opacity: 0; transform: translate(-50%, -50%) scale(0.86); } }
+
+/* Grille des capitales */
+.sz-glyphes { display: grid; grid-template-columns: repeat(7, 1fr); margin: 1.5vw 0 0; padding: 0; list-style: none; }
+.sz-glyphes__btn {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 44px;
+  font-size: clamp(1.1rem, 2vw, 2.4rem);
+  color: var(--sz-clotho);
+  touch-action: manipulation;
+  transition: background-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease);
+}
+.sz-glyphes__btn .sz-g { height: 1.2em; }
+@media (hover: hover) { .sz-glyphes__btn:hover { color: var(--sz-fil); } }
+.sz-glyphes__btn:focus-visible { outline: 2px solid var(--sz-clotho); outline-offset: -2px; }
+
+/* Colonnes : un Z par graisse, celle survolée s’ouvre */
+.sz-colonnes { display: flex; height: min(34vw, 72svh); overflow: clip; }
+.sz-colonnes__col {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: clip;
+  background: var(--fond);
+  color: var(--encre);
+  text-align: left;
+  touch-action: manipulation;
+  transition: flex-grow 600ms var(--ease-som);
+}
+.sz-colonnes__col.is-ouverte { flex-grow: 5.5; }
+.sz-colonnes__nom {
+  position: absolute;
+  top: clamp(0.6rem, 1.1vw, 1.25rem);
+  left: clamp(0.6rem, 1.1vw, 1.25rem);
+  z-index: 1;
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.sz-colonnes__s { position: absolute; left: 8%; bottom: -14%; height: 112%; width: auto; fill: currentColor; }
+.sz-colonnes__col:focus-visible { outline: 3px solid var(--encre); outline-offset: -6px; }
+
+/* Testeur : curseurs, puis le texte en Gyst */
+.sz-testeur { padding: 2.4vw 2.6vw 3.5vw; }
+.sz-testeur__reglages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.4fr); gap: 1.25rem 2.4vw; margin-bottom: 2.5vw; }
+.sz-testeur__reglage { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.5rem; font-weight: 800; font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; }
+.sz-testeur__reglage output { font-weight: 400; font-variant-numeric: tabular-nums; }
+.sz-testeur__reglage input { grid-column: 1 / -1; }
+.sz-testeur input[type="range"] { width: 100%; height: 44px; margin: 0; background: none; accent-color: var(--sz-clotho); -webkit-appearance: none; appearance: none; touch-action: pan-y; }
+.sz-testeur input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: color-mix(in srgb, var(--sz-clotho) 25%, transparent); }
+.sz-testeur input[type="range"]::-moz-range-track { height: 2px; background: color-mix(in srgb, var(--sz-clotho) 25%, transparent); }
+.sz-testeur input[type="range"]::-webkit-slider-thumb { width: 16px; height: 16px; margin-top: -7px; border-radius: 50%; background: var(--sz-clotho); -webkit-appearance: none; }
+.sz-testeur input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border: 0; border-radius: 50%; background: var(--sz-clotho); }
+.sz-testeur input[type="range"]:focus-visible { outline: 2px solid var(--sz-clotho); outline-offset: 2px; }
+.sz-testeur input[type="text"] {
+  min-height: 44px;
+  padding: 0 0.85rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--sz-voile);
+  color: var(--sz-clotho);
+  font: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.sz-testeur input[type="text"]:focus-visible { outline: 2px solid var(--sz-clotho); outline-offset: 0; }
+.sz-testeur__rendu {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.3em;
+  min-height: 1.4em;
+  margin: 0;
+  padding-bottom: 0.3em;
+  font-size: min(calc(var(--taille, 120) * 1px), 13vw);
+}
+.sz-testeur__rendu .sz-mot { align-items: center; height: calc(var(--lignes, 110) * 0.01em); }
+.sz-testeur__rendu .sz-g { margin-right: calc(var(--lettres, 4) * 0.01em); }
+
+/* Abril : la signature, lettre à lettre */
+.sz-signature { display: flex; flex-wrap: wrap; column-gap: 0.36em; margin: 0; font-size: clamp(2rem, 3.7vw, 4.75rem); line-height: 1; }
+.sz-signature__l { display: inline-flex; transition: color var(--d-fast) var(--ease); }
+@media (hover: hover) { .sz-signature__l:hover { color: var(--sz-fil); } }
+
+/* Glyphes d’Abril (vidéo d’Enzo) : grille de lettres, la lettre choisie en grand */
+.sz-glyphes-a { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: center; gap: 2.4vw; padding: 2.4vw 2.6vw 3vw; }
+.sz-glyphes-a__titre { margin: 0 0 0.75rem; font-weight: 800; font-size: var(--t-micro); letter-spacing: 0.1em; text-transform: uppercase; }
+.sz-glyphes-a__grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(44px, 3.1vw), 1fr)); gap: 0.4rem; margin: 0 0 1.75rem; padding: 0; list-style: none; }
+.sz-glyphes-a__btn {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 44px;
+  border-radius: 0.6rem;
+  background: rgb(55 18 30 / 0.08);
+  color: var(--sz-clotho);
+  font-size: max(0.9375rem, 1.05vw);
+  touch-action: manipulation;
+  transition: background-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease), transform var(--d-fast) var(--ease);
+}
+@media (hover: hover) { .sz-glyphes-a__btn:hover { background: rgb(55 18 30 / 0.18); } }
+.sz-glyphes-a__btn:active { transform: scale(0.94); transition-duration: 100ms; }
+.sz-glyphes-a__btn.is-choisi { background: var(--sz-clotho); color: var(--sz-destin); }
+.sz-glyphes-a__btn:focus-visible { outline: 2px solid var(--sz-clotho); outline-offset: 2px; }
+.sz-glyphes-a__vue { position: relative; margin: 0; border-radius: clamp(0.75rem, 1.4vw, 1.5rem); aspect-ratio: 5 / 3; background: var(--sz-clotho); color: var(--sz-destin); overflow: clip; }
+.sz-glyphes-a__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: currentColor; }
+.sz-glyphes-a__svg line { stroke: currentColor; stroke-opacity: 0.22; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.sz-glyphes-a__svg use { animation: sz-pose-a 350ms var(--ease); }
+@keyframes sz-pose-a { from { opacity: 0; } }
+.sz-glyphes-a__ligne {
+  position: absolute;
+  left: 1.2vw;
+  right: 1.2vw;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-130%);
+  font-size: max(0.625rem, 0.7vw);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+.sz-glyphes-a__ligne--dessous { transform: translateY(30%); }
+.sz-glyphes-a__nom { position: absolute; left: 1.2vw; right: 1.2vw; bottom: 1vw; display: flex; justify-content: space-between; font-weight: 800; font-size: var(--t-micro); letter-spacing: 0.1em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+
+/* Applications : les trois livrets s’enchaînent en coupe franche */
+.sz-defile { position: relative; margin: 0; overflow: clip; }
+.sz-defile > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; visibility: hidden; }
+.sz-defile > img.is-actif { visibility: visible; }
+
+/* Le catalogue des Moires, qui se feuillette ---------------------------------- */
+.sz-livre { display: grid; justify-items: center; gap: clamp(1.25rem, 2.4vw, 2.5rem); padding: clamp(2.5rem, 6vw, 6rem) var(--cl-p); }
+.sz-livre__titre { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0.2em 0.6em; margin: 0; font-weight: 800; font-size: var(--t-h3); letter-spacing: -0.01em; text-transform: uppercase; }
+.sz-livre__titre .serif { font-size: 0.8em; text-transform: none; }
+.sz-livre__objet {
+  position: relative;
+  width: min(34vw, 62svh);
+  aspect-ratio: 4 / 5;
+  perspective: 1700px;
+  box-shadow: 0 2.2vw 4.5vw rgb(20 8 4 / 0.38);
+}
+/* Moitiés empilées : seule celle de la page en cours se voit */
+.sz-livre__moitie { position: absolute; left: 0; right: 0; z-index: 1; height: 50%; overflow: clip; opacity: 0; }
+.sz-livre__moitie.is-vu { z-index: 2; opacity: 1; }
+.sz-livre__moitie--haut { top: 0; }
+.sz-livre__moitie--bas { top: 50%; }
+.sz-livre__moitie img, .sz-livre__recto img, .sz-livre__verso img { position: absolute; left: 0; width: 100%; height: 200%; max-width: none; }
+.sz-livre__moitie--haut img { top: 0; }
+.sz-livre__moitie--bas img { top: -100%; }
+/* La feuille : recto = haut de la page, dos = bas de la page suivante.
+   Elle pivote autour des anneaux (bord bas de la moitié haute) */
+.sz-livre__feuille { z-index: 3; overflow: visible; transform-origin: 50% 100%; transform-style: preserve-3d; }
+.sz-livre__feuille.is-tourne { z-index: 5; opacity: 1; }
+.sz-livre__recto, .sz-livre__verso { position: absolute; inset: 0; overflow: clip; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.sz-livre__recto img { top: 0; }
+.sz-livre__verso { transform: rotateX(180deg); }
+.sz-livre__verso img { top: -100%; }
+.sz-livre__anneaux { position: absolute; left: 0; top: 42.593%; z-index: 6; width: 100%; height: auto; pointer-events: none; }
+.sz-livre__statut { min-width: 9ch; margin: 0; font-weight: 800; font-size: var(--t-micro); letter-spacing: 0.1em; text-align: center; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+
+/* Applications ------------------------------------------------------------------- */
+.sz-stickers { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; padding: 0; list-style: none; }
+.sz-stickers .sz-case > img { inset: 8%; width: 84%; height: 84%; }
+
+/* Mobile et tablette étroite ------------------------------------------------- */
+@media (max-width: 899px) {
+  .sz-slide, .sz-slide--livre { grid-template-columns: 1fr; }
+  .sz-slide__texte, .sz-slide--livre .sz-slide__texte { padding: 2.5rem var(--bord-r) 2.75rem var(--bord-l); font-size: 1rem; }
+  .sz-slide__titre { font-size: 1rem; }
+  .sz-slide--livre .sz-livre__objet { width: 100%; }
+  .sz-ouverture__bande { aspect-ratio: auto; height: 34vw; min-height: 8.5rem; }
+  .sz-ouverture__bande .sz-masque { width: 72%; }
+  .sz-ouverture__corps { padding: 2rem var(--bord-r) 2.5rem var(--bord-l); }
+  .sz-ouverture__texte { font-size: 1.0625rem; }
+  .sz-g3 { grid-template-columns: 1fr; }
+  .sz-construction { grid-template-columns: 1fr; }
+  .sz-construction figure { padding: 1.75rem var(--bord-r) 2rem var(--bord-l); }
+  .sz-construction__mini { gap: 1.25rem; padding-block: 2.5rem; }
+  .sz-construction__titre { font-size: 1rem; }
+  .sz-motif { height: 9rem; }
+  .sz-recit { aspect-ratio: auto; padding: 3rem var(--bord-r) 3.25rem var(--bord-l); font-size: 1rem; }
+  .sz .cl-g2 { grid-template-columns: 1fr; }
+  .sz-logos { grid-template-columns: 1fr 1fr; }
+  .sz-stickers { grid-template-columns: 1fr; }
+  .sz-stickers .sz-case { aspect-ratio: 16 / 10; }
+  .sz-typo { grid-template-columns: 1fr; }
+  .sz-typo__panneau { min-height: 0; padding: 1.75rem var(--bord-r) 2rem var(--bord-l); }
+  .sz-typo__panneau--rond { padding-top: 0; }
+  .sz-rond { width: min(72vw, 22rem); }
+  .sz-typo__texte { margin-top: 1.5rem; }
+  .sz-pangramme { margin-top: 1.5rem; font-size: 10vw; }
+  .sz-glyphes { grid-template-columns: repeat(6, 1fr); margin-top: 1rem; }
+  .sz-colonnes { height: 92vw; }
+  .sz-colonnes__nom { writing-mode: vertical-rl; }
+  .sz-colonnes__col.is-ouverte .sz-colonnes__nom { writing-mode: horizontal-tb; }
+  .sz-testeur { padding: 1.75rem var(--bord-r) 2.25rem var(--bord-l); }
+  .sz-testeur__reglages { grid-template-columns: 1fr; gap: 0.25rem; margin-bottom: 1.5rem; }
+  .sz-testeur__reglage--texte { margin-top: 0.75rem; }
+  .sz-signature, .sz-typo--abril .sz-signature { font-size: 11vw; }
+  .sz-typo--abril .sz-typo__panneau { grid-template-columns: 1fr; gap: 1.5rem; }
+  .sz-typo--abril .sz-typo__texte { justify-self: start; }
+  .sz-fleches { display: flex; gap: 1rem; margin-top: 1.25rem; }
+  .sz-fleche { position: static; height: 3.5rem; }
+  .sz-typo > .sz-typo__ent { padding: 1.75rem var(--bord-r) 0 var(--bord-l); }
+  .sz-glyphes-a { grid-template-columns: 1fr; padding: 1.75rem var(--bord-r) 2.25rem var(--bord-l); gap: 1.5rem; }
+  .sz-glyphes-a__vue { order: -1; }
+  .sz-glyphes-a__ligne { font-size: 0.5625rem; }
+  .sz-bandes { height: 64vw; }
+  .sz-bandes li { padding: 0.75rem 0.35rem; }
+  .sz-bandes span { writing-mode: vertical-rl; font-size: 0.6875rem; }
+}
+
+/* « Réduire les animations » : rien ne glisse ni ne tourne */
+@media (prefers-reduced-motion: reduce) {
+  .sz-colonnes__col, .sz-glyphes__btn, .sz-pangramme .sz-g, .sz-signature__l, .sz-glyphes-a__btn, .sz-fleche { transition: none; }
+  .sz-rond__g, .sz-rond__a, .sz-glyphes-a__svg use { animation: none; }
+  .sz-motif__calque, .sz-construction__logo { transition: none; }
+}

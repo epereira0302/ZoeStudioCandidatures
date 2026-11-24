@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Projets · Zoé Vinardell</title>
+  <meta name="description" content="Tous les projets de Zoé Vinardell, graphiste et directrice artistique à Paris : identité visuelle, packaging, direction artistique, images, publicité et photographie.">
+  <meta name="theme-color" content="#37121e">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Zoé Vinardell · Studio Zoé">
+  <meta property="og:description" content="Graphisme / Direction artistique / Image. Portfolio de Zoé Vinardell, Paris.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="assets/fonts/neue-montreal-extrabold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/right-didone-light-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css?v=20261124c1">
+  <script>(function(h){h.classList.add('js');try{if(sessionStorage.getItem('sz-rideau')==='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('arrivee');setTimeout(function(){h.classList.remove('arrivee')},3000)}}catch(e){}})(document.documentElement)</script>
+  <!-- Démarrage plus rapide : scripts et contenus demandés dès l’en-tête -->
+  <link rel="modulepreload" href="assets/js/projets.js">
+  <link rel="modulepreload" href="assets/js/commun.js">
+  <link rel="modulepreload" href="assets/js/donnees.js">
+  <link rel="preload" href="contenu/site.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="contenu/projets.json" as="fetch" crossorigin="anonymous">
+  <!-- Page suivante préchargée au survol ou au toucher d’un lien (Chrome, Edge) -->
+  <script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body data-page="projets">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="curtain" aria-hidden="true"></div>
+  <div class="cursor is-hidden" aria-hidden="true">
+    <span class="cursor__calque cursor__calque--negatif"><span class="cursor__halo"></span></span>
+    <span class="cursor__calque cursor__calque--rose"><span class="cursor__halo"></span><span class="cursor__point"></span></span>
+  </div>
+
+  <header class="header wrap" data-on="paper">
+    <a class="brand" href="./" aria-label="Studio Zoé, accueil">
+      <svg class="brand__mono" viewBox="60 51 1153 881" aria-hidden="true"><use href="assets/img/sprite.svg#mono"/></svg>
+      <span class="brand__name" data-bind="identite.studio" translate="no">Studio Zoé</span>
+    </a>
+    <div class="header__right">
+    <nav class="nav" aria-label="Navigation principale">
+      <ul>
+        <li><a class="link" href="projets.html" aria-current="page">Projets</a></li>
+        <li><a class="link" href="#contact">Contact</a></li>
+        <li><a class="btn btn--rose nav__cta" href="mailto:studiozoe.graphisme@gmail.com?subject=Candidature%20%E2%80%93%20Zo%C3%A9%20Vinardell">Me contacter</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-btn__label">Menu</span><span class="menu-btn__icon" aria-hidden="true"></span>
+    </button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+    <nav aria-label="Menu mobile">
+      <ol>
+        <li><a class="menu__link display" href="./">Accueil</a></li>
+        <li><a class="menu__link display" href="projets.html" aria-current="page">Projets</a></li>
+        <li><a class="menu__link display" href="#contact">Contact</a></li>
+      </ol>
+    </nav>
+    <div class="menu__foot">
+      <a class="btn btn--rose menu__cta" href="mailto:studiozoe.graphisme@gmail.com?subject=Candidature%20%E2%80%93%20Zo%C3%A9%20Vinardell">Me contacter</a>
+      <a href="mailto:studiozoe.graphisme@gmail.com" data-bind-href="mailto:contact.email" data-bind="contact.email">studiozoe.graphisme@gmail.com</a>
+      <p class="micro dispo"><span class="dispo__dot" aria-hidden="true"></span><span data-bind="contact.disponibilite">Disponible pour missions freelance / CDI</span></p>
+    </div>
+  </div>
+
+
+  <main id="contenu" class="projets">
+    <!-- Grille de photos (référence d’Enzo, 2026-10-25) : titre, phrase courte,
+         onglets des catégories, puis une photo carrée par projet. Au clic,
+         la photo grandit jusqu’au plein écran et ouvre la page projet. -->
+    <section class="grille-page wrap" data-theme="paper" aria-labelledby="grille-titre">
+      <div class="grille-tete">
+        <h1 class="grille-titre display" id="grille-titre">Projets</h1>
+      </div>
+      <div class="grille-barre">
+        <h2 class="grille-barre__titre">Sélection</h2>
+        <div class="onglets" role="group" aria-label="Filtrer par catégorie" data-filtres>
+          <button class="onglet" type="button" aria-pressed="true" data-filtre="">Tout</button>
+        </div>
+      </div>
+      <p class="sr-only" role="status" data-grille-statut></p>
+      <ul class="grille" data-grille></ul>
+    </section>
+  </main>
+
+
+  <!-- Pied de page : coordonnées en colonnes, puis le mot géant dont les lettres
+       s’écrasent au survol (référence vidéo d’Enzo, 2026-10-15) -->
+  <footer class="footer wrap" id="contact" data-theme="rose">
+    <div class="footer__grid">
+      <nav class="footer__col" aria-labelledby="pied-nav">
+        <p class="footer__tete micro" id="pied-nav">Navigation</p>
+        <ul>
+          <li><a class="link" href="projets.html" aria-current="page">Projets</a></li>
+          <li><a class="link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer__col">
+        <p class="footer__tete micro">Contact</p>
+        <ul>
+          <li><a class="link" href="mailto:studiozoe.graphisme@gmail.com" data-bind-href="mailto:contact.email" data-bind="contact.email">studiozoe.graphisme@gmail.com</a></li>
+          <li><a class="link" href="tel:+33641910429" data-bind-href="tel:contact.telephone" data-bind="contact.telephone">+33 6 41 91 04 29</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="footer__tete micro">Ville</p>
+        <p class="footer__val" data-bind="contact.ville">Paris</p>
+      </div>
+      <div class="footer__col">
+        <p class="footer__tete micro">Suivez-moi</p>
+        <p class="footer__reseaux" data-linkedin>
+          <span class="footer__social is-attente" role="img" aria-label="LinkedIn, lien à venir" title="Lien LinkedIn à venir"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/img/sprite.svg#linkedin"/></svg></span>
+        </p>
+      </div>
+    </div>
+    <a class="footer__geant" href="mailto:studiozoe.graphisme@gmail.com" aria-label="Écrire à Zoé Vinardell"><span class="geant" aria-hidden="true"><span class="geant__l">C</span><span class="geant__l">O</span><span class="geant__l">N</span><span class="geant__l">T</span><span class="geant__l">A</span><span class="geant__l">C</span><span class="geant__l">T</span></span></a>
+    <div class="footer__bottom micro">
+      <span>© <span data-year>2026</span> <span data-bind="identite.studio" translate="no">Studio Zoé</span> · <span data-bind="identite.nom" translate="no">Zoé Vinardell</span></span>
+      <a class="link footer__legal" href="mentions-legales.html">Mentions légales</a>
+      <a class="to-top link" href="#contenu">Haut de page
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="assets/img/sprite.svg#arrow"/></svg><svg viewBox="0 0 24 24"><use href="assets/img/sprite.svg#arrow"/></svg></span>
+      </a>
+    </div>
+  </footer>
+
+  <script src="assets/js/vendor/gsap.min.js" defer></script>
+  <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/vendor/lenis.min.js" defer></script>
+  <script type="module" src="assets/js/projets.js"></script>
+</body>
+</html>

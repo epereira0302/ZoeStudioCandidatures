@@ -1,0 +1,158 @@
+/* Gabarit « Glowy Winter » (Columbus Café, Noël 2025) -----------------------
+   Même mise en page que Columbus et Studio Zoé (columbus.css : encart
+   aubergine à gauche, visuels à droite), d’après les 7 planches d’Enzo
+   (2026-11-04). Couleurs relevées sur ses planches. Aucun filet, coins carrés. */
+
+.page-gw {
+  --gw-rose: #f8b6d3;        /* fond des affiches */
+  --gw-rouge: #a72533;       /* libellés des affiches */
+  --gw-blanc: #ffffff;
+}
+.page-gw ::selection { background: var(--gw-rose); color: var(--cl-encart); }
+
+[data-theme="gw-rose"] { background: var(--gw-rose); color: var(--gw-rouge); }
+[data-theme="gw-blanc"] { background: var(--gw-blanc); color: var(--cl-encart); }
+
+.gw-visuels { background: var(--gw-blanc); }
+.gw figure { margin: 0; }
+
+/* Encart : deux paragraphes bien détachés */
+.gw-encart__texte { text-align: left; }
+.gw-encart__texte p { margin: 0; }
+.gw-encart__texte p + p { margin-top: 1.5em; }
+
+/* Crédits : « Nom : rôle », une ligne chacun */
+.gw-credits li { font-weight: 800; }
+.gw-credits li + li { margin-top: 0.1em; }
+
+/* Affiches A1, A4, A5 posées sur la même ligne, mesures de la planche 2 */
+.gw-affiches {
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  padding: 3.4% 4% 2.6% 9.4%;
+  list-style: none;
+}
+.gw-affiches__item { flex: none; }
+.gw-affiches__item--a1 { width: 27.5%; }
+.gw-affiches__item--a4 { width: 25.8%; margin-left: 5.1%; }
+.gw-affiches__item--a5 { width: 17.6%; margin-left: 4.6%; }
+.gw-affiches img { display: block; width: 100%; height: auto; }
+.gw-affiches__nom {
+  margin: 0 0 0.9em;
+  font-size: max(0.6875rem, 0.92vw);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Vidéos des recettes côte à côte, sans gouttière */
+.gw-posts video, .gw-posts img { display: block; width: 100%; height: auto; }
+.gw-posts { background: var(--cl-encart); }
+
+/* Façade : les étoiles tournent lentement sur elles-mêmes, derrière la façade */
+.gw-facade { position: relative; aspect-ratio: 2400 / 1738; overflow: clip; background: #f4bdd6; }
+.gw-facade__etoiles { position: absolute; inset: 0; }
+.gw-etoile {
+  position: absolute;
+  width: 17.1%;
+  aspect-ratio: 1;
+  fill: #c83b4a;
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+}
+.gw-facade__avant { position: relative; display: block; width: 100%; height: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .gw-etoile { animation: gw-tourne var(--d, 90s) linear infinite var(--sens, normal); will-change: transform; }
+}
+@keyframes gw-tourne {
+  from { transform: translate(-50%, -50%) rotate(var(--r, 0deg)); }
+  to { transform: translate(-50%, -50%) rotate(calc(var(--r, 0deg) + 360deg)); }
+}
+
+/* Sapin : vidéos jour et nuit superposées, bord à bord, interrupteur en bas */
+.gw-sapin { position: relative; aspect-ratio: 1440 / 1080; overflow: clip; background: #f2b6d4; }
+.gw-sapin[data-version="1"] { background: #2e1d33; }
+.gw-sapin__video { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 450ms var(--ease), visibility 0s linear 450ms; }
+.gw-sapin__video.is-actif { opacity: 1; visibility: visible; transition: opacity 450ms var(--ease), visibility 0s; }
+.gw-sapin__video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gw-mode { color: var(--cl-encart); }
+.gw-mode .cl-mode__pouce { background: var(--cl-encart); }
+.gw-mode .cl-mode__btn[aria-pressed="true"] { color: var(--cl-rose-texte); }
+/* Nuit : pastille aubergine, curseur rose */
+.gw-sapin[data-version="1"] .gw-mode { background: var(--cl-encart); color: var(--cl-rose-texte); box-shadow: 0 6px 24px rgb(0 0 0 / 0.35); }
+.gw-sapin[data-version="1"] .cl-mode__pouce { left: 50%; right: 4px; background: var(--cl-rose-texte); transition: right 300ms var(--ease), left 380ms var(--ease) 90ms, background-color 400ms var(--ease); }
+.gw-sapin[data-version="1"] .cl-mode__btn[aria-pressed="true"] { color: var(--cl-encart); }
+
+/* Mugs à plat sur blanc */
+.gw-mugs img { display: block; width: 100%; height: auto; }
+
+/* Shooting : photos carrées sur blanc, avec la marge des planches 6 et 7 */
+.gw-shooting { padding: 2.2% 2.2% 3%; }
+.gw-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.65vw 1.45vw; margin: 0; padding: 0; list-style: none; }
+.gw-grille + .gw-grille { margin-top: 1.65vw; }
+.gw-grille__large { grid-column: 1 / -1; }
+.gw-grille .cl-z { aspect-ratio: 1; }
+.gw-grille .cl-z > img { height: 100%; object-fit: cover; }
+.gw-grille__large .cl-z { aspect-ratio: 2400 / 854; }
+
+@media (max-width: 899px) {
+  .gw-affiches { flex-wrap: wrap; justify-content: center; gap: 2rem 6%; padding: 2.25rem var(--bord-r) 2.5rem var(--bord-l); }
+  .gw-affiches__item--a1 { width: 70%; }
+  .gw-affiches__item--a4, .gw-affiches__item--a5 { width: 44%; margin-left: 0; }
+  .gw-affiches__nom { font-size: 0.6875rem; white-space: normal; }
+  .gw-shooting { padding: 0.75rem; }
+  .gw-grille { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .gw-grille + .gw-grille { margin-top: 0.75rem; }
+  .gw-grille__large { grid-column: 1 / -1; }
+  /* Six photos sur deux colonnes ; la troisième de la seconde grille passe en large */
+  .gw-grille:last-child > li:last-child { grid-column: 1 / -1; }
+  .gw-grille:last-child > li:last-child .cl-z { aspect-ratio: 4 / 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gw-sapin__video, .gw-sapin__video.is-actif { transition: none; }
+}
+
+/* Ouverture animée (SNOW-TEXT.ai d’Enzo, 2026-11-05) ------------------------
+   Calques : fond (spirale + produits + coulée de neige), flocons (canvas),
+   titre en trois états (écrit, givré, enneigé), coulée de neige qui s’étire,
+   gouttes. Les masques à bord de neige (vagues et coulures) font apparaître
+   chaque état par le haut ; « envers » = le même bord, inversé, pour effacer
+   l’état précédent au même rythme. Tout se règle par mask-position :
+   0 % 100 % = caché (ou visible pour un envers), 0 % 0 % = l’inverse. */
+.gw-neige { position: relative; aspect-ratio: 2419 / 2420; overflow: clip; background: #d76ea8; }
+.gw-neige__fond { display: block; width: 100%; height: auto; }
+.gw-neige__flocons { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.gw-neige__titre { position: absolute; transform-origin: 50% 70%; will-change: transform; }
+.gw-neige__couche, .gw-neige__couche > img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gw-neige__couche > img { display: block; object-fit: fill; }
+.gw-neige__masque, .gw-neige__envers {
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 220%; mask-size: 100% 220%;
+  -webkit-mask-position: 0% 100%; mask-position: 0% 100%;
+}
+.gw-neige__masque {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 220' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H100 V100.9 Q98.0,115.0 96.0,100.2 Q92.5,115.7 89.0,101.0 Q87.0,109.3 85.0,102.9 Q82.0,110.3 79.0,101.5 Q76.5,128.4 74.0,100.5 Q70.5,110.0 67.0,101.8 Q63.0,110.5 59.0,101.5 Q57.0,113.0 55.0,101.6 Q51.0,111.0 47.0,100.3 Q44.0,113.5 41.0,100.4 Q38.5,127.2 36.0,100.1 Q32.0,115.8 28.0,100.2 Q25.5,112.7 23.0,101.7 Q21.0,108.5 19.0,100.2 Q16.5,129.5 14.0,102.7 Q10.0,130.7 6.0,100.1 Q3.0,111.2 0.0,100.0 Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 220' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H100 V100.9 Q98.0,115.0 96.0,100.2 Q92.5,115.7 89.0,101.0 Q87.0,109.3 85.0,102.9 Q82.0,110.3 79.0,101.5 Q76.5,128.4 74.0,100.5 Q70.5,110.0 67.0,101.8 Q63.0,110.5 59.0,101.5 Q57.0,113.0 55.0,101.6 Q51.0,111.0 47.0,100.3 Q44.0,113.5 41.0,100.4 Q38.5,127.2 36.0,100.1 Q32.0,115.8 28.0,100.2 Q25.5,112.7 23.0,101.7 Q21.0,108.5 19.0,100.2 Q16.5,129.5 14.0,102.7 Q10.0,130.7 6.0,100.1 Q3.0,111.2 0.0,100.0 Z'/%3E%3C/svg%3E");
+}
+.gw-neige__envers {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 220' preserveAspectRatio='none'%3E%3Cpath d='M0,100 Q3.0,111.2 6.0,100.1 Q10.0,130.7 14.0,102.7 Q16.5,129.5 19.0,100.2 Q21.0,108.5 23.0,101.7 Q25.5,112.7 28.0,100.2 Q32.0,115.8 36.0,100.1 Q38.5,127.2 41.0,100.4 Q44.0,113.5 47.0,100.3 Q51.0,111.0 55.0,101.6 Q57.0,113.0 59.0,101.5 Q63.0,110.5 67.0,101.8 Q70.5,110.0 74.0,100.5 Q76.5,128.4 79.0,101.5 Q82.0,110.3 85.0,102.9 Q87.0,109.3 89.0,101.0 Q92.5,115.7 96.0,100.2 Q98.0,115.0 100.0,100.9 V220 H0 Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 220' preserveAspectRatio='none'%3E%3Cpath d='M0,100 Q3.0,111.2 6.0,100.1 Q10.0,130.7 14.0,102.7 Q16.5,129.5 19.0,100.2 Q21.0,108.5 23.0,101.7 Q25.5,112.7 28.0,100.2 Q32.0,115.8 36.0,100.1 Q38.5,127.2 41.0,100.4 Q44.0,113.5 47.0,100.3 Q51.0,111.0 55.0,101.6 Q57.0,113.0 59.0,101.5 Q63.0,110.5 67.0,101.8 Q70.5,110.0 74.0,100.5 Q76.5,128.4 79.0,101.5 Q82.0,110.3 85.0,102.9 Q87.0,109.3 89.0,101.0 Q92.5,115.7 96.0,100.2 Q98.0,115.0 100.0,100.9 V220 H0 Z'/%3E%3C/svg%3E");
+}
+/* La coulée de neige, posée sur celle du fond, s’étire vers le bas en fondant */
+.gw-neige__bande { position: absolute; top: 0; left: 0; display: block; width: 100%; height: auto; transform-origin: 50% 0; pointer-events: none; }
+/* Eau de fonte (gouttes et filets) au-dessus de tout, et remplissage des
+   lettres : cercles qui grossissent depuis leur centre */
+.gw-neige__eau { position: absolute; top: 0; left: 0; width: 100%; height: auto; aspect-ratio: 2419 / 820; overflow: visible; pointer-events: none; }
+.gw-neige__ecrit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.gw-neige__eau circle { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+/* Fin (ou « réduire les animations ») : titre enneigé, grossi */
+.gw-neige[data-etat="fin"] .gw-neige__masque,
+.gw-neige[data-etat="fin"] .gw-neige__envers { -webkit-mask-position: 0% 0%; mask-position: 0% 0%; }
+.gw-neige[data-etat="fin"] .gw-neige__titre { transform: scale(1.12); will-change: auto; }
+.gw-neige[data-etat="fin"] .gw-neige__bande { transform: scaleY(1.045); }
+.gw-neige[data-etat="fin"] .gw-neige__eau { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .gw-neige__flocons { display: none; }
+}

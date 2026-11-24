@@ -1,0 +1,137 @@
+/* Gabarit « Production image & direction artistique » (Columbus Café) --------
+   Version C de la maquette vidéo (24/11/2026) : planche, duo, plein cadre,
+   seconde planche, en scroll libre. Base : columbus.css et krispy-commun.css.
+   Textes posés sur les visuels : Cooper Black (titres, kit Adobe Fonts lvy6flr)
+   et Uniform (le reste). Uniform n’est pas au catalogue Adobe Fonts : Sofia Pro
+   Condensed (kit ivl0joc) le remplace en attendant les fichiers web sous
+   licence. L’encart aubergine garde la police du site. */
+
+.ci-cooper { font-family: "cooper-black-std", "Cooper Black", "Cooper Std", Georgia, serif; font-weight: 400; font-style: normal; letter-spacing: -0.01em; text-transform: none; }
+.ci-uniform { font-family: "uniform-extra-condensed", "Uniform Extra Condensed", "uniform", "sofia-pro-condensed", "Arial Narrow", sans-serif; font-weight: 400; font-style: normal; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Crédits : nom en gras, travail en italique regular */
+.page-ci .kk-credits__nom { font-weight: 800; }
+.page-ci .kk-credits__role { font-weight: 400; font-style: italic; text-transform: none; letter-spacing: 0.02em; }
+
+/* Fond et encre : interpolés en continu par le gabarit au fil du scroll */
+.ci-visuels { --ci-haut: var(--header-h); background-color: var(--ci-fond); color: var(--ci-encre); }
+.ci-edition { padding-bottom: 6vh; }
+.ci-edition:last-of-type { padding-bottom: 10vh; }
+.ci-bloc { overflow-x: clip; }
+.ci-bloc img, .ci-bloc video { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+
+/* Planche : cinq photos (ou vidéos) posées sur l’aplat ---------------------- */
+.ci-bloc--planche { padding: 10vh 0 6vh; }
+.ci-planche {
+  position: relative;
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
+  min-height: 34rem;
+}
+.ci-photo { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); margin: 0; will-change: transform, opacity; }
+.ci-photo figcaption { position: absolute; bottom: 100%; left: 0; padding-bottom: 0.4rem; font-size: clamp(0.75rem, 0.9vw, 0.9375rem); line-height: 1; }
+.ci-photo__cadre { width: 100%; height: 100%; overflow: clip; }
+/* vidéo : format d’origine, rien n’est recadré */
+.ci-photo--video { height: auto; }
+.ci-photo--video .ci-photo__cadre { height: auto; }
+.ci-photo__cadre > * { will-change: transform; }
+/* Places relevées sur la maquette (P) et leur miroir (Q) */
+.ci-planche--P .ci-photo:nth-of-type(1) { --x: 17%; --y: 9%; --w: 19%; --h: 44%; }
+.ci-planche--P .ci-photo:nth-of-type(2) { --x: 43%; --y: 47%; --w: 22%; --h: 46%; }
+.ci-planche--P .ci-photo:nth-of-type(3) { --x: 47%; --y: 8%; --w: 25%; --h: 32%; }
+.ci-planche--P .ci-photo:nth-of-type(4) { --x: 3.5%; --y: 63%; --w: 25%; --h: 30%; }
+.ci-planche--P .ci-photo:nth-of-type(5) { --x: 75%; --y: 52%; --w: 19%; --h: 38%; }
+.ci-planche--Q .ci-photo:nth-of-type(1) { --x: 64%; --y: 9%; --w: 19%; --h: 44%; }
+.ci-planche--Q .ci-photo:nth-of-type(2) { --x: 35%; --y: 47%; --w: 22%; --h: 46%; }
+.ci-planche--Q .ci-photo:nth-of-type(3) { --x: 28%; --y: 8%; --w: 25%; --h: 32%; }
+.ci-planche--Q .ci-photo:nth-of-type(4) { --x: 71.5%; --y: 63%; --w: 25%; --h: 30%; }
+.ci-planche--Q .ci-photo:nth-of-type(5) { --x: 6%; --y: 52%; --w: 19%; --h: 38%; }
+
+/* Titre et sous-titre : un seul bloc, dans le flux, pour qu’ils ne se chevauchent jamais */
+.ci-planche__titre { position: absolute; top: 7%; width: 21%; display: flex; flex-direction: column; gap: clamp(1rem, 2.2vh, 1.75rem); will-change: transform, opacity; }
+.ci-planche--P .ci-planche__titre { left: 76.5%; }
+.ci-planche--Q .ci-planche__titre { left: 3.5%; }
+.ci-planche__titre h2 { margin: 0; font-size: clamp(1.75rem, 2.8vw, 3.25rem); line-height: 1.04; overflow-wrap: normal; hyphens: none; text-wrap: balance; }
+.ci-planche__titre p { margin: 0; font-size: clamp(0.8125rem, 1vw, 1rem); line-height: 1.35; }
+.ci-planche__ed { position: absolute; bottom: 3%; margin: 0; font-size: clamp(0.8125rem, 1vw, 1rem); }
+.ci-planche--P .ci-planche__ed { right: 3%; }
+.ci-planche--Q .ci-planche__ed { left: 3%; }
+
+/* Duo : photo et aplat foncé, la petite image change ------------------------ */
+.ci-bloc--duo { padding: 6vh 0; }
+/* piste : le duo reste à l’écran le temps que les petites images défilent */
+.ci-duo__piste { height: calc(100vh - var(--ci-haut) + 110vh); height: calc(100svh - var(--ci-haut) + 110svh); }
+.ci-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: sticky;
+  top: var(--ci-haut);
+  height: calc(100vh - var(--ci-haut));
+  height: calc(100svh - var(--ci-haut));
+  min-height: 30rem;
+  overflow: clip;
+}
+.ci-duo > * { will-change: transform; }
+.ci-duo__photo { margin: 0; overflow: clip; }
+.ci-duo__aplat { position: relative; display: grid; place-items: center; background: var(--ci-fonce); overflow: clip; }
+.ci-duo--miroir .ci-duo__photo { order: 2; }
+.ci-duo__suite { position: relative; width: 34%; aspect-ratio: 2 / 3; margin: 0; padding: 0; list-style: none; }
+.ci-duo__suite li { position: absolute; inset: 0; overflow: clip; opacity: 0; will-change: clip-path; }
+.ci-duo__suite li:first-child { opacity: 1; }
+.ci-duo__compte { position: absolute; left: 50%; bottom: clamp(1rem, 5vh, 2.5rem); margin: 0; transform: translateX(-50%); font-size: clamp(0.8125rem, 1vw, 1rem); color: var(--ci-clair); font-variant-numeric: tabular-nums; }
+
+/* Plein cadre : la dernière petite image, en paysage ------------------------ */
+.ci-bloc--plein { padding: 8vh 0; }
+.ci-plein {
+  position: relative;
+  margin: 0;
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
+  min-height: 28rem;
+  overflow: clip;
+  background: var(--ci-fonce);
+}
+.ci-plein img { will-change: transform; }
+.ci-plein__legende { position: absolute; left: clamp(1rem, 3vw, 2.5rem); bottom: clamp(1rem, 4vh, 2rem); margin: 0; font-size: clamp(0.8125rem, 1vw, 1rem); color: #fff; text-shadow: 0 1px 12px rgb(0 0 0 / 0.45); }
+
+/* Mobile et tablette étroite ------------------------------------------------- */
+@media (max-width: 899px) {
+  .ci-visuels { --ci-haut: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 44px); }
+  .ci-bloc--planche { padding: 6vh 0 4vh; }
+  .ci-planche { height: auto; min-height: 0; aspect-ratio: 3 / 5; }
+  .ci-planche__titre, .ci-planche--P .ci-planche__titre, .ci-planche--Q .ci-planche__titre { left: 6%; top: 2%; width: 88%; gap: 0.6rem; }
+  .ci-planche__titre h2 { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+  .ci-planche__titre p { font-size: 0.8125rem; }
+  .ci-planche--P .ci-photo:nth-of-type(1) { --x: 6%; --y: 23%; --w: 38%; --h: 25%; }
+  .ci-planche--P .ci-photo:nth-of-type(2) { --x: 50%; --y: 47%; --w: 44%; --h: 29%; }
+  .ci-planche--P .ci-photo:nth-of-type(3) { --x: 50%; --y: 25%; --w: 44%; --h: 16%; }
+  .ci-planche--P .ci-photo:nth-of-type(4) { --x: 6%; --y: 82%; --w: 44%; --h: 14%; }
+  .ci-planche--P .ci-photo:nth-of-type(5) { --x: 6%; --y: 54%; --w: 36%; --h: 23%; }
+  .ci-planche--Q .ci-photo:nth-of-type(1) { --x: 56%; --y: 23%; --w: 38%; --h: 25%; }
+  .ci-planche--Q .ci-photo:nth-of-type(2) { --x: 6%; --y: 47%; --w: 44%; --h: 29%; }
+  .ci-planche--Q .ci-photo:nth-of-type(3) { --x: 6%; --y: 25%; --w: 44%; --h: 16%; }
+  .ci-planche--Q .ci-photo:nth-of-type(4) { --x: 50%; --y: 82%; --w: 44%; --h: 14%; }
+  .ci-planche--Q .ci-photo:nth-of-type(5) { --x: 58%; --y: 54%; --w: 36%; --h: 23%; }
+  /* la seconde planche n’a pas de titre : les photos remontent */
+  .ci-planche--sans-titre { aspect-ratio: 3 / 4.4; }
+  .ci-planche--sans-titre .ci-photo { top: calc((var(--y) - 16%) * 1.14); }
+  .ci-planche__ed { font-size: 0.75rem; }
+  /* vidéo : la hauteur de la case décide, la largeur suit le format de la vidéo */
+  .ci-photo--video { width: auto; height: var(--h); }
+  .ci-photo--video .ci-photo__cadre { width: auto; height: 100%; }
+  .ci-planche--Q .ci-photo--video:nth-of-type(1), .ci-planche--Q .ci-photo--video:nth-of-type(4), .ci-planche--Q .ci-photo--video:nth-of-type(5) { left: auto; right: 6%; }
+  .ci-bloc--duo { padding: 4vh 0; }
+  .ci-duo { grid-template-columns: none; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); min-height: 0; }
+  .ci-duo--miroir .ci-duo__photo { order: 0; }
+  .ci-duo__suite { width: auto; height: 68%; }
+  .ci-bloc--plein { padding: 4vh 0; }
+  .ci-plein { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+}
+
+/* Réduire les animations : rien ne bouge, tout reste visible ----------------- */
+.ci--statique .ci-photo, .ci--statique .ci-planche__titre, .ci--statique .ci-duo, .ci--statique .ci-duo > *, .ci--statique .ci-plein { opacity: 1; transform: none; clip-path: none; }
+.ci--statique .ci-duo__suite { display: flex; gap: 3%; width: 86%; aspect-ratio: auto; height: auto; }
+.ci--statique .ci-duo__suite li { position: static; flex: 1; aspect-ratio: 2 / 3; opacity: 1; }
+.ci--statique .ci-duo__compte { display: none; }
+.ci--statique .ci-duo__piste { height: auto; }
+.ci--statique .ci-duo { position: static; }

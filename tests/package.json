@@ -1,0 +1,19 @@
+{
+  "name": "zoestudio-tests",
+  "private": true,
+  "type": "module",
+  "description": "Tests du site ZoeStudio : données, fonctions et parcours dans le navigateur (méthode ECC test-coverage + e2e-testing)",
+  "scripts": {
+    "test": "npm run test:unitaires && npm run test:e2e",
+    "test:unitaires": "node --test \"unitaires/*.test.mjs\"",
+    "test:e2e": "playwright test",
+    "test:couverture": "rm -rf .couverture && COUVERTURE=1 playwright test && node couverture/rapport.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "istanbul-lib-coverage": "3.2.2",
+    "istanbul-lib-report": "3.0.1",
+    "istanbul-reports": "3.1.7",
+    "v8-to-istanbul": "9.3.0"
+  }
+}

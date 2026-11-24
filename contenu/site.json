@@ -1,0 +1,65 @@
+{
+  "identite": {
+    "nom": "Zoé Vinardell",
+    "prenom": "Zoé",
+    "nomFamille": "Vinardell",
+    "studio": "Studio Zoé",
+    "accroche": "Graphisme / Direction artistique / Image",
+    "ville": "Paris"
+  },
+  "aPropos": {
+    "court": "Passionnée par l’image, le design et les tendances, j’ai le goût du détail et je m’attache à rendre chaque marque désirable, sur tous ses supports.",
+    "long": "J’aime construire des univers de marque désirables : trouver le bon concept, poser une direction artistique, puis la faire vivre à travers des images, des shootings et des campagnes qui se reconnaissent au premier regard. Je prends autant de plaisir à défendre une idée qu’à la voir prendre forme, seule ou en équipe, car c’est en partageant que les meilleurs projets prennent vie.",
+    "motsItaliques": [
+      "univers de marque",
+      "direction artistique",
+      "des shootings",
+      "campagnes",
+      "défendre une idée",
+      "partageant",
+      "meilleurs projets"
+    ]
+  },
+  "contact": {
+    "email": "studiozoe.graphisme@gmail.com",
+    "telephone": "+33 6 41 91 04 29",
+    "ville": "Paris",
+    "disponibilite": "Disponible pour missions freelance / CDI",
+    "reseaux": [],
+    "disponibiliteContact": "Disponible tout de suite — CDI ou Freelance",
+    "linkedin": "https://www.linkedin.com/in/zo%C3%A9-vinardell-7a2176151/",
+    "_aide": "Renseignez « linkedin » avec l’adresse complète du profil (https://www.linkedin.com/in/…) : le lien apparaîtra automatiquement."
+  },
+  "accueil": {
+    "_aide": "Textes et images de la page d’accueil.",
+    "ouverture": {
+      "_aide": "Phrase d’accroche : « debut » et « liaison » en italique, l’ovale du logo se place avant « fin ».",
+      "debut": "Je suis",
+      "liaison": "et ceci est mon",
+      "fin": "univers"
+    },
+    "apropos": {
+      "metier": "Direction artistique,\ngraphisme et production d’images",
+      "paragraphes": [
+        "Je suis Zoé, directrice artistique et graphiste à Paris. Pendant six ans chez Wagram, j’ai été la garante de l’image de Columbus Café et de Krispy Kreme : nouvelle charte graphique, campagne des 30 ans, co-brandings, packaging et scénographie en boutique.",
+        "Ce que j’aime le plus : faire passer une idée du moodboard à l’image. Je dirige shootings et tournages, une trentaine en un an, en orchestrant lieux, décors, casting, équipes et budget, optimisé de 32 %. Depuis 2023, je mène aussi Studio Zoé, mon activité freelance, pour Monin, Candia ou LCT. Prête à rejoindre votre équipe pour donner vie à vos prochaines campagnes."
+      ],
+      "portrait": "contenu/images/accueil/portrait-zoe.webp",
+      "portraitPetit": "contenu/images/accueil/portrait-zoe-700.webp",
+      "fond": "contenu/images/accueil/fourrure.webp"
+    },
+    "logo": {
+      "photo": "contenu/images/accueil/logo-studio-zoe.webp",
+      "petite": "contenu/images/accueil/logo-studio-zoe-s.webp",
+      "legende": "Création graphique",
+      "_aide": "Image de la fenêtre ovale du titre, qui s’agrandit au scroll. Le logo doit être au centre de l’image (format 16:9). « photo » : grand format (2560 px), « petite » : 1000 px. Laissez « photo » vide pour afficher le monogramme vectoriel."
+    }
+  },
+  "mentionsLegales": {
+    "_aide": "Informations de l’éditrice du site, affichées sur mentions-legales.html. Un champ vide reste affiché « à compléter ».",
+    "statut": "Micro-entreprise",
+    "siret": "982 872 434 00013",
+    "adresse": "117 Grande Rue, 93250 Villemomble",
+    "majLe": "24 octobre 2026"
+  }
+}

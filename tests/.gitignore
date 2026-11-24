@@ -1,0 +1,5 @@
+node_modules/
+.couverture/
+rapport-couverture/
+rapport-playwright/
+test-results/

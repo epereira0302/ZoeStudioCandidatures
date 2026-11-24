@@ -1,0 +1,433 @@
+/* Gabarit « C’est le moment » (Columbus Café) ------------------------------
+   D’après la maquette d’Enzo (2026-10-25) : un encart aubergine très foncé
+   fixé à gauche (un quart de la largeur, texte rose en capitales espacées),
+   les visuels bord à bord à droite, sans gouttière. Couleurs de la charte :
+   jaune muffin, brun café, blanc, crème et rose des exemples. Aucun filet. */
+
+.page-cl {
+  --cl-encart: #200603;
+  --cl-rose-texte: #feabda;
+  --cl-jaune: #fab900;
+  --cl-soda: #ffd57b;
+  --cl-noir: #221718;
+  --cl-blanc: #ffffff;
+  --cl-creme: #fef1d6;
+  --cl-rose: #ffd3e9;
+  --cl-l: 25vw;              /* largeur de l’encart */
+  --cl-p: 1.55vw;            /* marge intérieure de l’encart */
+  background: var(--cl-encart);
+}
+.page-cl .curtain { background: var(--cl-encart); }
+.page-cl ::selection { background: var(--cl-jaune); color: var(--cl-noir); }
+.page-cl :focus-visible { outline-color: currentColor; }
+
+[data-theme="cl-encart"] { background: var(--cl-encart); color: var(--cl-rose-texte); }
+[data-theme="cl-noir"] { background: var(--cl-noir); color: var(--cl-blanc); }
+[data-theme="cl-jaune"] { background: var(--cl-jaune); color: var(--cl-noir); }
+[data-theme="cl-blanc"] { background: var(--cl-blanc); color: var(--cl-noir); }
+[data-theme="cl-creme"] { background: var(--cl-creme); color: var(--cl-noir); }
+[data-theme="cl-rose"] { background: var(--cl-rose); color: var(--cl-noir); }
+
+/* En-tête du site : sur toute la largeur, aubergine comme l’encart (Enzo,
+   2026-10-25), toujours affiché ; l’encart et les visuels commencent dessous */
+.page-cl .header[data-on] { --header-fg: var(--cl-rose-texte); --brand-fg: var(--cl-rose-texte); --header-bg: var(--cl-encart); }
+.page-cl .header { background: var(--header-bg); }
+.page-cl .header.is-hidden { transform: none; }
+
+/* Projet suivant en bandeau blanc, texte aubergine ; le pied de page reste rose */
+.page-cl .projet-suivant { --aubergine: var(--cl-blanc); --rose: var(--cl-encart); --paper: var(--cl-encart); --fuchsia: var(--cl-encart); color: var(--cl-encart); }
+
+/* Mise en page : l’encart, puis les visuels ---------------------------------- */
+.cl { display: grid; grid-template-columns: var(--cl-l) minmax(0, 1fr); align-items: start; }
+.cl figure { margin: 0; }
+.cl-visuels { grid-column: 2; min-width: 0; padding-top: var(--header-h); background: var(--cl-noir); }
+/* Ancre : le chapitre se cale juste sous l’en-tête (et sous le bandeau sur mobile) */
+.cl-chap { scroll-margin-top: -1rem; }
+
+/* Encart */
+.cl-encart {
+  position: sticky;
+  top: 0;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  overflow: clip;
+  background: var(--cl-encart);
+  color: var(--cl-rose-texte);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+/* Contenu de l’encart : il défile au rythme du projet (columbus.js, suivi) */
+.cl-encart__defile {
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--header-h) + var(--cl-p) * 0.4) var(--cl-p) calc(var(--cl-p) + 3rem);
+  will-change: transform;
+}
+.cl-encart :focus-visible { outline-color: var(--cl-rose-texte); }
+
+.cl-encart__haut { display: flex; justify-content: space-between; gap: 1rem; margin: 0; letter-spacing: 0.08em; line-height: 1.25; }
+.cl-encart__haut dt { font-size: max(0.6875rem, 0.7vw); }
+.cl-encart__haut dd { margin: 0; font-size: max(0.6875rem, 0.56vw); font-weight: 400; }
+.cl-encart__haut div:last-child { text-align: right; }
+.cl-encart__titre {
+  margin: clamp(1.5rem, 8vh, 5.5rem) 0 0;
+  font-size: clamp(1.4rem, 2.05vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.cl-encart__sous { margin: max(0.4rem, 0.55vw) 0 0; font-size: max(0.75rem, 1vw); letter-spacing: 0.035em; }
+.cl-encart__texte {
+  margin: clamp(1.25rem, 5.5vh, 4rem) 0 0;
+  font-size: max(0.75rem, 0.86vw);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-align: left; /* aligné à gauche sur tous les projets (Enzo, 2026-11-16) */
+  hyphens: none;
+}
+
+/* Menu des chapitres, puis les crédits à la même place en fin de page */
+.cl-encart__bas { margin-top: clamp(1.25rem, 5.5vh, 5rem); }
+/* Les crédits arrivent sous le menu, en fin de défilement */
+.cl-credits--encart { margin-top: clamp(4rem, 14vh, 9rem); }
+.cl-encart__menu ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.cl-encart__lien {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: max(0.8rem, 1.05vw);
+  letter-spacing: 0.08em;
+  transition: opacity var(--d-fast) var(--ease);
+}
+.cl-encart__lien:hover, .cl-encart__lien[aria-current] { font-style: italic; }
+/* Chapitre en cours en fuchsia fluo, comme le sommaire de l’accueil */
+.cl-encart__lien[aria-current] { color: var(--fuchsia-fluo); }
+.cl-encart.a-un-actif .cl-encart__lien:not([aria-current]) { opacity: 0.75; }
+.cl-encart__lien:hover { opacity: 1 !important; }
+
+.cl-credits { letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; }
+.cl-credits h2 { margin: 0 0 max(0.9rem, 1.4vw); font-size: clamp(1.4rem, 2vw, 2.6rem); letter-spacing: 0.075em; line-height: 1; }
+.cl-credits h3 { margin: max(0.9rem, 1.6vw) 0 0.15rem; font-size: max(0.8rem, 1.05vw); letter-spacing: 0.06em; }
+.cl-credits h3:first-of-type { margin-top: 0; }
+.cl-credits ul { margin: 0; padding: 0; list-style: none; }
+.cl-credits li { font-size: max(0.75rem, 0.86vw); line-height: 1.4; font-weight: 600; }
+.cl-credits--mobile { display: none; }
+
+.cl-encart__fleche {
+  position: absolute;
+  right: calc(var(--cl-p) - 0.75rem);
+  bottom: calc(var(--cl-p) - 0.75rem);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: max(1.2rem, 1.6vw);
+  line-height: 1;
+  border-radius: 50%;
+  background: var(--cl-encart);
+  transition: transform var(--d-fast) var(--ease);
+}
+.cl-encart__fleche:hover { transform: translateY(-3px); }
+
+.cl-repere { display: none; }
+
+/* Briques des visuels -------------------------------------------------------- */
+.cl-g2 { display: grid; grid-template-columns: 1fr 1fr; }
+.cl-g3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+.cl-g2 > *, .cl-g3 > * { min-width: 0; }
+
+/* Visuel qui se pose au scroll : 106 % → 100 % */
+.cl-z { overflow: clip; }
+.cl-z > img, .cl-z > video { width: 100%; height: auto; transform: scale(var(--s, 1.06)); transform-origin: 50% 60%; will-change: transform; }
+.cl-carre { aspect-ratio: 1; }
+.cl-carre > img, .cl-carre > video { height: 100%; object-fit: cover; }
+
+/* Case de couleur : le visuel détouré au centre */
+.cl-case { display: grid; place-items: center; aspect-ratio: 1; padding: 10%; overflow: clip; }
+/* Le visuel ne déforme jamais la case (sinon un fond blanc apparaît à côté) */
+.cl-case:not(.cl-case--bande) { contain: size; }
+.cl-case { position: relative; }
+/* Le visuel tient entier dans la case, marges comprises */
+.cl-case:not(.cl-case--bande) > img { position: absolute; inset: 10%; width: 80%; height: 80%; object-fit: contain; }
+.cl-case--noir { background: var(--cl-noir); }
+.cl-case--jaune { background: var(--cl-jaune); }
+.cl-case--blanc { background: #f4f1ec; }
+/* Les visuels à fond blanc se fondent dans leur case (démarcation demandée par Enzo) */
+.cl-case--blanc img, .cl-case--creme img { mix-blend-mode: multiply; }
+.cl-case--creme { background: var(--cl-creme); }
+.cl-case--bande { aspect-ratio: auto; padding: 4vw 6vw; }
+.cl-case--bande img { height: auto; }
+
+/* Petite pastille de texte (Avant, Après, statut de la carte) */
+.cl-pastille {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  margin: 0;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  background: var(--cl-noir);
+  color: var(--cl-blanc);
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+button.cl-pastille { min-height: 44px; touch-action: manipulation; transition: transform var(--d-fast) var(--ease); }
+button.cl-pastille:active { transform: scale(0.97); transition-duration: 100ms; }
+.cl-pastille[hidden] { display: none; }
+
+/* Logo : deux versions basculées */
+.cl-bascule { position: relative; aspect-ratio: 16 / 9; overflow: clip; }
+.cl-bascule__img { position: absolute; inset: 0; opacity: 0; transition: opacity 250ms var(--ease); }
+.cl-bascule__img.is-actif { opacity: 1; }
+.cl-bascule__img img { width: 100%; height: 100%; object-fit: cover; }
+/* Interrupteur mode clair / mode sombre (référence d’Enzo) : la pastille
+   s’étire vers l’option choisie puis s’y resserre */
+.cl-mode {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.9rem, 2.5vw, 2rem);
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--cl-blanc);
+  color: var(--cl-noir);
+  box-shadow: 0 6px 24px rgb(34 23 24 / 0.18);
+  transform: translateX(-50%);
+  transition: background-color 400ms var(--ease), color 400ms var(--ease);
+}
+.cl-mode__pouce {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  right: 50%;
+  border-radius: 999px;
+  background: var(--cl-noir);
+  transition: left 300ms var(--ease), right 380ms var(--ease) 90ms, background-color 400ms var(--ease);
+}
+.cl-mode__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: var(--t-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition: color 300ms var(--ease) 60ms;
+}
+.cl-mode__btn svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.cl-mode__btn[aria-pressed="true"] { color: var(--cl-blanc); }
+.cl-mode__btn:active { transform: scale(0.97); }
+@media (hover: hover) { .cl-mode__btn[aria-pressed="false"]:hover { opacity: 0.7; } }
+/* Mode sombre : fond brun, pastille crème */
+.cl-bascule[data-version="1"] .cl-mode { background: var(--cl-noir); color: var(--cl-creme); box-shadow: 0 6px 24px rgb(0 0 0 / 0.35); }
+.cl-bascule[data-version="1"] .cl-mode__pouce { left: 50%; right: 4px; background: var(--cl-creme); transition: right 300ms var(--ease), left 380ms var(--ease) 90ms, background-color 400ms var(--ease); }
+.cl-bascule[data-version="1"] .cl-mode__btn[aria-pressed="true"] { color: var(--cl-noir); }
+.cl-mode :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+/* Avant / après : la barre découvre l’un ou l’autre logo */
+.cl-comparer { position: relative; aspect-ratio: 16 / 9; overflow: clip; touch-action: pan-y; }
+.cl-comparer__cote { position: absolute; inset: 0; display: grid; place-items: center; background: var(--cl-blanc); }
+.cl-comparer__cote img { width: auto; height: 96%; aspect-ratio: 1; object-fit: contain; }
+.cl-comparer__cote--avant { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+.cl-comparer__libelle { position: absolute; top: clamp(0.75rem, 2vw, 1.5rem); z-index: 2; }
+.cl-comparer__libelle--avant { left: clamp(0.75rem, 2vw, 1.5rem); }
+.cl-comparer__libelle--apres { right: clamp(0.75rem, 2vw, 1.5rem); }
+.cl-comparer__barre { position: absolute; top: 0; bottom: 0; left: var(--pos); z-index: 2; width: 2px; margin-left: -1px; background: var(--cl-noir); pointer-events: none; }
+.cl-comparer__poignee {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--cl-jaune);
+  transform: translate(-50%, -50%);
+  transition: transform var(--d-fast) var(--ease);
+}
+.cl-comparer__poignee::before, .cl-comparer__poignee::after { content: ""; position: absolute; top: 50%; border: 0.4rem solid transparent; transform: translateY(-50%); }
+.cl-comparer__poignee::before { left: 0.55rem; border-right-color: var(--cl-noir); border-left-width: 0; }
+.cl-comparer__poignee::after { right: 0.55rem; border-left-color: var(--cl-noir); border-right-width: 0; }
+/* Le vrai curseur couvre tout le cadre, invisible : souris, doigt et clavier */
+.cl-comparer__curseur { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; }
+.cl-comparer__curseur::-webkit-slider-thumb { -webkit-appearance: none; width: 3rem; height: 100vh; }
+.cl-comparer__curseur::-moz-range-thumb { width: 3rem; height: 100vh; border: 0; }
+.cl-comparer:hover .cl-comparer__poignee { transform: translate(-50%, -50%) scale(1.08); }
+.cl-comparer:has(.cl-comparer__curseur:focus-visible) { outline: 2px solid var(--cl-noir); outline-offset: -6px; }
+
+/* Couleurs : les bandes verticales, qui s’élargissent au survol */
+.cl-bandes { display: flex; height: min(34vw, 66vh); margin: 0; padding: 0; list-style: none; }
+.cl-bandes li {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 1.1vw 0.6vw;
+  background: var(--c);
+  color: var(--cl-noir);
+  transition: flex-grow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cl-bandes span { writing-mode: vertical-rl; font-size: clamp(0.85rem, 1.75vw, 2.25rem); font-weight: 600; letter-spacing: -0.01em; text-transform: none; }
+.cl-bandes .is-sombre { color: var(--cl-blanc); }
+.cl-bandes .cl-bandes__large { flex-grow: 4.3; text-align: right; }
+.cl-bandes__large span { font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; }
+@media (hover: hover) {
+  .cl-bandes li:hover { flex-grow: 2.2; }
+  .cl-bandes .cl-bandes__large:hover { flex-grow: 4.6; }
+}
+
+/* Typographies : deux moitiés */
+.cl-moitie { display: flex; flex-direction: column; min-height: 31vw; padding: 3vw 3vw 4vw; }
+.cl-moitie__ent { display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 4vw; font-weight: 800; font-size: max(0.85rem, 1.15vw); letter-spacing: 0.02em; text-transform: uppercase; }
+.cl-moitie__titre { text-wrap: balance; margin: auto 0 0.8vw; padding-top: 3vw; font-size: clamp(1.4rem, 2.2vw, 2.8rem); letter-spacing: -0.02em; }
+.cl-moitie p:last-child { max-width: 44ch; margin: 0; font-size: max(0.875rem, 0.85vw); }
+
+/* Iconographie */
+.cl-pictos { padding: 6vw 8vw; }
+
+/* Le muffin : une phrase en capitales jaune muffin sur brun café */
+
+/* Images en boucle (parfums, écrans du site), en fondu enchaîné */
+.cl-boucle { position: relative; aspect-ratio: 16 / 9; overflow: clip; }
+/* Bandeau fin qui invite à tamponner la carte de fidélité */
+.cl-incite { overflow: clip; padding-block: 0.85rem; background: var(--cl-jaune); color: var(--cl-noir); }
+.cl-incite__piste { display: flex; width: max-content; margin: 0; font-family: var(--f-sans); font-weight: 800; font-size: clamp(1.1rem, 0.7rem + 1.2vw, 1.75rem); letter-spacing: 0.04em; line-height: 1.2; text-transform: uppercase; white-space: nowrap; animation: cl-defile 40s linear infinite; }
+/* Huit fois la phrase : la moitié de la piste dépasse toujours l’écran, la boucle ne se voit pas */
+.cl-incite__piste span { padding-right: 3em; }
+
+/* Visuel bord à bord, sans zoom au scroll */
+.cl-fixe { margin: 0; }
+.cl-fixe img { display: block; width: 100%; height: auto; }
+
+/* Bande de photos qui défile de droite à gauche, sur jaune */
+.cl-defile { overflow: clip; padding-block: clamp(3rem, 7vw, 7rem); background: var(--cl-soda); }
+.cl-defile__piste { display: flex; width: max-content; margin: 0; padding: 0; list-style: none; animation: cl-defile 90s linear infinite; }
+.cl-defile__piste li { flex: none; margin-right: clamp(1rem, 3vw, 3.5rem); width: clamp(11rem, 22vw, 26rem); aspect-ratio: 2 / 3; }
+.cl-defile__piste img { width: 100%; height: 100%; object-fit: cover; }
+@keyframes cl-defile { to { transform: translate3d(-50%, 0, 0); } }
+.cl-boucle__img { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity 0s linear 700ms; }
+/* Fondu enchaîné : la nouvelle image se pose par-dessus, l’ancienne reste
+   dessous le temps du fondu (jamais de creux sombre entre les deux) */
+.cl-boucle__img.is-actif { z-index: 1; opacity: 1; transition: opacity 700ms var(--ease); }
+.cl-boucle__img img { width: 100%; height: 100%; object-fit: cover; }
+/* Parfums : deux volets, chacun montre sa moitié de l’image */
+.cl-boucle--deux .cl-boucle__img { z-index: auto; opacity: 1; transition: none; }
+.cl-boucle__volet { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity 0s linear 450ms; }
+.cl-boucle__volet img { width: 100%; height: 100%; object-fit: cover; }
+/* Deux moitiés jointives, sans trait au milieu */
+.cl-boucle__volet--g { clip-path: inset(0 50% 0 0); }
+.cl-boucle__volet--d { clip-path: inset(0 0 0 50%); }
+.cl-boucle__img.is-g .cl-boucle__volet--g, .cl-boucle__img.is-d .cl-boucle__volet--d { z-index: 1; opacity: 1; transition: opacity 450ms var(--ease); }
+
+/* Carte de fidélité : la planche entière sur ordinateur, la carte seule sur mobile.
+   La planche fait 8000 × 4500 px ; la carte occupe x 2600–5400 et y 300–4300. */
+.cl-carte { position: relative; }
+.cl-carte__fenetre { position: relative; overflow: clip; aspect-ratio: 16 / 9; }
+.cl-carte__planche { position: absolute; top: 0; left: 0; width: 100%; }
+.cl-carte__planche > img { width: 100%; height: auto; }
+.cl-carte__cases { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+.cl-carte__cases li { position: absolute; left: var(--x); top: var(--y); width: 5.2%; aspect-ratio: 1; transform: translate(-50%, -50%); }
+.cl-carte__case { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 50%; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.cl-carte__case[aria-pressed="true"] { cursor: default; }
+.cl-carte__tampon {
+  width: 70%;
+  height: 70%;
+  background: #120c0d;
+  -webkit-mask: url("../../../contenu/images/projets/columbus-cest-le-moment/tampon-muffin.png") center / contain no-repeat;
+  mask: url("../../../contenu/images/projets/columbus-cest-le-moment/tampon-muffin.png") center / contain no-repeat;
+  opacity: 0;
+  transform: scale(1.6) rotate(var(--r, 0deg));
+  transition: opacity 150ms linear, transform 300ms cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.cl-carte__case[aria-pressed="true"] .cl-carte__tampon { opacity: 1; transform: scale(1) rotate(var(--r, 0deg)); }
+@media (hover: hover) {
+  .cl-carte__case[aria-pressed="false"]:hover .cl-carte__tampon { opacity: 0.18; transform: scale(1) rotate(var(--r, 0deg)); }
+}
+.cl-carte__case:focus-visible { outline: 3px solid var(--cl-noir); outline-offset: 0; }
+.cl-carte__statut, .cl-carte__reset { position: absolute; bottom: clamp(0.75rem, 2vw, 1.5rem); z-index: 2; }
+.cl-carte__statut { left: clamp(0.75rem, 2vw, 1.5rem); }
+.cl-carte__reset { right: clamp(0.75rem, 2vw, 1.5rem); background: var(--cl-jaune); color: var(--cl-noir); }
+.cl-carte.is-complete .cl-carte__statut { background: var(--cl-jaune); color: var(--cl-noir); }
+
+/* Mobile et tablette étroite : l’encart passe en haut, un bandeau garde le chapitre */
+@media (max-width: 899px) {
+  .page-cl { --cl-l: 0px; --cl-p: var(--gutter); }
+  .cl { display: block; }
+  .cl-encart {
+    position: static;
+    height: auto;
+    padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 1.25rem) var(--bord-r) 1.75rem var(--bord-l);
+  }
+  .cl-encart__defile { padding: 0; transform: none !important; will-change: auto; }
+  .cl-encart__titre { margin-top: 2.25rem; white-space: normal; font-size: clamp(1.6rem, 7vw, 2.4rem); }
+  .cl-encart__sous { margin-top: 0.5rem; font-size: 0.875rem; }
+  .cl-encart__texte { margin-top: 1.5rem; font-size: 0.8125rem; }
+  .cl-encart__bas, .cl-encart__fleche { display: none; }
+  .cl-visuels { padding-top: 0; }
+  .cl-chap { scroll-margin-top: calc(44px - 1rem); }
+  .cl-repere {
+    position: sticky;
+    top: 0;
+    z-index: 700;
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding: 0 var(--bord-r) 0 var(--bord-l);
+    background: var(--cl-encart);
+    color: var(--cl-rose-texte);
+    font-weight: 800;
+    font-size: var(--t-micro);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    scrollbar-width: none;
+  }
+  .cl-repere::-webkit-scrollbar { display: none; }
+  /* Le bandeau des chapitres se cale sous l’en-tête */
+  .page-cl .cl-repere { top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
+  .cl-repere__lien { display: flex; align-items: center; min-height: 44px; white-space: nowrap; opacity: 0.75; }
+  .cl-repere__lien[aria-current] { opacity: 1; font-style: italic; color: var(--fuchsia-fluo); }
+  .cl-repere :focus-visible { outline-color: var(--cl-rose-texte); outline-offset: -4px; }
+  .cl-g3 { grid-template-columns: 1fr 1fr; }
+  .cl-g3 > :last-child { grid-column: 1 / -1; }
+  .cl-g2--empile { grid-template-columns: 1fr; }
+  .cl-bandes { height: 56vw; }
+  .cl-bandes li { padding: 0.75rem 0.3rem; }
+  .cl-moitie { min-height: 0; padding: 1.75rem var(--bord-r) 2.25rem var(--bord-l); }
+  .cl-moitie__ent { margin-bottom: 1.75rem; }
+  .cl-moitie__titre { margin: 1.5rem 0 0.5rem; }
+  .cl-comparer { aspect-ratio: 1; }
+  .cl-carte__fenetre { aspect-ratio: 2800 / 4000; }
+  /* Les marges en % se calculent sur la largeur : décalage exact de la carte */
+  .cl-carte__planche { width: calc(100% * 8000 / 2800); left: calc(-100% * 2600 / 2800); margin-top: calc(-100% * 300 / 2800); }
+  .cl-credits--mobile { display: block; padding: 2.5rem var(--bord-r) 3rem var(--bord-l); }
+  .cl-credits--mobile h2 { font-size: 1.75rem; }
+}
+
+/* « Réduire les animations » : rien ne zoome ni ne glisse */
+@media (prefers-reduced-motion: reduce) {
+  .cl-z > img, .cl-z > video { transform: none; will-change: auto; }
+  .cl-bandes li, .cl-carte__tampon, .cl-boucle__img, .cl-boucle__volet,
+  .cl-mode, .cl-mode__pouce, .cl-mode__btn, .cl-bascule__img, .cl-encart__fleche, .cl-comparer__poignee { transition: none; }
+  /* La bande de photos s’arrête et se fait défiler à la main */
+  .cl-defile { overflow-x: auto; overscroll-behavior-x: contain; }
+  .cl-defile__piste { animation: none; }
+  .cl-incite__piste { justify-content: center; width: auto; white-space: normal; text-align: center; animation: none; }
+  .cl-incite__piste span { padding: 0 1rem; }
+  .cl-incite__piste span[aria-hidden] { display: none; }
+  .cl-defile__piste li[aria-hidden] { display: none; }
+}

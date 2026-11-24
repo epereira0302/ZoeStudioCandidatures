@@ -1,0 +1,96 @@
+/* Gabarit « Buttermelt Glaze » (NYX × Krispy Kreme) -------------------------
+   D’après la maquette d’Enzo (2026-11-18). Couleurs relevées sur la maquette :
+   crème du fond des tubes, jaune de la bande de fin. Base : krispy-commun.css */
+
+.page-bm {
+  --bm-creme: #fcdeae;
+  --bm-blanc: #ffffff;
+}
+.page-bm ::selection { background: var(--bm-creme); color: var(--cl-encart); }
+
+.bm-visuels { background: var(--bm-blanc); }
+
+/* Le produit : photos à gauche, scène des teintes à droite, aux largeurs de
+   la maquette (2712 et 3287 px) */
+.bm-produit {
+  display: grid;
+  grid-template-columns: 2712fr 3287fr;
+  background: var(--bm-creme);
+}
+.bm-produit__gobelet { grid-area: gobelet; }
+.bm-produit__plateau { grid-area: plateau; }
+
+@media (max-width: 899px) {
+  .bm-produit { grid-template-columns: 1fr; }
+}
+
+/* Changement de teinte (scène) ---------------------------------------------
+   Ordinateur : la scène occupe la colonne de droite sur la hauteur des deux
+   photos et reste centrée à l’écran pendant qu’elles défilent.
+   Mobile : la scène se place entre les deux photos, sur deux hauteurs d’écran.
+   Sans JavaScript ou avec « réduire les animations » : les deux visuels fixes. */
+.bm-produit { grid-template-areas: "gobelet teintes" "plateau teintes"; }
+.bm-teintes { grid-area: teintes; position: relative; background: var(--bm-creme); }
+.bm-teintes__scene { display: none; }
+.bm-teintes__fixe { margin: 0; }
+
+.bm-anime .bm-teintes__fixe { display: none; }
+.bm-anime .bm-teintes__scene {
+  display: block;
+  position: sticky;
+  top: max(4.5rem, calc(50svh - var(--bm-scene-h, 40vw) / 2));
+  aspect-ratio: 3287 / 3391;
+  overflow: hidden;
+  contain: layout paint;
+}
+.bm-teintes__scene > img { position: absolute; display: block; height: auto; will-change: transform, opacity; }
+/* (sélecteurs renforcés : la règle commune .kk img met toutes les images à 100 %) */
+/* Places relevées sur la maquette (en % de la scène) */
+.bm-teintes__scene > .bm-teintes__goutte { left: 16.215%; top: 21.026%; width: 71.615%; transform: scale(0.22); transform-origin: 50.7% 49.6%; opacity: 0; }
+.bm-teintes__scene > .bm-teintes__tube { width: 37.268%; transform-origin: 50% 70%; }
+.bm-teintes__scene > .bm-teintes__tube--almond { left: 32.887%; top: 8.965%; }
+.bm-teintes__scene > .bm-teintes__tube--chai { left: 33.009%; top: 9.407%; opacity: 0; }
+
+@media (max-width: 899px) {
+  .bm-produit { grid-template-areas: "gobelet" "teintes" "plateau"; }
+  .bm-anime .bm-teintes { aspect-ratio: 3287 / 6782; }   /* deux hauteurs de scène */
+}
+
+/* Vidéo des réseaux, sur un fond un peu plus clair que le post aux logos */
+.bm-video {
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 6vw, 6rem) clamp(1rem, 8vw, 8rem);
+  background: #fee0ab;
+}
+.bm-video .kk-video { width: min(100%, 62rem); }
+
+/* Post aux logos → post croqué (scène) ---------------------------------------
+   La scène (cadre 6000 × 4500 de la maquette) reste centrée à l’écran sur deux
+   hauteurs de scène ; le JavaScript fait varier le fond et glisser l’affiche.
+   Sans JavaScript ou avec « réduire les animations » : les deux visuels fixes. */
+.bm-posts__scene { display: none; }
+.bm-posts.bm-anime { aspect-ratio: 6000 / 9000; }
+.bm-posts.bm-anime .bm-posts__fixe { display: none; }
+.bm-posts.bm-anime .bm-posts__scene {
+  display: block;
+  position: sticky;
+  top: max(4.5rem, calc(50svh - var(--bm-posts-h, 56vw) / 2));
+  aspect-ratio: 6000 / 4500;
+  overflow: hidden;
+  background: #fdcf7e;
+}
+.bm-posts__affiche {
+  position: absolute;
+  left: 13.27%;
+  top: 15%;
+  width: 40.03%;
+  aspect-ratio: 2402 / 3005;
+  overflow: hidden;
+}
+.bm-posts__scene .bm-posts__a { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+.bm-posts__a--croque { transform: translate3d(100%, 0, 0); }
+.bm-posts__scene > .bm-posts__tel { position: absolute; left: 60.58%; top: 14.27%; width: 25.97%; height: auto; will-change: opacity; }
+.bm-posts__tel--croque { opacity: 0; }
+/* Mobile : la scène est petite, on lui laisse trois hauteurs pour que le passage reste lent */
+@media (max-width: 899px) { .bm-posts.bm-anime { aspect-ratio: 6000 / 13500; } }

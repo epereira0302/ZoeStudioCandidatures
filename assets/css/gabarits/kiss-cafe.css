@@ -1,0 +1,69 @@
+/* Gabarit « Kiss café » (Too Faced × Krispy Kreme) ---------------------------
+   D’après la maquette d’Enzo (2026-11-18). Couleurs relevées sur la maquette :
+   rose de la boutique, violet du logo chromé. Base : krispy-commun.css */
+
+.page-kc {
+  --kc-rose: #f6c4e6;
+  --kc-violet: #6843b4;
+}
+.page-kc ::selection { background: var(--kc-rose); color: var(--cl-encart); }
+
+.kc-visuels { background: var(--kc-rose); }
+
+/* Réseaux sociaux : quatre contenus carrés, deux par rangée, sans gouttière
+   (aussi sur mobile, comme un profil Instagram) */
+.kc-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--kc-violet);
+}
+.kc-grille .cl-z { aspect-ratio: 1; }
+.kc-grille .cl-z > img { height: 100%; object-fit: cover; }
+
+/* Reels de l’événement : côte à côte sur le dégradé blanc → rose de Too Faced */
+.kc-reels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 3vw, 3rem);
+  padding: clamp(1.5rem, 6vw, 6rem) clamp(1rem, 12vw, 12rem);
+  background: linear-gradient(90deg, #f3eef7 0%, #f6c9ea 55%, #f38fd8 100%);
+}
+.kc-reels .kk-video { overflow: hidden; border-radius: clamp(10px, 1.2vw, 18px); box-shadow: 0 1.5rem 3rem -1.5rem rgb(120 20 90 / 0.45); }
+@media (max-width: 899px) { .kc-reels { padding-inline: 1rem; } }
+
+/* Logo Krispy Kreme en 3D : fond violet sans logo, image fixe tant que la 3D
+   n’est pas prête, puis la toile WebGL (krispy-3d.js) */
+.kc-logo3d { position: relative; overflow: clip; background: #6843b4; }
+.kc-logo3d > img { display: block; width: 100%; height: auto; }
+.kc-logo3d__image { position: absolute; inset: 0; transition: opacity 0.6s ease; }
+.kc-logo3d__toile { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease; cursor: grab; touch-action: pan-y; }
+.kc-logo3d.is-3d .kc-logo3d__toile { opacity: 1; }
+.kc-logo3d.is-3d .kc-logo3d__image { opacity: 0; }
+.kc-logo3d.is-prise .kc-logo3d__toile { cursor: grabbing; }
+.kc-logo3d__aide {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.75rem, 2.5vw, 2rem);
+  transform: translateX(-50%);
+  padding: 0.5em 1em;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.16);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.kc-logo3d.is-3d .kc-logo3d__aide { opacity: 1; }
+.kc-logo3d.is-prise .kc-logo3d__aide { opacity: 0; }
+@media (max-width: 699px) { .kc-logo3d__aide { bottom: 0.5rem; font-size: 0.5625rem; padding: 0.4em 0.85em; } }
+@media (prefers-reduced-transparency: reduce) { .kc-logo3d__aide { background: rgb(32 6 3 / 0.85); backdrop-filter: none; } }

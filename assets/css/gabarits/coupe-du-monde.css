@@ -1,0 +1,76 @@
+/* Gabarit « Coupe du monde 2026 » --------------------------------------------
+   Base : columbus.css et krispy-commun.css (encart aubergine, colonnes).
+   Planches de cinq photos numérotées sur fond papier (validées par Enzo le
+   24/11), images en grand entre les planches. Police : PP Neue Montreal. */
+
+.cdm-visuels {
+  --cdm-papier: #efece6;
+  --cdm-page: #f7f5f0;
+  --cdm-encre: #141414;
+  --cdm-gris: #7d7970;
+  --cdm-bleu: #1f3f94;
+  background: var(--cdm-papier);
+  color: var(--cdm-encre);
+  font-family: "PP Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cdm-section { padding: clamp(3rem, 8vh, 6rem) clamp(1rem, 3vw, 3rem); overflow-x: clip; }
+.cdm-section img, .cdm-section video { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+.cdm-section figure { margin: 0; }
+
+/* Crédits : nom en gras, travail en italique regular */
+.page-cdm .kk-credits__nom { font-weight: 800; }
+.page-cdm .kk-credits__role { font-weight: 400; font-style: italic; text-transform: none; letter-spacing: 0.02em; }
+
+/* Mises en page libres : chaque élément a sa place (gauche, haut, largeur, hauteur en %) */
+.cdm-libre { position: relative; }
+.cdm-libre > [style*="--x"] { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); }
+.cdm-entete { position: absolute; top: 1.5%; margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.3; letter-spacing: 0.02em; text-transform: uppercase; }
+.cdm-entete--gauche { left: 0; }
+.cdm-entete--droite { right: 0; text-align: right; text-transform: none; }
+
+/* Planche : cinq photos numérotées --------------------------------------------- */
+.cdm-libre--P, .cdm-libre--Q { aspect-ratio: 1080 / 1120; margin-bottom: 2rem; }
+.cdm-chapitre { position: absolute; top: 11%; width: 26%; will-change: transform, opacity; }
+.cdm-chapitre--P { left: 11%; }
+.cdm-chapitre--Q { left: 66%; }
+.cdm-chapitre h2 { margin: 0; font-size: clamp(0.9375rem, 1.25vw, 1.125rem); font-weight: 800; line-height: 1.15; letter-spacing: 0.02em; text-transform: uppercase; }
+.cdm-chapitre p { margin: 0.45rem 0 0; font-size: 0.8125rem; line-height: 1.35; }
+.cdm-photo { will-change: transform, opacity; }
+.cdm-num { font-size: 0.8125rem; font-weight: 600; line-height: 1; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+.cdm-photo .cdm-num { position: absolute; }
+.cdm-photo--num-haut .cdm-num { bottom: 100%; left: 0; padding-bottom: 0.6rem; }
+.cdm-photo--num-gauche .cdm-num { right: 100%; top: 0; padding-right: 1rem; }
+.cdm-photo--num-droite .cdm-num { left: 100%; top: 0; padding-left: 1rem; }
+.cdm-photo--num-bas .cdm-num { top: 100%; left: 0; padding-top: 0.6rem; }
+.cdm-photo--num-bas-droite .cdm-num { top: 100%; right: 0; padding-top: 0.6rem; }
+.cdm-photo--num-bas-gauche .cdm-num { top: 100%; left: 0; padding-top: 0.6rem; }
+
+/* Image en grand, sur toute la largeur de la colonne ------------------------------ */
+.cdm-section--grand { padding-left: 0; padding-right: 0; }
+.cdm-grand { will-change: opacity; }
+.cdm-grand__cadre { aspect-ratio: 3 / 2; overflow: clip; will-change: clip-path; }
+.cdm-grand__cadre > * { will-change: transform; }
+.cdm-grand figcaption { display: flex; gap: 1.25rem; align-items: baseline; padding: 0.75rem clamp(1rem, 3vw, 3rem) 0; font-size: 0.8125rem; line-height: 1.35; }
+.cdm-grand--boucle { width: min(78%, 56rem); margin: 0 auto; }
+.cdm-grand--boucle .cdm-grand__cadre { aspect-ratio: 9 / 8; background: #1d1b19; }
+.cdm-grand--boucle figcaption { padding-left: 0; padding-right: 0; }
+
+/* Mobile et tablette étroite : les planches deviennent une lecture continue -------- */
+@media (max-width: 899px) {
+  .cdm-libre--P, .cdm-libre--Q { aspect-ratio: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.25rem 0.9rem; margin-bottom: 0; }
+  .cdm-libre > [style*="--x"], .cdm-entete, .cdm-chapitre { position: static; width: auto; height: auto; }
+  .cdm-libre > [style*="--x"] { grid-column: span var(--m); }
+  .cdm-entete { grid-column: span 1; align-self: start; }
+  .cdm-entete--droite { text-align: right; }
+  .cdm-chapitre { grid-column: 1 / -1; }
+  .cdm-photo { aspect-ratio: 4 / 5; margin-top: 1.4rem; }
+  .cdm-photo[style*="--m:2"] { aspect-ratio: 3 / 2; }
+  .cdm-photo .cdm-num { top: auto; right: auto; bottom: 100%; left: 0; padding: 0 0 0.5rem; }
+  .cdm-grand--boucle { width: auto; margin: 0 1rem; }
+  .cdm-grand figcaption { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Réduire les animations : rien ne bouge, tout est visible */
+.cdm--statique [data-apparait], .cdm--statique [data-grand] { opacity: 1; transform: none; }
+.cdm--statique .cdm-grand__cadre { clip-path: none; }
+.cdm--statique .cdm-grand__cadre > * { transform: none; }
