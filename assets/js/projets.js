@@ -40,6 +40,11 @@ function construire(projets) {
     img.alt = '';
     img.removeAttribute('fetchpriority');
     if (i < 2) { img.loading = 'eager'; img.fetchPriority = 'high'; } else img.loading = 'lazy';
+    // Couverture à garder entière (un logo, ex. LCT) : posée sur sa couleur de fond
+    if (p.couv?.entierIndex) {
+      a.style.background = p.couv.entierIndex;
+      img.classList.add('index__entier');
+    }
     a.append(img);
     lienProjet(a, img);
     li.append(a);
