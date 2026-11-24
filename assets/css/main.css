@@ -793,7 +793,6 @@ button:hover .arrow svg + svg, button:focus-visible .arrow svg + svg { transform
 .apropos__corps p {
   margin: 0;
   font-weight: 400;
-  text-transform: uppercase;
   font-size: max(1rem, 1.4vw);
   line-height: 1.48;
   letter-spacing: 0.005em;
@@ -841,7 +840,7 @@ button:hover .arrow svg + svg, button:focus-visible .arrow svg + svg { transform
   }
   .apropos__texte { position: relative; z-index: 1; width: 40vw; }
   .apropos__corps { margin-top: 6.2vw; }
-  .apropos__corps p { text-align: justify; hyphens: none; }
+  .apropos__corps p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 8 4 4; }
   .apropos__fourrure { position: absolute; top: 0; right: 0; bottom: 0; width: 35.15vw; }
   .apropos__portrait { position: absolute; left: 51.1vw; top: 12.4vw; width: 27.8vw; }
   .apropos__pied { position: absolute; left: 51.1vw; bottom: 3.85vw; } /* Paris sous le portrait, À propos au-dessus */
@@ -1453,3 +1452,114 @@ a.footer__social:hover, a.footer__social:focus-visible { color: var(--fuchsia-in
 /* Pages construites par script (Projets, page projet) : le pied de page et le
    projet suivant attendent la fin du rendu pour ne pas sauter à l’écran */
 html.js body:is([data-page="projet"], [data-page="projets"]):not(.est-pret) :is(.projet-suivant, .footer) { display: none; }
+
+/* 10. Page Projets, index défilant (référence vidéo d’Enzo, 2026-11-24) ------
+   Ordinateur : liste des noms fixe à gauche, ligne de repère au centre de
+   l’écran ; couvertures qui défilent à droite. Mobile : la liste devient une
+   bande fixe en haut (trois noms visibles), les couvertures défilent dessous. */
+.index {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 40vw);
+  column-gap: clamp(2rem, 5vw, 6rem);
+  padding-inline: var(--bord-l) var(--bord-r);
+  color: var(--aubergine);
+  --img-ratio: 3 / 2;
+  --img-h: calc(40vw * 2 / 3);
+}
+.index__fixe {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 4vw, 3rem));
+}
+.index__tete { position: relative; z-index: 1; pointer-events: none; display: flex; align-items: baseline; gap: 1.25rem; }
+.index__titre { margin: 0; }
+.index__tete > * { pointer-events: auto; }
+.index__info { display: none; margin: 0 0 0 auto; color: var(--muted-on-paper); text-align: right; }
+.index__compteur { margin: 0; color: var(--muted-on-paper); font-variant-numeric: tabular-nums; }
+/* Fenêtre de la liste : la ligne de repère est au centre de l’écran
+   (le haut de la fenêtre est décalé de la hauteur de la tête) */
+.index__fenetre {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 4%, #000 34%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 4%, #000 34%, #000 82%, transparent 100%);
+}
+.index__liste {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  will-change: transform;
+}
+.index__ligne { transition: opacity 200ms linear; }
+.index__nom {
+  position: relative;
+  display: inline-block;
+  min-height: 44px;
+  padding-block: 0.1em;
+  font-size: clamp(1.5rem, 2.6vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: color-mix(in srgb, var(--aubergine) 42%, var(--paper)); /* grand texte : 3,3:1 */
+  transition: color var(--d-fast) var(--ease);
+}
+.index__texte { text-wrap: balance; }
+.index__meta {
+  /* Hors du flux : la ligne garde la même hauteur, active ou non */
+  position: absolute;
+  left: calc(100% + 0.9rem);
+  bottom: 0.55em;
+  color: var(--muted-on-paper);
+  opacity: 0;
+  transform: translateY(0.3em);
+  transition: opacity var(--d-fast) var(--ease), transform var(--d) var(--ease);
+  white-space: nowrap;
+}
+.is-actif .index__nom { color: var(--aubergine); }
+.is-actif .index__meta { opacity: 1; transform: none; }
+@media (hover: hover) { .index__nom:hover { color: var(--aubergine); } }
+.index__nom:focus-visible { outline-offset: 4px; }
+
+.index__visuels {
+  position: relative; /* repère des offsetTop des couvertures (projets.js) */
+  list-style: none;
+  margin: 0;
+  padding: calc(50vh - var(--img-h) / 2) 0;
+  padding-block: calc(50svh - var(--img-h) / 2);
+  display: grid;
+  gap: clamp(0.75rem, 1.2vw, 1.25rem);
+}
+.index__image { display: block; aspect-ratio: var(--img-ratio); overflow: hidden; background: var(--paper-2); }
+.index__image :is(img, video) { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease); }
+@media (hover: hover) and (pointer: fine) { .index__image:hover :is(img, video) { transform: scale(1.03); } }
+.index__image:active :is(img, video) { transform: scale(0.985); transition-duration: 120ms; }
+
+@media (max-width: 899px) {
+  .index { grid-template-columns: minmax(0, 1fr); --img-h: calc((100vw - var(--bord-l) - var(--bord-r)) * 3 / 4); --img-ratio: 4 / 3; }
+  .index__fixe {
+    z-index: 2;
+    height: auto;
+    padding-top: calc(var(--header-h) + 0.5rem);
+    padding-bottom: 0.75rem;
+    background: var(--paper);
+    margin-inline: calc(var(--bord-l) * -1) calc(var(--bord-r) * -1);
+    padding-inline: var(--bord-l) var(--bord-r);
+  }
+  .index__fenetre { position: relative; inset: auto; margin-top: 0.5rem; height: 7.5rem; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent); }
+  .index__nom { font-size: 1.375rem; min-height: 2.5rem; }
+  .index__meta { display: none; }
+  .index__info { display: block; }
+  .index__visuels { padding-block: 1rem 45svh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .index__ligne, .index__meta, .index__nom { transition: none; }
+}
+
+/* Logos « Ils m’ont fait confiance » : dessinés dès l’arrivée (pas d’apparition tardive) */
+.confiance__masque { will-change: opacity; }

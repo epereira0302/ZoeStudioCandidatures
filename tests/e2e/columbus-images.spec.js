@@ -11,7 +11,7 @@ test.describe('Production image & direction artistique', () => {
 
   test('titre, texte d’Enzo et crédits (nom en gras, travail en italique)', async ({ page }) => {
     const encart = page.locator('[data-cl-encart]');
-    await expect(page.locator('h1')).toHaveText('Production image & direction artistique');
+    await expect(page.locator('h1')).toHaveText('Production Images : Éditions Limitées');
     await expect(encart).toContainText('Imaginer et orchestrer la production image');
     await expect(encart).toContainText('La couleur devient le fil rouge de l’année.');
     const nom = encart.locator('.kk-credits__nom').first();

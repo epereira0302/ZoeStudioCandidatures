@@ -22,6 +22,7 @@ test('un projet inconnu affiche « Projet introuvable » et un lien de retour', 
 test.describe('Page projet type', () => {
   test('affiche la fiche et les planches du projet', async ({ page, request }) => {
     const p = (await projets(request)).find((x) => !x.gabarit && !x.galerie);
+    test.skip(!p, 'site des candidatures : chaque projet a sa mise en page sur mesure');
     await page.goto(`/projet.html?p=${p.slug}`);
     await expect(page.locator('[data-projet="titre"]')).toContainText(p.nom || p.titre);
     await expect(page.locator('main img').first()).toBeVisible();
@@ -32,9 +33,9 @@ test.describe('Page projet type', () => {
 test.describe('Projets suivants', () => {
   test('montre les trois projets d’après et la flèche passe au suivant', async ({ page, request }) => {
     const liste = await projets(request);
-    const i = liste.findIndex((p) => p.slug === 'sirop-monin');
+    const i = liste.findIndex((p) => p.slug === 'glowy-winter');
     const attendus = [1, 2, 3].map((k) => liste[(i + k) % liste.length]);
-    await page.goto('/projet.html?p=sirop-monin');
+    await page.goto('/projet.html?p=glowy-winter');
     await allerA(page, '.projet-suivant');
     const actif = page.locator('.suivant__item.is-actif .suivant__titre');
     const depart = await actif.textContent();
@@ -47,7 +48,7 @@ test.describe('Projets suivants', () => {
 
   test('la pile s’arrête au survol puis repart', async ({ page, isMobile }) => {
     test.skip(isMobile, 'survol à la souris seulement');
-    await page.goto('/projet.html?p=sirop-monin');
+    await page.goto('/projet.html?p=glowy-winter');
     await allerA(page, '.projet-suivant');
     const actif = page.locator('.suivant__item.is-actif .suivant__titre');
     await page.locator('.suivant__pile').hover();

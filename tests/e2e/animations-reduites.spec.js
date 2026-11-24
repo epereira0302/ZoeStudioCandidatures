@@ -6,7 +6,7 @@ test.use({ reducedMotion: 'reduce' });
 test('accueil : pas de chargement animé, contenu visible', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.loader')).toHaveCount(0);
-  await expect(page.locator('[data-sommaire-row]').first()).toBeVisible();
+  await expect(page.locator('[data-phares-liste] a').first()).toBeVisible();
 });
 
 test('Studio Zoé : vidéo arrêtée avec ses commandes, carnet immobile mais utilisable', async ({ page }) => {
@@ -35,7 +35,7 @@ test('Studio Zoé : les livrets ne défilent pas', async ({ page }) => {
 });
 
 test('projets suivants : la pile reste immobile, la flèche fonctionne', async ({ page }) => {
-  await page.goto('/projet.html?p=sirop-monin');
+  await page.goto('/projet.html?p=glowy-winter');
   await allerA(page, '.projet-suivant');
   const actif = page.locator('.suivant__item.is-actif .suivant__titre');
   const depart = await actif.textContent();
@@ -52,4 +52,10 @@ test('Columbus : la bande de photos se parcourt au clavier, les parfums ne tourn
   const avant = await bloc.locator('.cl-boucle__img.is-actif').first().innerHTML();
   await page.waitForTimeout(2500);
   expect(await bloc.locator('.cl-boucle__img.is-actif').first().innerHTML()).toBe(avant);
+});
+
+test('page Projets : la liste suit le scroll sans animation propre', async ({ page }) => {
+  await page.goto('/projets.html');
+  await expect(page.locator('.index__ligne.is-actif')).toHaveCount(1);
+  expect(await page.locator('.index__ligne').first().evaluate((x) => getComputedStyle(x).transitionDuration)).toBe('0s');
 });

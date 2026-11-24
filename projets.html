@@ -17,7 +17,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="assets/fonts/neue-montreal-extrabold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/right-didone-light-italic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/main.css?v=20261124c1">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261124c5">
   <script>(function(h){h.classList.add('js');try{if(sessionStorage.getItem('sz-rideau')==='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('arrivee');setTimeout(function(){h.classList.remove('arrivee')},3000)}}catch(e){}})(document.documentElement)</script>
   <!-- Démarrage plus rapide : scripts et contenus demandés dès l’en-tête -->
   <link rel="modulepreload" href="assets/js/projets.js">
@@ -72,21 +72,22 @@
 
 
   <main id="contenu" class="projets">
-    <!-- Grille de photos (référence d’Enzo, 2026-10-25) : titre, phrase courte,
-         onglets des catégories, puis une photo carrée par projet. Au clic,
-         la photo grandit jusqu’au plein écran et ouvre la page projet. -->
-    <section class="grille-page wrap" data-theme="paper" aria-labelledby="grille-titre">
-      <div class="grille-tete">
-        <h1 class="grille-titre display" id="grille-titre">Projets</h1>
-      </div>
-      <div class="grille-barre">
-        <h2 class="grille-barre__titre">Sélection</h2>
-        <div class="onglets" role="group" aria-label="Filtrer par catégorie" data-filtres>
-          <button class="onglet" type="button" aria-pressed="true" data-filtre="">Tout</button>
+    <!-- Index des projets (référence vidéo d’Enzo, 2026-11-24) : la liste des noms
+         reste en place à gauche et glisse au fil du scroll, le nom du projet au
+         centre de l’écran en encre ; à droite, les couvertures défilent.
+         Au clic, la couverture grandit jusqu’à la page projet. -->
+    <section class="index" data-theme="paper" aria-labelledby="index-titre">
+      <div class="index__fixe">
+        <div class="index__tete">
+          <h1 class="index__titre micro" id="index-titre">Projets</h1>
+          <p class="index__compteur micro" aria-hidden="true"><span data-index-actif>01</span> / <span data-index-total>10</span></p>
+          <p class="index__info micro" data-index-info aria-hidden="true"></p>
         </div>
+        <nav class="index__fenetre" aria-label="Liste des projets">
+          <ol class="index__liste" data-index-liste></ol>
+        </nav>
       </div>
-      <p class="sr-only" role="status" data-grille-statut></p>
-      <ul class="grille" data-grille></ul>
+      <ul class="index__visuels" data-index-visuels aria-label="Couvertures des projets"></ul>
     </section>
   </main>
 

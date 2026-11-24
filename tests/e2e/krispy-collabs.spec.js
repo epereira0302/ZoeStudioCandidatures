@@ -141,12 +141,10 @@ test.describe('Kiss café', () => {
 });
 
 test.describe('Catégories et accueil', () => {
-  test('les deux projets sont rangés en Identité visuelle et en Packaging', async ({ page }) => {
-    for (const id of ['brand-identity', 'packaging']) {
-      await page.goto(`/projets.html?categorie=${id}`);
-      for (const slug of ['nyx-krispy-kreme', 'too-faced-kiss-cafe']) {
-        await expect(page.locator(`.grille__lien[data-slug="${slug}"]`).locator('xpath=..')).toBeVisible();
-      }
+  test('les deux projets sont rangés en Identité visuelle et en Packaging', async ({ request }) => {
+    const liste = await projets(request);
+    for (const slug of ['nyx-krispy-kreme', 'too-faced-kiss-cafe']) {
+      expect(liste.find((p) => p.slug === slug).categories).toEqual(['brand-identity', 'packaging']);
     }
   });
 
@@ -164,7 +162,7 @@ test.describe('Catégories et accueil', () => {
   test('Glowy Winter, Buttermelt Glaze et Kiss café ont leur couverture choisie', async ({ page }) => {
     await page.goto('/projets.html');
     for (const [slug, dossier] of [['glowy-winter', 'glowy-winter'], ['nyx-krispy-kreme', 'buttermelt-glaze'], ['too-faced-kiss-cafe', 'kiss-cafe']]) {
-      const img = page.locator(`.grille__lien[data-slug="${slug}"] img`);
+      const img = page.locator(`.index__image[href$="p=${slug}"] img`);
       await expect(img).toHaveAttribute('src', new RegExp(`${dossier}/couverture-s\\.webp$`));
     }
   });

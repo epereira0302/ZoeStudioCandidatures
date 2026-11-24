@@ -17,7 +17,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="assets/fonts/neue-montreal-extrabold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/right-didone-light-italic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/main.css?v=20261124c1">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261124c5">
   <script>(function(h){h.classList.add('js');try{if(sessionStorage.getItem('sz-rideau')==='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('arrivee');setTimeout(function(){h.classList.remove('arrivee')},3000)}}catch(e){}})(document.documentElement)</script>
   <!-- Démarrage plus rapide : scripts et contenus demandés dès l’en-tête -->
   <link rel="modulepreload" href="assets/js/accueil.js">
@@ -25,6 +25,13 @@
   <link rel="modulepreload" href="assets/js/donnees.js">
   <link rel="preload" href="contenu/site.json" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="contenu/projets.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="contenu/images/logos/columbus-cafe-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
+  <link rel="preload" href="contenu/images/logos/krispy-kreme-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
+  <link rel="preload" href="contenu/images/logos/monin-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
+  <link rel="preload" href="contenu/images/logos/candia-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
+  <link rel="preload" href="contenu/images/logos/le-central-technique-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
+  <link rel="preload" href="contenu/images/logos/nutrimaine-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
+  <link rel="preload" href="contenu/images/logos/olga-masque.webp" as="image" crossorigin="anonymous" fetchpriority="low">
   <!-- Page suivante préchargée au survol ou au toucher d’un lien (Chrome, Edge) -->
   <script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
@@ -120,8 +127,10 @@
         <p class="apropos__metier serif" data-bind="accueil.apropos.metier">Direction artistique,
 graphisme et production d’images</p>
         <div class="apropos__corps">
-          <p data-bind="accueil.apropos.paragraphes.0">Je suis Zoé, directrice artistique et graphiste à Paris. Pendant six ans chez Wagram, j’ai été la garante de l’image de Columbus Café et de Krispy Kreme&nbsp;: nouvelle charte graphique, campagne des 30 ans, co-brandings, packaging et scénographie en boutique.</p>
-          <p data-bind="accueil.apropos.paragraphes.1">Ce que j’aime le plus&nbsp;: faire passer une idée du moodboard à l’image. Je dirige shootings et tournages, une trentaine en un an, en orchestrant lieux, décors, casting, équipes et budget, optimisé de 32&nbsp;%. Depuis 2023, je mène aussi Studio Zoé, mon activité freelance, pour Monin, Candia ou LCT. Prête à rejoindre votre équipe pour donner vie à vos prochaines campagnes.</p>
+          <p data-bind="accueil.apropos.paragraphes.0">Je suis Zoé, directrice artistique à Paris, et je parle couramment brief, rétroplanning et glaçage de donut. Chez Wagram, j’ai porté l’image de Columbus Café et de Krispy Kreme&nbsp;: plus de 30 shootings dirigés en un an, 5 co-brandings, et un univers complet à chaque lancement produit, tous les deux mois, de la PLV au motion design en passant par la vitrophanie.</p>
+          <p data-bind="accueil.apropos.paragraphes.1">J’ai refondu la charte graphique de Columbus Café, restructuré les menu boards de trois enseignes et réduit de 32&nbsp;% le budget création, tout en encadrant une alternante en direction artistique et les chargés de communication.</p>
+          <p data-bind="accueil.apropos.paragraphes.2">En freelance, Studio Zoé tourne depuis 2023. Krispy Kreme me confie ses éditions limitées, Le Central Technique sa communication. J’ai lancé une animation commerciale en deux semaines, et mon étiquette de pâte à tartiner Columbus Café a rejoint les rayons des hypers et supermarchés. Résultat&nbsp;: 100&nbsp;% de clients satisfaits, dont deux qui ne me lâchent plus.</p>
+          <p data-bind="accueil.apropos.paragraphes.3">Je cherche une équipe qui aime les idées fortes autant que les plannings tenus. Je m’occupe des deux.</p>
         </div>
       </div>
       <p class="apropos__etiquette" aria-hidden="true">À propos</p>

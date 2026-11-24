@@ -1,4 +1,4 @@
-// Accueil : ouverture, sommaire des catégories, projets phares, pied de page
+// Accueil (site des candidatures) : ouverture, projets phares, à propos, pied de page
 import { test, expect, allerA, projets } from './outils.js';
 
 test.describe('Accueil', () => {
@@ -12,41 +12,26 @@ test.describe('Accueil', () => {
     await expect(page.locator('h1')).toHaveCount(1);
   });
 
-  test('le sommaire liste chaque catégorie avec son nombre de projets', async ({ page, request }) => {
-    const r = await request.get('/contenu/projets.json');
-    const { categories, projets: liste } = await r.json();
-    const lignes = page.locator('[data-sommaire-row]');
-    await expect(lignes).toHaveCount(categories.length);
-    for (const [i, c] of categories.entries()) {
-      const nb = liste.filter((p) => (p.categories ?? [p.categorie]).includes(c.id)).length;
-      await expect(lignes.nth(i)).toHaveText(c.nom);
-      await expect(lignes.nth(i)).toHaveAttribute('href', `projets.html?categorie=${encodeURIComponent(c.id)}`);
-      await expect(lignes.nth(i)).toHaveAttribute('aria-label', new RegExp(`${nb} projets?`));
-    }
+  test('pas de sommaire : les projets phares suivent l’ouverture', async ({ page }) => {
+    await expect(page.locator('#sommaire, [data-sommaire-row]')).toHaveCount(0);
+    await expect(page.locator('header')).toHaveAttribute('data-fixe-apres', '#phares');
   });
 
-  test('le survol d’une ligne du sommaire l’active et écarte les voisines', async ({ page, isMobile }) => {
-    test.skip(isMobile, 'survol à la souris seulement');
-    await allerA(page, '[data-sommaire-row]');
-    const lignes = page.locator('[data-sommaire-row]');
-    await lignes.nth(2).hover();
-    await expect(lignes.nth(2)).toHaveClass(/is-active/);
-    await expect(page.locator('.sommaire__list li').nth(0)).toHaveClass(/is-avant/);
-    await expect(page.locator('.sommaire__list li').nth(3)).toHaveClass(/is-apres/);
-    await page.mouse.move(5, 5);
-    await page.locator('#a-propos').scrollIntoViewIfNeeded();
-    await expect(page.locator('[data-sommaire-row].is-active')).toHaveCount(0);
+  test('l’à propos parle de son parcours, en minuscules, sans texte en dur périmé', async ({ page, request }) => {
+    const site = await (await request.get('/contenu/site.json')).json();
+    const p = page.locator('.apropos__corps p');
+    await expect(p).toHaveCount(site.accueil.apropos.paragraphes.length);
+    await expect(p.first()).toContainText('Wagram');
+    expect(await p.first().evaluate((x) => getComputedStyle(x).textTransform)).toBe('none');
   });
 
-  test('le focus clavier active aussi la ligne du sommaire', async ({ page }) => {
-    const ligne = page.locator('[data-sommaire-row]').first();
-    await ligne.focus();
-    await expect(ligne).toHaveClass(/is-active/);
+  test('les logos « Ils m’ont fait confiance » sont demandés dès l’en-tête', async ({ page }) => {
+    await expect(page.locator('link[rel="preload"][href*="logos/"][crossorigin]')).toHaveCount(7);
   });
 
-  test('les quatre projets choisis pour l’accueil mènent à leur page, dans l’ordre', async ({ page, request }) => {
+  test('les trois projets choisis pour l’accueil (sans Studio Zoé) mènent à leur page, dans l’ordre', async ({ page, request }) => {
     const phares = (await projets(request)).filter((p) => p.accueil).sort((a, b) => a.accueil - b.accueil);
-    expect(phares.map((p) => p.slug)).toEqual(['studio-zoe', 'columbus-cafe-brand-identity', 'heinz-krispy-kreme', 'ne-gardez-que-le-meilleur-des-us']);
+    expect(phares.map((p) => p.slug)).toEqual(['columbus-cafe-brand-identity', 'heinz-krispy-kreme', 'ne-gardez-que-le-meilleur-des-us']);
     const liens = page.locator('[data-phares-liste] a');
     await expect(liens).toHaveCount(phares.length);
     for (const [i, p] of phares.entries()) {
