@@ -33,6 +33,7 @@ test.describe('Page Projets', () => {
     await expect(page.locator('.index__ligne.is-actif')).toHaveCount(1);
     await expect(page.locator('.index__nom[aria-current="true"]')).toHaveText(new RegExp(liste[4].nomIndex || liste[4].titre));
     await expect(page.locator('[data-index-actif]')).toHaveText('05');
+    await expect(page.locator('.index__ligne.is-actif .index__meta')).toHaveText('Identité visuelle et Packaging');
     // La liste glisse : le nom actif reste près de la ligne de repère
     const ecart = await page.locator('.index__ligne.is-actif').evaluate((l) => {
       const f = document.querySelector('.index__fenetre').getBoundingClientRect();

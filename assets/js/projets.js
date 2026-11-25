@@ -1,7 +1,7 @@
 // Page Projets : index défilant (référence vidéo d’Enzo, 2026-11-24).
 // À gauche, la liste des noms reste à l’écran et glisse au fil du scroll :
 // le projet dont la couverture passe au centre de l’écran est en encre, sur la
-// ligne de repère, avec son client et son année. À droite, les couvertures
+// ligne de repère, avec son type de projet. À droite, les couvertures
 // défilent. Le mouvement suit le scroll en continu (aucune animation autonome) ;
 // avec « réduire les animations », il reste lié au scroll, sans glissé amorti.
 // Au clic, la couverture grandit jusqu’à la page projet (lienProjet).
@@ -23,7 +23,8 @@ const el = (tag, classe, texte) => {
 
 // Nom dans la liste : « nomIndex » s’il existe (ex. « C’est le moment »), sinon le titre
 const nomIndex = (p) => p.nomIndex || p.titre;
-const meta = (p) => [p.client, p.annee].filter(Boolean).join(' · ');
+// À côté du nom : le type de projet (ex. « Identité visuelle », « Identité visuelle et Packaging »)
+const meta = (p) => p.categorieNom || '';
 
 /* Construction -------------------------------------------------------------- */
 function construire(projets) {
