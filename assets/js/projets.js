@@ -24,7 +24,7 @@ const el = (tag, classe, texte) => {
 // Nom dans la liste : « nomIndex » s’il existe (ex. « C’est le moment »), sinon le titre
 const nomIndex = (p) => p.nomIndex || p.titre;
 // À côté du nom : le type de projet (ex. « Identité visuelle », « Identité visuelle et Packaging »)
-const meta = (p) => p.categorieNom || '';
+const meta = (p) => p.typeIndex || p.categorieNom || '';
 
 /* Construction -------------------------------------------------------------- */
 function construire(projets) {

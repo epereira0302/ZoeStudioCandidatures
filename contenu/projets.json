@@ -1,5 +1,5 @@
 {
-  "_aide": "Pour ajouter un projet : ajoutez une entrée dans « projets » et déposez ses planches dans contenu/images/planches/ sous la forme <prefixe-de-categorie>-NN.webp (1366 px) et <prefixe>-NN-s.webp (720 px). « planches » indique la première et la dernière planche du projet, « couverture » la planche utilisée comme vignette (ou « couv » : une image du dossier, avec « cadrage » facultatif, qui remplace la vignette sur l’accueil et dans la grille), « categories » (facultatif) range le projet dans plusieurs catégories, « categorie » restant celle de ses planches, « phare » l’affiche dans la sélection de l’accueil, « accueil » (1, 2, 3…) la place dans la bande de l’accueil ; « couv.video » rend la couverture animée. « legende » : une ligne affichée sous les projets phares de l’accueil. Un projet peut avoir une page détaillée : « nom », « type », « contribution », « agence », « texte », « dossier » (images en <nom>.webp et <nom>-s.webp), « hero » et « galerie » (sections avec « titre », « note » facultative et « images » : format plein, demi, bande ou seul ; type panneau pour les visuels détourés, photo pour les photos). « nomIndex » (facultatif) : nom affiché dans la liste de la page Projets, à la place du titre. « couv.entierIndex » (facultatif, une couleur) : dans la page Projets, la couverture est montrée entière (sans recadrage) sur ce fond.",
+  "_aide": "Pour ajouter un projet : ajoutez une entrée dans « projets » et déposez ses planches dans contenu/images/planches/ sous la forme <prefixe-de-categorie>-NN.webp (1366 px) et <prefixe>-NN-s.webp (720 px). « planches » indique la première et la dernière planche du projet, « couverture » la planche utilisée comme vignette (ou « couv » : une image du dossier, avec « cadrage » facultatif, qui remplace la vignette sur l’accueil et dans la grille), « categories » (facultatif) range le projet dans plusieurs catégories, « categorie » restant celle de ses planches, « phare » l’affiche dans la sélection de l’accueil, « accueil » (1, 2, 3…) la place dans la bande de l’accueil ; « couv.video » rend la couverture animée. « legende » : une ligne affichée sous les projets phares de l’accueil. Un projet peut avoir une page détaillée : « nom », « type », « contribution », « agence », « texte », « dossier » (images en <nom>.webp et <nom>-s.webp), « hero » et « galerie » (sections avec « titre », « note » facultative et « images » : format plein, demi, bande ou seul ; type panneau pour les visuels détourés, photo pour les photos). « nomIndex » (facultatif) : nom affiché dans la liste de la page Projets, à la place du titre. « couv.entierIndex » (facultatif, une couleur) : dans la page Projets, la couverture est montrée entière (sans recadrage) sur ce fond. « typeIndex » (facultatif) : type de projet affiché à côté du nom dans la page Projets, à la place des catégories.",
   "categories": [
     {
       "id": "brand-identity",
@@ -389,7 +389,8 @@
           ]
         }
       ],
-      "accueil": 1
+      "accueil": 1,
+      "typeIndex": "Refonte de charte graphique"
     },
     {
       "slug": "glowy-winter",
@@ -502,7 +503,8 @@
           ]
         }
       ],
-      "dossier": "contenu/images/projets/kiss-cafe"
+      "dossier": "contenu/images/projets/kiss-cafe",
+      "typeIndex": "Direction artistique et packaging"
     },
     {
       "slug": "nyx-krispy-kreme",
@@ -558,7 +560,8 @@
           ]
         }
       ],
-      "dossier": "contenu/images/projets/buttermelt-glaze"
+      "dossier": "contenu/images/projets/buttermelt-glaze",
+      "typeIndex": "Direction artistique et packaging"
     },
     {
       "slug": "heinz-krispy-kreme",
@@ -633,7 +636,7 @@
     },
     {
       "slug": "columbus-cafe-images",
-      "titre": "Production Images : Éditions Limitées",
+      "titre": "Éditions limitées",
       "categorie": "images",
       "planches": {
         "de": 1,
@@ -656,8 +659,8 @@
         "La couleur devient le fil rouge de l’année. Chaque édition s’articule autour d’une palette dédiée, déclinée dans les décors, les accessoires et la mise en scène des produits. Une direction artistique pensée comme un ensemble cohérent, au service de l’identité de la marque et de son expression sur les réseaux sociaux."
       ],
       "gabarit": "columbus-images",
-      "nom": "Production Images : Éditions Limitées",
-      "type": "Direction artistique de shootings photo",
+      "nom": "Éditions limitées",
+      "type": "Shootings photo et direction artistique",
       "credits": [
         {
           "equipe": "",
@@ -673,7 +676,8 @@
           ]
         }
       ],
-      "dossier": "contenu/images/projets/columbus-images"
+      "dossier": "contenu/images/projets/columbus-images",
+      "typeIndex": "Shootings photo et direction artistique"
     },
     {
       "slug": "ne-gardez-que-le-meilleur-des-us",
